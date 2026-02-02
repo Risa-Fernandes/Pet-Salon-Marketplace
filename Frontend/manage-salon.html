@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawSalon - Manage Listing</title>
+
+    <!-- Bootstrap & Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Fonts & Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;700&display=swap');
+
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --dark-text: #292F36;
+            --light-bg: #F7FFF7;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background-color: var(--light-bg); 
+            color: var(--dark-text); 
+        }
+        h1,h2,h3,h4,h5,h6,.navbar-brand { 
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 700; 
+        }
+
+        .navbar { 
+            background-color: #fff; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            padding: 1rem 0; 
+            
+        }
+        .navbar-brand { 
+            color: var(--primary-color) !important; 
+            font-size: 1.5rem; 
+        }
+
+        .btn-primary-custom { 
+            background-color: var(--primary-color); 
+            border: none; color: white; 
+            padding: 10px 25px; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            transition: all 0.3s; 
+        }
+        .btn-primary-custom:hover { 
+            background-color: #ff5252; 
+            transform: translateY(-2px); 
+            color: white;
+        }
+                /* CARDS */
+        .salon-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        .salon-card:hover {
+            transform: translateY(-5px);
+        }
+        .salon-card-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .salon-badge {
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        /* UTILITIES */
+        .text-primary-custom { color: var(--primary-color); }
+        .text-secondary-custom { color: var(--secondary-color); }
+        .section-padding { padding: 60px 0; }
+
+        /* Specific Dashboard Styles */
+        .form-section { 
+            background: #fff; 
+            border-radius: 15px; 
+            padding: 30px; 
+            margin-bottom: 30px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+        .section-title { 
+            color: var(--dark-text);
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            padding-bottom: 15px; 
+            border-bottom: 2px solid #f1f1f1; 
+        }
+
+        .upload-area { 
+            border: 2px dashed #ddd; 
+            border-radius: 10px; 
+            padding: 40px; 
+            text-align: center; 
+            background: #fafafa; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+        }
+        .upload-area:hover { 
+            border-color: var(--primary-color); 
+            background: #fff5f5; 
+        }
+
+        .service-row { 
+            background: #f8f9fa; 
+            border-radius: 10px; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+        }
+
+        .img-preview { 
+            max-height: 200px; 
+            margin-top: 15px; 
+            border-radius: 10px; 
+        }
+
+        .remove-service { 
+            cursor: pointer; 
+            color: red; 
+        }
+    </style>
+</head>
+<body>
+<style>
+    /* UPDATED NAVBAR STYLES */
+    .navbar {
+        margin-top: 20px; /* Makes it look like it's floating */
+        padding: 0.8rem 2rem;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(15px);
+        border-radius: 50px; /* Pill shape */
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 0.4s ease;
+    }
+
+    /* Navbar links hover effect */
+    .nav-link {
+        color: var(--dark-text) !important;
+        font-weight: 600;
+        margin: 0 10px;
+        position: relative;
+        transition: color 0.3s;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .nav-link:hover {
+        color: var(--primary-color) !important;
+    }
+
+    /* COOL BUTTONS ON THE RIGHT */
+    .btn-login {
+        color: var(--dark-text);
+        font-weight: 700;
+        padding: 8px 25px;
+        border-radius: 50px;
+        transition: 0.3s;
+        border: 2px solid transparent;
+    }
+
+    .btn-login:hover {
+        border-color: var(--secondary-color);
+        color: var(--secondary-color);
+    }
+
+    .btn-owner {
+        background: linear-gradient(135deg, #4ECDC4 0%, #2a5298 100%);
+        color: white !important;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-owner:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(78, 205, 196, 0.5);
+        filter: brightness(1.1);
+    }
+
+    /* Subtle pulse animation for the main action button */
+    .pulse-animation {
+        animation: shadow-pulse 2s infinite;
+    }
+
+    @keyframes shadow-pulse {
+        0% { box-shadow: 0 0 0 0 rgba(78, 205, 196, 0.4); }
+        70% { box-shadow: 0 0 0 15px rgba(78, 205, 196, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(78, 205, 196, 0); }
+    }
+</style>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <span style="color: var(--primary-color);"><i class="fas fa-paw"></i> Paw</span><span style="color: var(--bg-top);">Salon</span>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="/"></a></li>
+            </ul>
+            
+            <div class="d-flex align-items-center">
+                <a href="adminviewsalon.html" class="btn btn-login me-2">Back</a>
+                <a href="index.html" class="btn btn-owner pulse-animation">
+                    Home
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- FORM -->
+<div class="container my-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="mb-0">Edit Salon Details</h2>
+                    <button class="btn btn-outline-secondary">Cancel</button>
+            </div>
+    <form id="salonForm">
+
+        <!-- Basic Info -->
+        <div class="form-section">
+            <h4 class="section-title"><i class="fas fa-store me-2 text-primary-custom"></i> Basic Info</h4>
+            <div class="mb-12">
+                <label>Salon Name</label>
+                <input type="text" id="salon_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Tagline</label>
+                <input type="text" id="tagline" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Description</label>
+                <textarea id="description" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <!-- Location -->
+        <div class="form-section">
+            <h4 class="section-title">Location</h4>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label>Street</label>
+                    <input type="text" id="street" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label>City/District</label>
+                    <input type="text" id="city" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label>Phone</label>
+                    <input type="text" id="phone" class="form-control">
+                </div>
+                <div class="col-md-12">
+                    <div class="bg-light rounded p-5 text-center text-muted border">
+                        <i class="fas fa-map-pin fa-2x mb-2"></i>
+                        <p>Map Pin Selector Integration Goes Here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-section">
+            <h4 class="section-title">Salon Image</h4>
+            <div class="upload-area">
+                <input type="file" id="salonImage" accept="image/*" hidden>
+                <i class="fas fa-cloud-upload-alt fa-3x mb-2"></i>
+                <p>Click or Drag & Drop an image here</p>
+                <img id="previewImg" class="img-preview d-none">
+            </div>
+        </div>
+
+        <!-- Services -->
+        <div class="form-section">
+            <h4 class="section-title">Services</h4>
+            <button type="button" id="addServiceBtn" class="btn btn-sm btn-outline-primary mb-2"><i class="fas fa-plus"></i> Add Service</button>
+            <div id="servicesContainer">
+                <div class="service-row row g-2 align-items-center">
+                    <div class="col-md-5"><input type="text" class="form-control service-name" placeholder="Service Name"></div>
+                    <div class="col-md-3"><input type="number" class="form-control service-price" placeholder="Price"></div>
+                    <div class="col-md-3"><input type="number" class="form-control service-duration" placeholder="Duration (min)"></div>
+                    <div class="col-md-1 text-end"><span class="remove-service"><i class="fas fa-times"></i></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
+            <button class="btn btn-primary-custom btn-lg px-5 shadow">Save Salon</button>
+        </div>
+    </form>
+</div>
+
+<!-- Scripts -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const uploadArea = document.querySelector(".upload-area");
+    const fileInput = document.getElementById("salonImage");
+    const previewImg = document.getElementById("previewImg");
+
+    // Click to select
+    uploadArea.addEventListener("click", () => fileInput.click());
+
+    // Drag & drop
+    uploadArea.addEventListener("dragover", (e) => { e.preventDefault(); uploadArea.style.borderColor = "#FF6B6B"; });
+    uploadArea.addEventListener("dragleave", (e) => { e.preventDefault(); uploadArea.style.borderColor = "#ddd"; });
+    uploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if(file){
+            fileInput.files = e.dataTransfer.files;
+            previewImg.src = URL.createObjectURL(file);
+            previewImg.classList.remove("d-none");
+        }
+    });
+
+    // Preview on select
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if(file){
+            previewImg.src = URL.createObjectURL(file);
+            previewImg.classList.remove("d-none");
+        }
+    });
+
+    // Add service row
+    document.getElementById("addServiceBtn").addEventListener("click", () => {
+        const container = document.getElementById("servicesContainer");
+        const row = document.createElement("div");
+        row.className = "service-row row g-2 align-items-center";
+        row.innerHTML = `
+            <div class="col-md-5"><input type="text" class="form-control service-name" placeholder="Service Name"></div>
+            <div class="col-md-3"><input type="number" class="form-control service-price" placeholder="Price"></div>
+            <div class="col-md-3"><input type="number" class="form-control service-duration" placeholder="Duration (min)"></div>
+            <div class="col-md-1 text-end"><span class="remove-service"><i class="fas fa-times"></i></span></div>
+        `;
+        container.appendChild(row);
+    });
+
+    // Remove service row
+    document.getElementById("servicesContainer").addEventListener("click", (e) => {
+        if(e.target.closest(".remove-service")) e.target.closest(".service-row").remove();
+    });
+
+    // Form submit
+    document.getElementById("salonForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("name", document.getElementById("salon_name").value);
+        formData.append("tagline", document.getElementById("tagline").value);
+        formData.append("description", document.getElementById("description").value);
+        formData.append("address", document.getElementById("street").value);
+        formData.append("city", document.getElementById("city").value);
+        formData.append("phone", document.getElementById("phone").value);
+
+        const imageFile = document.getElementById("salonImage").files[0];
+        if (imageFile) formData.append("image", imageFile);
+
+        const services = [];
+        document.querySelectorAll(".service-row").forEach(row => {
+            const name = row.querySelector(".service-name")?.value;
+            const price = row.querySelector(".service-price")?.value;
+            const duration = row.querySelector(".service-duration")?.value;
+
+            if (name && price && duration) {
+                services.push({ service_name: name, price, duration });
+            }
+        });
+        formData.append("services", JSON.stringify(services));
+
+        fetch("http://127.0.0.1:5000/api/salon", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => alert(res.message))
+        .catch(err => console.error(err));
+
+    });
+
+});
+</script>
+
+</body>
+</html>
