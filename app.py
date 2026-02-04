@@ -80,6 +80,14 @@ def search():
 def manage_salon():
     return render_template("manage-salon.html")
 
+@app.route("/adminviewsalon")
+def admin_view_salon():
+    return render_template("adminviewsalon.html")
+
+@app.route("/editsalon")
+def edit_salon():
+    return render_template("edit-salon.html")
+
 @app.route("/salon/<int:salon_id>")
 def salon_detail(salon_id):
     return render_template("salon-detail.html", salon_id=salon_id)

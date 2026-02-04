@@ -160,7 +160,7 @@ function renderSalons(salons) {
             <a href="/salon-details?id=${salon.id}" class="view-btn">
               View Details
             </a>
-            <a href="edit-salon.html?id=${salon.id}" class="view1-btn">
+            <a href="/editsalon?id=${salon.id}" class="view1-btn">
               Edit
             </a>
             <a href="" class="view2-btn">
@@ -425,8 +425,8 @@ document.getElementById("searchInput").addEventListener("input", function () {
             </ul>
 
             <div class="d-flex align-items-center">
-                <a href="index.html" class="btn btn-login me-2">Back</a>
-                <a href="manage-salon.html" class="btn btn-owner pulse-animation">
+                <a href="/" class="btn btn-login me-2">Back</a>
+                <a href="/manage-salon" class="btn btn-owner pulse-animation">
                     Add Salon
                 </a>
             </div>
