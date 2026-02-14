@@ -198,8 +198,10 @@ input:disabled, textarea:disabled{
 <h4 class="section-title"><i class="fas fa-store text-danger me-2"></i>Basic Info</h4>
 
 <input id="salon_name" class="form-control mb-3" placeholder="Salon Name" >
+<input id="open_hours" class="form-control mb-3" placeholder="Open Hours" >
+<input id="close_hours" class="form-control mb-3" placeholder="Close Hours" >
 <input id="tagline" class="form-control mb-3" placeholder="Tagline" >
-<textarea id="description" class="form-control" placeholder="Description" ></textarea>
+<textarea id="description" class="form-control" placeholder="Description"></textarea>
 </div>
 
 <!-- LOCATION -->
@@ -238,6 +240,7 @@ Update Salon
 </form>
 </div>
 
+
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const salonId = urlParams.get("id");
@@ -250,6 +253,8 @@ if (salonId) {
     .then(res => res.json())
     .then(data => {
       salon_name.value = data.name;
+      open_hours.value = data.open_hours || "";
+      close_hours.value = data.close_hours || "";
       tagline.value = data.tagline || "";
       description.value = data.description || "";
       street.value = data.address || "";
@@ -261,11 +266,10 @@ if (salonId) {
       if (data.services && data.services.length > 0) {
         data.services.forEach(service => addServiceRow(service));
       }
-    })
-    .catch(err => console.error("Failed to load salon", err));
+    });
 }
 
-// 🔹 Create service row
+// 🔹 Add Service Row
 function addServiceRow(service = {}) {
   const div = document.createElement("div");
   div.className = "service-row row align-items-center g-2 mb-2";
@@ -277,66 +281,75 @@ function addServiceRow(service = {}) {
     </div>
 
     <div class="col-md-3">
-      <div class="input-group">
-        <span class="input-group-text">₹</span>
-        <input type="number" class="form-control service-price"
-          value="${service.price || ""}" placeholder="Price">
-      </div>
+      <input type="number" class="form-control service-price"
+        value="${service.price || ""}" placeholder="Price">
     </div>
 
     <div class="col-md-2">
       <input type="number" class="form-control service-duration"
-        value="${service.duration || ""}" placeholder="Duration (min)">
+        value="${service.duration || ""}" placeholder="Duration">
     </div>
 
-    <div class="col-md-1 text-end">
-      <button type="button"
-        class="btn btn-link text-danger p-0"
-        onclick="this.closest('.service-row').remove()">
-        <i class="fas fa-times"></i>
-      </button>
+    <div class="col-md-1">
+      <button type="button" class="btn btn-danger btn-sm"
+        onclick="this.closest('.service-row').remove()">X</button>
     </div>
   `;
 
   servicesContainer.appendChild(div);
 }
 
-// 🔹 Add new service manually
-document.getElementById("addServiceBtn").addEventListener("click", () => {
-  addServiceRow();
-});
+// 🔹 Add Service button
+document.getElementById("addServiceBtn")
+  .addEventListener("click", () => addServiceRow());
 
-// 🔹 Update salon
-document.getElementById("salonForm").addEventListener("submit", function(e) {
-  e.preventDefault();
 
-  const services = [];
-  document.querySelectorAll(".service-row").forEach(row => {
-    services.push({
-      service_name: row.querySelector(".service-name").value,
-      price: row.querySelector(".service-price").value,
-      duration: row.querySelector(".service-duration").value
+// 🔹 UPDATE SALON (FIXED)
+document.getElementById("editForm")
+  .addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("name", salon_name.value);
+    formData.append("open_hours", open_hours.value);
+    formData.append("close_hours", close_hours.value);
+    formData.append("tagline", tagline.value);
+    formData.append("description", description.value);
+    formData.append("address", street.value);
+    formData.append("city", city.value);
+    formData.append("phone", phone.value);
+
+    // Collect services
+    const services = [];
+    document.querySelectorAll(".service-row").forEach(row => {
+      services.push({
+        service_name: row.querySelector(".service-name").value,
+        price: row.querySelector(".service-price").value,
+        duration: row.querySelector(".service-duration").value
+      });
     });
-  });
 
-  fetch(`http://127.0.0.1:5000/api/salon/${salonId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: salon_name.value,
-      tagline: tagline.value,
-      description: description.value,
-      address: street.value,
-      city: city.value,
-      phone: phone.value,
-      services: services
+    formData.append("services", JSON.stringify(services));
+
+    fetch(`http://127.0.0.1:5000/api/salon/${salonId}`, {
+      method: "PUT",
+      body: formData
     })
-  })
-  .then(res => res.json())
-  .then(() => alert("Salon updated successfully ✅"))
-  .catch(err => alert("Update failed"));
+    .then(res => res.json())
+    .then(data => {
+      alert("Salon updated successfully ✅");
+      window.location.href = "/adminviewsalon";
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Update failed ❌");
+    });
 });
 </script>
+
+
 
 
 

@@ -23,6 +23,8 @@ db = SQLAlchemy(app)
 class Salon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
+    open_hours = db.Column(db.String(50))
+    close_hours= db.Column(db.String(50))
     tagline = db.Column(db.String(200))
     description = db.Column(db.Text)
     address = db.Column(db.String(200))
@@ -34,6 +36,8 @@ class Salon(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "open_hours":self.open_hours,
+            "close_hours":self.close_hours,
             "tagline": self.tagline,
             "description": self.description,
             "address": self.address,
@@ -112,6 +116,8 @@ def get_salons():
         {
             "id": s.id,
             "name": s.name,
+            "open_hours":s.open_hours,
+            "close_hours":s.close_hours,
             "tagline": s.tagline,
             "city": s.city,
             "image": f"uploads/{s.image}" if s.image else "images/default.jpg"
@@ -126,6 +132,8 @@ def add_salon():
     try:
         # 1️⃣ Get form data
         name = request.form.get("name")
+        open_hours = request.form.get("open_hours")
+        close_hours = request.form.get("close_hours")
         tagline = request.form.get("tagline")
         description = request.form.get("description")
         address = request.form.get("address")
@@ -142,6 +150,8 @@ def add_salon():
         # 3️⃣ Create Salon in DB
         salon = Salon(
             name=name,
+            open_hours=open_hours,
+            close_hours=close_hours,
             tagline=tagline,
             description=description,
             address=address,
@@ -188,29 +198,40 @@ def get_single_salon(salon_id):
 
 
 
-# PUT /api/salon/<int:salon_id> -Update salon
 @app.route('/api/salon/<int:salon_id>', methods=['PUT'])
 def update_salon(salon_id):
     salon = Salon.query.get_or_404(salon_id)
-    data = request.json
 
-    salon.name = data.get('name')
-    salon.tagline = data.get('tagline')
-    salon.description = data.get('description')
-    salon.address = data.get('address')
-    salon.city = data.get('city')
-    salon.phone = data.get('phone')
+    # Update salon basic details
+    salon.name = request.form.get('name')
+    salon.tagline = request.form.get('tagline')
+    salon.open_hours = request.form.get('open_hours')
+    salon.close_hours = request.form.get('close_hours')
+    salon.description = request.form.get('description')
+    salon.address = request.form.get('address')
+    salon.city = request.form.get('city')
+    salon.phone = request.form.get('phone')
 
-    # Delete old services
-    #Service.query.filter_by(salon_id=salon.id).delete()
+    #  Update image (if new image uploaded)
+    image = request.files.get("image")
+    if image:
+        image_filename = secure_filename(image.filename)
+        image.save(os.path.join(UPLOAD_FOLDER, image_filename))
+        salon.image = image_filename
 
-    # Add updated services
-    for s in data.get('services', []):
+    #  DELETE old services
+    Service.query.filter_by(salon_id=salon.id).delete()
+
+    #  ADD new services
+    services_json = request.form.get("services")
+    services = json.loads(services_json) if services_json else []
+
+    for s in services:
         service = Service(
             salon_id=salon.id,
-            service_name=s['service_name'],
-            price=s['price'],
-            duration=s['duration']
+            service_name=s.get("service_name"),
+            price=float(s.get("price", 0)),
+            duration=int(s.get("duration", 0))
         )
         db.session.add(service)
 
@@ -218,17 +239,22 @@ def update_salon(salon_id):
 
     return jsonify({"message": "Salon updated successfully"})
 
-
-
 #delete salon
 @app.route('/api/salon/<int:salon_id>', methods=['DELETE'])
 def delete_salon(salon_id):
-    salon = Salon.query.get_or_404(salon_id)
 
+    # Delete all services of this salon
+    Service.query.filter_by(salon_id=salon_id).delete()
+
+    # Delete salon
+    salon = Salon.query.get_or_404(salon_id)
     db.session.delete(salon)
+
+    # Commit changes
     db.session.commit()
 
-    return jsonify({"message": "Salon deleted successfully"})
+    return jsonify({"message": "Salon and all services deleted successfully"})
+
 
 
 
