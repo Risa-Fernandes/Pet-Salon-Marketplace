@@ -92,9 +92,15 @@ def admin_view_salon():
 def edit_salon():
     return render_template("edit-salon.html")
 
-@app.route("/salon/<int:salon_id>")
-def salon_detail(salon_id):
-    return render_template("salon-detail.html", salon_id=salon_id)
+@app.route("/salon-detail")
+def detils_salon():
+    id = int(request.args.get('id'))
+    salon = Salon.query.get_or_404(id)
+    services = Service.query.filter_by(salon_id=id).all()
+    return render_template('salon-detail.html', salon=salon, services=services)
+
+
+
 
 # =============================================================================
 # SALONS
