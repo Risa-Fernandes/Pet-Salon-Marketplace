@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawSalon - Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* GLOBAL THEME */
+        :root {
+            --primary-blue: #5D5FEF;
+            --light-lavender: #DDE2FF;
+            --emerald-green: #109362;
+            --gold-yellow: #FFC107;
+            --dark-text: #292F36;
+            --gray-sub: #A0A0C0;
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #9951b1, #515eaa);
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        .search-hero {
+            padding: 180px 0 80px;
+            text-align: center;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+        }
+
+        .search-hero h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 500px;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 30px auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 15px 25px;
+            outline: none;
+        }
+
+        .search-bar button {
+            background: #ff7a7a;
+            border: none;
+            padding: 0 30px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .salon-row {
+            display: flex;
+            gap: 25px;
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 0 auto 30px;
+            max-width: 900px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+        }
+
+        .salon-row img {
+            width: 260px;
+            height: 180px;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .view-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background: #ff7a7a;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+        }
+    /* UPDATED NAVBAR STYLES */
+    .navbar {
+        margin-top: 20px; /* Makes it look like it's floating */
+        padding: 0.8rem 2rem;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(15px);
+        border-radius: 50px; /* Pill shape */
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 0.4s ease;
+    }
+
+    /* Navbar links hover effect */
+    .nav-link {
+        color: var(--dark-text) !important;
+        font-weight: 600;
+        margin: 0 10px;
+        position: relative;
+        transition: color 0.3s;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .nav-link:hover {
+        color: var(--primary-color) !important;
+    }
+
+    /* COOL BUTTONS ON THE RIGHT */
+    .btn-login {
+        color: var(--dark-text);
+        font-weight: 700;
+        padding: 8px 25px;
+        border-radius: 50px;
+        transition: 0.3s;
+        border: 2px solid transparent;
+    }
+
+    .btn-login:hover {
+        border-color: var(--secondary-color);
+        color: var(--secondary-color);
+    }
+
+    .btn-owner {
+        background: linear-gradient(135deg, #4ECDC4 0%, #2a5298 100%);
+        color: white !important;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-owner:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(78, 205, 196, 0.5);
+        filter: brightness(1.1);
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/salon/dashbord">
+            <span style="color: var(--primary-color);"><i class="fas fa-paw"></i> Paw</span><span style="color: var(--bg-top);">Salon</span>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="/salon/dashbord">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/search">Browse Salons</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+            </ul>
+            
+            <div class="d-flex align-items-center">
+                <a href="" class="btn btn-login me-2">Login</a>
+                <a href="" class="btn btn-login me-2">Register</a>
+                <a href="/adminviewsalon" class="btn btn-owner pulse-animation">
+                    <i class="fas fa-store me-2"></i>Salon Owners
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <section class="search-hero">
+        <div class="container">
+            <h1>Find a Salon Your Pet Will Love 🐶🐱</h1>
+            <p style="color: white;">Trusted grooming salons near you</p>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by city or salon name">
+                <button>Search</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="salonResults" class="mt-5"></div>
+
+    <script>
+        // SIDEBAR LOGIC
+        function openMenu() {
+            document.getElementById("sideMenu").classList.add("active");
+            document.getElementById("menuOverlay").classList.add("active");
+        }
+
+        function closeMenu() {
+            document.getElementById("sideMenu").classList.remove("active");
+            document.getElementById("menuOverlay").classList.remove("active");
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // --- BACKEND FETCH LOGIC (UNCHANGED) ---
+            let allSalons = [];
+
+            function renderSalons(salons) {
+                const resultsDiv = document.getElementById("salonResults");
+                resultsDiv.innerHTML = "";
+
+                salons.forEach(salon => {
+                    resultsDiv.innerHTML += `
+                    <div class="container mb-4">
+                        <div class="salon-row">
+                            <img src="http://127.0.0.1:5000/static/${salon.image}" alt="Salon">
+                            <div class="salon-info">
+                                <h4 style="font-family: 'Fredoka';">${salon.name}</h4>
+                                <p class="text-muted">${salon.tagline || ""}</p>
+                                <p><i class="fas fa-map-marker-alt"></i> ${salon.city}</p>
+                                <a href="/salon-detail?id=${salon.id}" class="view-btn">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+
+            fetch("http://127.0.0.1:5000/api/salons")
+                .then(res => res.json())
+                .then(data => {
+                    allSalons = data;
+                    renderSalons(allSalons);
+                });
+
+            document.getElementById("searchInput").addEventListener("input", function () {
+                const value = this.value.toLowerCase();
+                const filtered = allSalons.filter(salon =>
+                    salon.name.toLowerCase().includes(value) ||
+                    salon.city.toLowerCase().includes(value)
+                );
+                renderSalons(filtered);
+            });
+        });
+    </script>
+</body>
+</html>

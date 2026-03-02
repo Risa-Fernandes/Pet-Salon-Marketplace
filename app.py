@@ -73,32 +73,52 @@ class Service(db.Model):
 # =============================================================================
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("user/index.html")
+
+@app.route("/salon")
+def salon():
+    print("SEARCH PAGE LOADED")
+    return render_template("user/salon.html")
+
+@app.route("/salondetail")
+def detilssalon():
+    id = int(request.args.get('id'))
+    salon = Salon.query.get_or_404(id)
+    services = Service.query.filter_by(salon_id=id).all()
+    return render_template('user/salondetail.html', salon=salon, services=services)
+
+@app.route("/salon/dashbord")
+def dashbord():
+    return render_template("salon/salonDashbord.html")
 
 @app.route("/search")
 def search():
     print("SEARCH PAGE LOADED")
-    return render_template("search.html")
+    return render_template("salon/search.html")
+
+
+@app.route("/about")
+def about():
+    return render_template("user/about.html")
 
 @app.route("/manage-salon")
 def manage_salon():
-    return render_template("manage-salon.html")
+    return render_template("salon/manage-salon.html")
 
 @app.route("/adminviewsalon")
 def admin_view_salon():
-    return render_template("adminviewsalon.html")
+    return render_template("salon/adminviewsalon.html")
 
 @app.route("/editsalon")
 def edit_salon():
-    return render_template("edit-salon.html")
+    return render_template("salon/edit-salon.html")
 
 @app.route("/salon-detail")
 def detils_salon():
     id = int(request.args.get('id'))
     salon = Salon.query.get_or_404(id)
     services = Service.query.filter_by(salon_id=id).all()
-    return render_template('salon-detail.html', salon=salon, services=services)
-
+    return render_template('salon/salon-detail.html', salon=salon, services=services)
 
 
 
@@ -324,6 +344,7 @@ def delete_service(service_id):
     db.session.commit()
 
     return jsonify({"message": "Service deleted successfully"})
+
 
 
 if __name__ == '__main__':

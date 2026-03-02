@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawfeact Care - {{ salon.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-blue: #5D5FEF;
+            --light-lavender: #DDE2FF;
+            --emerald-green: #109362;
+            --gold-yellow: #FFC107;
+            --dark-text: #292F36;
+            --gray-sub: #A0A0C0;
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #9951b1, #515eaa);
+            min-height: 100vh;
+            margin: 0;
+            color: var(--dark-text);
+        }
+
+        /* --- NAVBAR & SPACING FIX --- */
+        .navbar {
+            margin-top: 20px;
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            left: 50%;
+            transform: translateX(-50%);
+            position: fixed;
+            z-index: 1100; /* Higher than everything else */
+        }
+
+        .main-content {
+            padding-top: 130px; /* This pushes content below the floating navbar */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- SIDEBAR --- */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: #F8F9FD;
+            padding: 40px 20px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2000;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-menu.active { right: 0; }
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            z-index: 1500;
+            backdrop-filter: blur(3px);
+        }
+
+        .menu-overlay.active { display: block; }
+
+        /* --- CARD & ELEMENT STYLES --- */
+        .card { 
+            border-radius: 20px; 
+            border: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary-custom {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .service-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .service-item:last-child { border-bottom: none; }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .live-bg-wrapper {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .paw-bubble {
+            position: absolute;
+            bottom: -100px;
+            color: rgba(255,255,255,0.1);
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.4; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="live-bg-wrapper" id="paw-container"></div>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/" style="color: var(--primary-color) !important;">
+                <i class="fas fa-paw"></i> Pawfeact Care
+            </a>
+            <div class="d-none d-lg-flex gap-4 mx-auto fw-semibold">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+            </div>
+            <button class="btn" style="background: var(--primary-color); color: white; border-radius: 50px;" onclick="openMenu()">☰ Menu</button>
+        </div>
+    </nav>
+
+    <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+    <div id="sideMenu" class="side-menu">
+        <div class="sidebar-logo mb-4">
+            <i class="fas fa-paw fa-2x text-primary"></i>
+            <span class="h4 ms-2 fw-bold">Pawfect Menu</span>
+        </div>
+        <div class="sidebar-links">
+            <a href="index.html" class="btn btn-light w-100 text-start mb-2 rounded-3"><i class="fas fa-home me-2"></i> Home</a>
+            <a href="#" class="btn btn-light w-100 text-start mb-2 rounded-3"><i class="fas fa-cut me-2"></i> Salons</a>
+        </div>
+        <div class="mt-auto">
+            <button class="btn btn-warning w-100 rounded-pill mb-2">Register</button>
+            <button class="btn btn-outline-secondary w-100 rounded-pill">Login</button>
+        </div>
+    </div>
+
+    <div class="container main-content">
+        <div class="row g-4"> <div class="col-lg-8">
+                <div class="card p-4 mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h1 class="fw-bold mb-1">{{ salon.name }}</h1>
+                            <p class="text-muted mb-1"><i class="fas fa-map-marker-alt me-2 text-danger"></i>{{ salon.address }}, {{ salon.city }}</p>
+                            <p class="text-muted"><i class="fas fa-phone me-2 text-danger"></i>{{ salon.phone or "Not Available" }}</p>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-warning text-dark fs-5">4.8 / 5</span>
+                            <p class="small text-muted mt-1">120 Reviews</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="salonCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                    <div class="carousel-inner rounded-4 shadow">
+                        <div class="carousel-item active">
+                            <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1599443015574-be5fe8a05783" class="d-block w-100">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-white mb-3 fw-bold">Services Menu</h3>
+                <div class="card p-4 mb-5">
+                    {% for service in services %}
+                    <div class="service-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold mb-0">{{ service.service_name }}</h5>
+                            <small class="text-muted">{{ service.duration }} mins</small>
+                        </div>
+                        <div class="fw-bold text-primary fs-5">₹{{ "%.2f"|format(service.price) }}</div>
+                    </div>
+                    {% else %}
+                    <p class="text-center py-4">No services listed for this salon.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card p-4 sticky-top shadow" style="top: 130px;">
+                    <h4 class="fw-bold mb-3">Book Appointment</h4>
+                    <p class="text-muted small mb-4">Book a slot for your pet instantly.</p>
+                    
+                    <a href="/book/{{ salon.id }}" class="btn btn-primary-custom w-100 mb-4">Book Now</a>
+                    
+                    <h5 class="fw-bold mb-2">Business Hours</h5>
+                    <p class="small mb-4 text-muted">
+                        <i class="far fa-clock me-2"></i>{{ salon.open_hours or "9:00 AM" }} - {{ salon.close_hours or "8:00 PM" }}
+                    </p>
+
+                    <h5 class="fw-bold mb-2">Location</h5>
+                    <div class="bg-light rounded text-center py-4 mb-2">
+                        <i class="fas fa-map-marked-alt fa-2x text-muted mb-2"></i>
+                        <p class="small text-muted mb-0">Map View Available in App</p>
+                    </div>
+                    <p class="small text-muted">{{ salon.address }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").classList.add("active");
+            document.getElementById("menuOverlay").classList.add("active");
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").classList.remove("active");
+            document.getElementById("menuOverlay").classList.remove("active");
+        }
+
+        // Generate Paws
+        function createPaw() {
+            const container = document.getElementById('paw-container');
+            const paw = document.createElement('i');
+            paw.className = 'fas fa-paw paw-bubble';
+            const size = Math.random() * 20 + 15 + 'px';
+            paw.style.left = Math.random() * 100 + 'vw';
+            paw.style.fontSize = size;
+            paw.style.animationDuration = Math.random() * 4 + 6 + 's';
+            container.appendChild(paw);
+            setTimeout(() => { paw.remove(); }, 8000);
+        }
+        setInterval(createPaw, 1000);
+    </script>
+</body>
+</html>
