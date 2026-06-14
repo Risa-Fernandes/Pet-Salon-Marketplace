@@ -7,280 +7,869 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
 
-        :root {
-            --primary: #ff6b6b;
-            --primary-blue: #5D5FEF;
-            --light-lavender: #DDE2FF;
+        :root{
+            --primary:#ff6b6b;
+            --primary-blue:#5D5FEF;
+            --light-lavender:#DDE2FF;
+            --emerald-green:#16a34a;
         }
 
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(135deg, #b65fd2, #6a7bdc);
-            color: #333;
-            min-height: 100vh;
-            overflow-x: hidden;
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Open Sans',sans-serif;
+            background:linear-gradient(135deg,#b65fd2,#6a7bdc);
+            color:#333;
+            overflow-x:hidden;
         }
 
         /* NAVBAR */
-        .navbar {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            padding: 0.8rem 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px);
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+
+        .navbar{
+            position:fixed;
+            top:20px;
+            left:50%;
+            transform:translateX(-50%);
+            width:90%;
+            padding:0.8rem 2rem;
+            background:rgba(255,255,255,0.92);
+            backdrop-filter:blur(15px);
+            border-radius:50px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.15);
+            z-index:1000;
         }
 
-        .menu-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 600;
+        .navbar-brand{
+            font-weight:700;
+            color:#222;
         }
 
-        /* SIDEBAR */
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100vh;
-            background: #F8F9FD;
-            padding: 40px 20px;
-            transition: 0.4s;
-            z-index: 2000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
+        .nav-link{
+            color:#333;
+            transition:0.3s;
         }
 
-        .side-menu.active { right: 0; }
-
-        .menu-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            display: none;
-            z-index: 1500;
+        .nav-link:hover{
+            color:var(--primary-blue);
         }
 
-        .menu-overlay.active { display: block; }
-
-        /* HERO */
-        .about-hero {
-            padding: 180px 0 100px;
-            text-align: center;
-            color: white;
-        }
-
-        .about-hero h1 {
-            font-family: 'Fredoka';
-            font-size: 4rem;
-        }
-
-        /* GLASS CONTAINER */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 40px;
-            padding: 70px 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-            margin-bottom: 80px;
-        }
-
-        .story-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* TEAM CARD */
-        .team-card {
+        .stat-card {
             background: white;
-            border-radius: 30px;
-            padding: 35px;
+            border-radius: 18px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: 0.3s;
-            height: 100%;
+            font-weight: 700;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
 
-        .team-card:hover {
-            transform: translateY(-10px);
+        .stat-card span {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: block;
         }
 
-        .team-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            object-fit: cover;
-            border: 4px solid #f1f1f1;
+        /* ================= SIDE MENU REDESIGN ================= */
+
+.menu-btn{
+    background:var(--primary-blue);
+    border:none;
+    color:white;
+    padding:10px 20px;
+    border-radius:30px;
+    font-weight:700;
+}
+
+.menu-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
+    z-index:9998;
+}
+
+.menu-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.side-menu{
+    position:fixed;
+    top:0;
+    right:-380px;
+    width:340px;
+    height:100vh;
+
+    background:linear-gradient(180deg,#ffffff,#f5f7ff);
+
+    z-index:9999;
+
+    transition:0.4s ease;
+
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow-y:auto;
+}
+
+.side-menu.active{
+    right:0;
+}
+
+.sidebar-top{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.profile-circle{
+    width:90px;
+    height:90px;
+    background:linear-gradient(135deg,#ff6b6b,#ff9a9e);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    color:white;
+    font-size:2.5rem;
+    margin-bottom:15px;
+}
+
+.sidebar-title{
+    font-size:1.5rem;
+    font-weight:700;
+    color:#333;
+}
+
+.sidebar-subtitle{
+    color:#777;
+    font-size:14px;
+}
+
+.sidebar-links{
+    list-style:none;
+    padding:0;
+}
+
+.sidebar-links li{
+    margin-bottom:15px;
+}
+
+.sidebar-links li a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
+    background:white;
+    padding:16px 18px;
+    border-radius:20px;
+    color:#333;
+    font-weight:600;
+    box-shadow:0 8px 20px rgba(0,0,0,0.06);
+    transition:0.3s;
+}
+
+.sidebar-links li a:hover{
+    background:#ff6b6b;
+    color:white;
+    transform:translateX(5px);
+}
+
+.ai-box{
+    margin-top:10px;
+}
+
+.ai-btn{
+    display:block;
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+    color:white;
+    text-decoration:none;
+    padding:16px;
+    border-radius:20px;
+    font-weight:700;
+    text-align:center;
+    transition:0.3s;
+}
+
+.ai-btn:hover{
+    transform:translateY(-3px);
+    color:white;
+}
+
+.menu-footer{
+    margin-top:auto;
+}
+
+/* ================= SIDEBAR BUTTONS ================= */
+
+.sidebar-action-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    text-decoration:none;
+
+    width:100%;
+
+    padding:16px;
+
+    border-radius:20px;
+
+    font-weight:700;
+
+    margin-top:12px;
+
+    transition:0.3s;
+
+    color:white;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.sidebar-action-btn:hover{
+    transform:translateY(-3px);
+    color:white;
+}
+
+.profile-btn{
+    background:linear-gradient(135deg,#3b82f6,#60a5fa);
+}
+
+.logout-btn{
+    background:linear-gradient(135deg,#ef4444,#f87171);
+}
+
+.login-btn{
+    background:linear-gradient(135deg,#6366f1,#818cf8);
+}
+
+.register-btn{
+    background:linear-gradient(135deg,#f59e0b,#fbbf24);
+}
+        /* HERO */
+
+        .about-hero{
+            padding:180px 0 110px;
+            text-align:center;
+            color:white;
+        }
+
+        .about-hero h1{
+            font-family:'Fredoka';
+            font-size:4rem;
+            font-weight:700;
+            margin-bottom:20px;
+        }
+
+        .about-hero p{
+            font-size:1.2rem;
+            max-width:800px;
+            margin:auto;
+            opacity:0.9;
+        }
+
+        /* GLASS SECTION */
+
+        .glass-container{
+            background:rgba(255,255,255,0.95);
+            border-radius:40px;
+            padding:70px 45px;
+            box-shadow:0 30px 60px rgba(0,0,0,0.12);
+            margin-bottom:80px;
+        }
+
+        .section-title{
+            font-family:'Fredoka';
+            font-size:2.5rem;
+            font-weight:700;
+            margin-bottom:25px;
+            text-align:center;
+        }
+
+        .story-text{
+            font-size:1.08rem;
+            line-height:1.9;
+            color:#555;
+            text-align:center;
+            max-width:950px;
+            margin:auto;
+        }
+
+        /* STATS */
+
+        .stats-box{
+            text-align:center;
+            margin-top:30px;
+        }
+
+        .stats-box h3{
+            font-size:2.2rem;
+            font-weight:700;
+            color:var(--primary-blue);
+        }
+
+        /* FEATURES */
+
+        .feature-card{
+            background:white;
+            border-radius:30px;
+            padding:35px 25px;
+            text-align:center;
+            box-shadow:0 15px 35px rgba(0,0,0,0.1);
+            transition:0.3s;
+            height:100%;
+        }
+
+        .feature-card:hover{
+            transform:translateY(-10px);
+        }
+
+        .feature-icon{
+            width:100px;
+            height:100px;
+            border-radius:50%;
+            background:#f4f5ff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin:auto auto 20px;
+        }
+
+        .feature-icon i{
+            font-size:35px;
+            color:var(--primary-blue);
+        }
+
+        /* WHY CHOOSE */
+
+        .choose-box{
+            background:white;
+            border-radius:30px;
+            padding:30px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.08);
+            height:100%;
+        }
+
+        .choose-box i{
+            color:var(--primary-blue);
+            font-size:30px;
+            margin-bottom:15px;
         }
 
         /* CTA */
-        .cta-section {
-            background: rgba(0,0,0,0.2);
-            padding: 80px 0;
-            border-radius: 50px 50px 0 0;
-            margin-top: 60px;
-            color: white;
-            text-align: center;
+
+        .cta-section{
+            background:rgba(0,0,0,0.18);
+            padding:90px 0;
+            border-radius:50px 50px 0 0;
+            margin-top:80px;
+            text-align:center;
+            color:white;
         }
 
-        .btn-primary-custom {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-weight: 700;
-            border: none;
+        .btn-primary-custom{
+            background:linear-gradient(135deg,#ff6b6b,#ff8e8e);
+            color:white;
+            padding:15px 40px;
+            border-radius:50px;
+            text-decoration:none;
+            font-weight:700;
+            display:inline-block;
+            transition:0.3s;
         }
+
+        .btn-primary-custom:hover{
+            transform:scale(1.05);
+            color:white;
+        }
+
+        /* FOOTER */
+
+        .footer{
+            padding:25px;
+            text-align:center;
+            color:white;
+            font-size:0.95rem;
+        }
+
+        @media(max-width:768px){
+
+            .about-hero h1{
+                font-size:2.7rem;
+            }
+
+            .glass-container{
+                padding:45px 25px;
+            }
+
+            .navbar{
+                width:95%;
+                padding:0.8rem 1rem;
+            }
+        }
+
     </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
+<!-- ================= NAVBAR ================= -->
+
 <nav class="navbar navbar-expand-lg">
+
     <div class="container-fluid">
+
         <a class="navbar-brand fw-bold" href="/">
             <i class="fas fa-paw"></i> Pawfect Care
         </a>
+
         <div class="d-none d-lg-flex gap-4 mx-auto fw-semibold">
-            <a href="/" class="nav-link">Home</a>
+            <a href="/index" class="nav-link">Home</a>
             <a href="/about" class="nav-link">About</a>
         </div>
-        <button class="menu-btn" onclick="openMenu()">☰ Menu</button>
+
+        <button class="menu-btn" onclick="openMenu()">
+            ☰ Menu
+        </button>
+
     </div>
+
 </nav>
 
-<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+<!-- ================= OVERLAY ================= -->
 
-<div id="sideMenu" class="side-menu">
-    <h4 class="fw-bold mb-4">Pawfect Care</h4>
-    <ul class="list-unstyled">
-        <li><a href="/" class="d-block mb-2">🏠 Home</a></li>
-        <li><a href="/salon" class="d-block mb-2">🐾 Salons</a></li>
-        <li><a href="#" class="d-block mb-2">🛒 Marketplace</a></li>
-        <li><a href="#" class="d-block mb-2">👨‍⚕️ Doctors</a></li>
+<div id="menuOverlay"
+class="menu-overlay"
+onclick="closeMenu()">
+</div>
+
+<!-- ================= SIDEBAR ================= -->
+
+<div id="sideMenu"
+class="side-menu">
+
+    <div class="sidebar-top">
+
+        <div class="profile-circle">
+            <i class="fas fa-paw"></i>
+        </div>
+
+        <div class="sidebar-title">
+            Pawfect Care
+        </div>
+
+        <div class="sidebar-subtitle">
+            Premium Pet Care Platform
+        </div>
+
+    </div>
+
+    <ul class="sidebar-links">
+
+        <li>
+            <a href="/index">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="/salon">
+                <i class="fas fa-cut"></i>
+                Pet Salons
+            </a>
+        </li>
+
+        <li>
+            <a href="/sales">
+                <i class="fas fa-store"></i>
+                Marketplace
+            </a>
+        </li>
+
+        <li>
+            <a href="/user_doctor">
+                <i class="fas fa-user-md"></i>
+                Doctors
+            </a>
+        </li>
+        <li>
+            <a href="/my_appointments">
+                <i class="fas fa-user-md"></i>
+                My Appointment
+            </a>
+        </li>
     </ul>
+    
+    <div class="ai-box">
+
+        <a href="/ai-health"
+        class="ai-btn">
+            🤖 AI Health Assistant
+        </a>
+
+    </div>
+
+    <div class="menu-footer">
+
+    {% if session.get("user_id") %}
+
+    <a href="/profile"
+    class="sidebar-action-btn profile-btn">
+        <i class="fas fa-user-circle"></i>
+        My Profile
+    </a>
+
+    <a href="/logout"
+    class="sidebar-action-btn logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+    </a>
+
+    {% else %}
+
+    <a href="/login"
+    class="sidebar-action-btn login-btn">
+        <i class="fas fa-lock"></i>
+        Login
+    </a>
+
+    <a href="/register"
+    class="sidebar-action-btn register-btn">
+        <i class="fas fa-user-plus"></i>
+        Register
+    </a>
+
+    {% endif %}
+
+</div>
+
 </div>
 
 <!-- HERO -->
-<section class="about-hero">
-    <div class="container">
-        <h1>About Pawfect Care 🐾</h1>
-        <p class="lead opacity-75">A Full-Stack Pet Care Management Platform</p>
-    </div>
-</section>
 
-<!-- MISSION -->
-<div class="container">
-    <div class="glass-container text-center">
-        <h2 class="fw-bold mb-4" style="font-family:Fredoka;">Our Mission</h2>
-        <p class="story-text">
-            Pawfect Care is a full-stack web application developed by a team of four developers.
-            Our mission is to simplify pet care services by connecting pet owners with trusted salons,
-            veterinarians, and service providers through a secure and user-friendly digital platform.
-            <br><br>
-            The frontend team focused on responsive UI design and smooth user experience,
-            while the backend team developed REST APIs using Flask, handled authentication,
-            and managed database integration for efficient service management.
+<section class="about-hero">
+
+    <div class="container">
+
+        <h1>About Pawfect Care 🐾</h1>
+
+        <p>
+            Pawfect Care is a modern pet-care platform designed to provide
+            smart healthcare, grooming, accessories, and AI-powered support
+            for pet owners through one easy-to-use system.
         </p>
 
-        <!-- Team Stats -->
-        <div class="row mt-5">
-            <div class="col-md-3"><h3 class="fw-bold text-primary">4</h3><p>Team Members</p></div>
-            <div class="col-md-3"><h3 class="fw-bold text-primary">2</h3><p>Frontend Developers</p></div>
-            <div class="col-md-3"><h3 class="fw-bold text-primary">2</h3><p>Backend Developers</p></div>
-            <div class="col-md-3"><h3 class="fw-bold text-primary">Flask</h3><p>Backend Framework</p></div>
-        </div>
     </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<div class="container">
+
+    <div class="glass-container">
+
+        <h2 class="section-title">
+            Who We Are
+        </h2>
+
+        <p class="story-text">
+
+            Pawfect Care was created with a simple vision — making pet care
+            easier, smarter, and more accessible for every pet owner.
+
+            Our platform combines veterinary services, pet salons,
+            pet accessories, and AI health assistance into one
+            modern digital experience.
+
+            <br><br>
+
+            We understand that pets are family members,
+            and caring for them should never feel complicated.
+            That is why Pawfect Care focuses on providing trusted services,
+            user-friendly technology, and a smooth experience for users.
+
+            <br><br>
+
+            Built using Flask, SQLAlchemy, Bootstrap, Tailwind CSS,
+            and modern web technologies, Pawfect Care offers a responsive,
+            secure, and premium platform for both pet owners and service providers.
+
+        </p>
+
+        <!-- STATS -->
+
+        <div class="row mt-5">
+
+            <div class="col-md-3 stats-box">
+                <h3>500+</h3>
+                <p>Happy Pet Owners</p>
+            </div>
+
+            <div class="col-md-3 stats-box">
+                <h3>100+</h3>
+                <p>Trusted Services</p>
+            </div>
+
+            <div class="col-md-3 stats-box">
+                <h3>24/7</h3>
+                <p>AI Health Support</p>
+            </div>
+
+            <div class="col-md-3 stats-box">
+                <h3>1000+</h3>
+                <p>Pet Products</p>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-<!-- TEAM SECTION -->
+<!-- FEATURES -->
+
 <section class="container pb-5">
-    <h2 class="text-center text-white mb-5" style="font-family:Fredoka;">Development Team 💻</h2>
 
-    <div class="row g-4 text-center">
+    <h2 class="section-title text-white mb-5">
+        Our Services ✨
+    </h2>
 
-        <div class="col-md-3">
-            <div class="team-card">
-                <div class="team-img d-flex align-items-center justify-content-center bg-light">
-                    <i class="fas fa-palette fa-2x text-primary"></i>
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    <i class="fas fa-user-doctor"></i>
                 </div>
-                <h5 class="fw-bold">Shraddha Shinde</h5>
-                <p class="text-primary fw-semibold">Frontend Developer</p>
-                <small class="text-muted">UI/UX & Responsive Design</small>
+
+                <h5 class="fw-bold">Pet Doctors</h5>
+
+                <p class="text-primary fw-semibold">
+                    Trusted Veterinary Care
+                </p>
+
+                <small class="text-muted">
+                    Consult experienced veterinary doctors
+                    for better pet healthcare.
+                </small>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="team-card">
-                <div class="team-img d-flex align-items-center justify-content-center bg-light">
-                    <i class="fas fa-laptop-code fa-2x text-primary"></i>
+        <div class="col-md-6 col-lg-3">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    <i class="fas fa-scissors"></i>
                 </div>
-                <h5 class="fw-bold">Asma Mujawar</h5>
-                <p class="text-primary fw-semibold">Frontend Developer</p>
-                <small class="text-muted">JavaScript & UI Logic</small>
+
+                <h5 class="fw-bold">Pet Grooming</h5>
+
+                <p class="text-primary fw-semibold">
+                    Salon & Grooming
+                </p>
+
+                <small class="text-muted">
+                    Explore professional pet salons
+                    and grooming services.
+                </small>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="team-card">
-                <div class="team-img d-flex align-items-center justify-content-center bg-light">
-                    <i class="fas fa-database fa-2x text-primary"></i>
+        <div class="col-md-6 col-lg-3">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    <i class="fas fa-cart-shopping"></i>
                 </div>
-                <h5 class="fw-bold">Mariya Shaikh</h5>
-                <p class="text-primary fw-semibold">Backend Developer</p>
-                <small class="text-muted">Flask APIs & Database</small>
+
+                <h5 class="fw-bold">Marketplace</h5>
+
+                <p class="text-primary fw-semibold">
+                    Accessories & Products
+                </p>
+
+                <small class="text-muted">
+                    Buy trusted pet products and accessories
+                    easily online.
+                </small>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="team-card">
-                <div class="team-img d-flex align-items-center justify-content-center bg-light">
-                    <i class="fas fa-server fa-2x text-primary"></i>
+        <div class="col-md-6 col-lg-3">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
                 </div>
-                <h5 class="fw-bold">Risa Fernandes</h5>
-                <p class="text-primary fw-semibold">Backend Developer</p>
-                <small class="text-muted">Authentication & Optimization</small>
+
+                <h5 class="fw-bold">AI Health Bot</h5>
+
+                <p class="text-primary fw-semibold">
+                    Smart Assistance
+                </p>
+
+                <small class="text-muted">
+                    Get instant AI-powered guidance
+                    for pet health support.
+                </small>
+
             </div>
+
         </div>
 
     </div>
+
 </section>
+
+<!-- WHY CHOOSE -->
+
+<section class="container pb-5">
+
+    <h2 class="section-title text-white mb-5">
+        Why Choose Pawfect Care?
+    </h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="choose-box text-center">
+
+                <i class="fas fa-shield-heart"></i>
+
+                <h5 class="fw-bold mb-3">
+                    Trusted Platform
+                </h5>
+
+                <p>
+                    We focus on secure and reliable services
+                    for pet owners and service providers.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="choose-box text-center">
+
+                <i class="fas fa-mobile-screen"></i>
+
+                <h5 class="fw-bold mb-3">
+                    Responsive Design
+                </h5>
+
+                <p>
+                    Smooth experience across desktop,
+                    tablet, and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="choose-box text-center">
+
+                <i class="fas fa-heart"></i>
+
+                <h5 class="fw-bold mb-3">
+                    Built for Pet Lovers
+                </h5>
+
+                <p>
+                    Every feature is designed with care
+                    to improve pet parenting experience.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
 <!-- CTA -->
+
 <section class="cta-section">
+
     <div class="container">
-        <h2 class="fw-bold mb-3" style="font-family:Fredoka;">Start Exploring Pawfect Care</h2>
-        <p class="mb-4">Book salons, connect with vets, and manage your pet services easily.</p>
-        <a href="/salon" class="btn btn-primary-custom">Explore Our Salons</a>
+
+        <h2 class="fw-bold mb-3" style="font-family:Fredoka;">
+            Start Your Pet Care Journey Today
+        </h2>
+
+        <p class="mb-4">
+            Discover trusted doctors, grooming services,
+            AI support, and pet accessories — all in one place.
+        </p>
+
+        <a href="/salon" class="btn-primary-custom">
+            Explore Pawfect Care
+        </a>
+
     </div>
+
 </section>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+    © 2026 Pawfect Care • Built with ❤️ for Pet Lovers
+
+</div>
+
+<!-- SCRIPT -->
 
 <script>
+
 function openMenu(){
+
     document.getElementById("sideMenu").classList.add("active");
     document.getElementById("menuOverlay").classList.add("active");
+
 }
+
 function closeMenu(){
+
     document.getElementById("sideMenu").classList.remove("active");
     document.getElementById("menuOverlay").classList.remove("active");
+
 }
+
 </script>
 
 </body>

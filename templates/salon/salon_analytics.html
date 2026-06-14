@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PawSalon Analytics</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Chart JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:
+    linear-gradient(135deg,#eef2ff,#f8fafc,#fdf2f8);
+    min-height:100vh;
+    padding:30px;
+    color:#1e293b;
+}
+
+/* HEADER */
+/* HEADER */
+
+.top-header{
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(15px);
+
+    border-radius:25px;
+    padding:20px 30px;   /* reduced height */
+
+    margin-bottom:25px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.top-header h1{
+    font-size:32px;      /* smaller */
+    font-weight:800;
+    margin-bottom:3px;
+
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed,
+        #ec4899
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.top-header p{
+    font-size:14px;
+    color:#64748b;
+    margin:0;
+}
+/* GRID */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    margin-bottom:35px;
+}
+
+/* CARD */
+
+.stat-card{
+    background:rgba(255,255,255,0.6);
+    backdrop-filter:blur(18px);
+
+    border-radius:30px;
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+
+    position:relative;
+    overflow:hidden;
+
+    transition:0.4s;
+}
+
+.stat-card:hover{
+    transform:translateY(-8px);
+}
+
+.stat-card::before{
+    content:'';
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:rgba(255,255,255,0.25);
+    border-radius:50%;
+    top:-80px;
+    right:-60px;
+}
+
+.icon-box{
+    width:70px;
+    height:70px;
+    border-radius:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-size:28px;
+
+    margin-bottom:18px;
+}
+
+.blue{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+.green{
+    background:linear-gradient(135deg,#10b981,#059669);
+}
+
+.red{
+    background:linear-gradient(135deg,#f43f5e,#e11d48);
+}
+
+.purple{
+    background:linear-gradient(135deg,#8b5cf6,#7c3aed);
+}
+
+.orange{
+    background:linear-gradient(135deg,#f59e0b,#ea580c);
+}
+
+.stat-card h2{
+    font-size:42px;
+    font-weight:800;
+}
+
+.stat-card p{
+    color:#64748b;
+    margin-top:5px;
+}
+
+/* CHART GRID */
+
+.chart-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:30px;
+}
+
+/* CHART BOX */
+
+.chart-box{
+    background:rgba(255,255,255,0.65);
+    backdrop-filter:blur(20px);
+
+    border-radius:30px;
+
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.chart-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+/* TABLE */
+
+.table-box{
+    margin-top:35px;
+
+    background:white;
+    border-radius:30px;
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.table th{
+    background:#6366f1;
+    color:white;
+}
+.badge-complete,
+.badge-cancel,
+.badge-confirm{
+    color:white;
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:600;
+}
+
+.badge-complete{
+    background:#10b981;
+}
+
+.badge-cancel{
+    background:#ef4444;
+}
+
+.badge-confirm{
+    background:#f59e0b;
+}
+/* HOME BUTTON */
+
+.btn-owner{
+    background:linear-gradient(
+        135deg,
+        #6366f1,
+        #8b5cf6
+    );
+
+    color:white !important;
+    text-decoration:none;
+
+    padding:12px 22px;
+    border-radius:15px;
+
+    font-weight:600;
+    border:none;
+
+    transition:.3s;
+}
+
+.btn-owner:hover{
+    color:white !important;
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(16,185,129,.4);
+}
+.header-actions{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.action-btn-header{
+    background:linear-gradient(
+        135deg,
+        #6366f1,
+        #8b5cf6
+    );
+
+    color:white !important;
+    text-decoration:none;
+
+    padding:12px 22px;
+    border-radius:15px;
+
+    font-weight:600;
+    border:none;
+
+    transition:.3s;
+}
+
+.action-btn-header:hover{
+    color:white !important;
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(99,102,241,.4);
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="top-header">
+
+    <div>
+
+        <h1>
+            <i class="fas fa-chart-line"></i>
+            Analytics  {{ salon.name }}
+        </h1>
+
+        <p>
+          Professional salon performance insights
+        </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      
+
+        <a href="/salon-appointments/{{ salon.id }}" class="action-btn-header">
+            <i class="fas fa-calendar-check"></i>
+            Appointments
+        </a>
+          <a href="/adminviewsalon"
+               class="btn btn-owner">
+                <i class="fas fa-house me-2"></i>Home
+            </a>
+    </div>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="icon-box blue">
+            <i class="fas fa-calendar-check"></i>
+        </div>
+
+        <h2>{{ total_appointments }}</h2>
+
+        <p>Total Appointments</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="icon-box green">
+            <i class="fas fa-indian-rupee-sign"></i>
+        </div>
+
+        <h2>₹{{ total_revenue }}</h2>
+
+        <p>Total Revenue</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="icon-box purple">
+            <i class="fas fa-circle-check"></i>
+        </div>
+
+        <h2>{{ completed }}</h2>
+
+        <p>Completed</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="icon-box red">
+            <i class="fas fa-circle-xmark"></i>
+        </div>
+
+        <h2>{{ cancelled }}</h2>
+
+        <p>Cancelled</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="icon-box orange">
+            <i class="fas fa-star"></i>
+        </div>
+
+        <h2>{{ salon.rating if salon.rating else 0 }}</h2>
+
+        <p>Salon Rating</p>
+
+    </div>
+
+</div>
+
+<!-- CHARTS -->
+
+<div class="chart-grid">
+
+    <!-- BAR CHART -->
+
+    <div class="chart-box">
+
+        <div class="chart-title">
+            Appointments Overview
+        </div>
+
+        <canvas id="barChart"></canvas>
+
+    </div>
+
+    <!-- PIE CHART -->
+
+    <div class="chart-box">
+
+        <div class="chart-title">
+            Appointment Status
+        </div>
+
+        <canvas id="pieChart"></canvas>
+
+    </div>
+
+    <!-- LINE CHART -->
+
+    <div class="chart-box">
+
+        <div class="chart-title">
+            Revenue Growth
+        </div>
+
+        <canvas id="lineChart"></canvas>
+
+    </div>
+
+    <!-- DOUGHNUT -->
+
+    <div class="chart-box">
+
+        <div class="chart-title">
+            Pets Insights
+        </div>
+
+        <canvas id="doughnutChart"></canvas>
+
+    </div>
+
+</div>
+
+    </div>
+
+</div>
+
+<script>
+
+const labels = {{ chart_labels|safe }};
+const values = {{ chart_values|safe }};
+
+/* BAR */
+
+new Chart(document.getElementById('barChart'),{
+
+    type:'bar',
+
+    data:{
+        labels:labels,
+
+        datasets:[{
+            label:'Appointments',
+            data:values,
+            borderWidth:1
+        }]
+    },
+
+    options:{
+        responsive:true
+    }
+});
+
+/* PIE */
+
+new Chart(document.getElementById('pieChart'),{
+
+    type:'pie',
+
+    data:{
+        labels:['Completed','Cancelled','Confirmed'],
+
+        datasets:[{
+            data:[
+                {{ completed }},
+                {{ cancelled }},
+                {{ total_appointments - completed - cancelled }}
+            ]
+        }]
+    }
+});
+
+/* LINE */
+
+
+const revenueLabels = {{ revenue_labels|tojson }};
+const revenueValues = {{ revenue_values|tojson }};
+
+new Chart(document.getElementById('lineChart'), {
+
+    type: 'line',
+
+    data: {
+        labels: revenueLabels,
+
+        datasets: [{
+            label: 'Monthly Revenue (₹)',
+
+            data: revenueValues,
+
+            borderColor: '#8b5cf6',
+            backgroundColor: 'rgba(139,92,246,0.15)',
+
+            fill: true,
+            tension: 0.4,
+            borderWidth: 3,
+
+            pointRadius: 5,
+            pointHoverRadius: 7
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+            legend: {
+                display: true
+            }
+        },
+
+        scales: {
+            y: {
+                beginAtZero: true,
+
+                ticks: {
+                    callback: function(value) {
+                        return '₹' + value;
+                    }
+                }
+            }
+        }
+    }
+});
+/*doughnut*/
+document.addEventListener("DOMContentLoaded", function () {
+
+    const petCounts = {{ pet_counts | tojson }};
+
+    new Chart(document.getElementById('doughnutChart'), {
+
+        type: 'doughnut',
+
+        data: {
+            labels: ['Dog', 'Cat', 'Other'],
+
+            datasets: [{
+                data: [
+                    petCounts.Dog,
+                    petCounts.Cat,
+                    petCounts.Other
+                ],
+
+                backgroundColor: [
+                    '#6366f1',
+                    '#10b981',
+                    '#f59e0b'
+                ]
+            }]
+        },
+
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+});
+
+</script>
+
+</body>
+</html>

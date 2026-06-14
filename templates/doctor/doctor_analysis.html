@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Doctor Analytics</title>
+
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/main.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Times New Roman', Times, serif;
+
+background:
+linear-gradient(
+135deg,
+#05112b 0%,
+#0a1f4f 35%,
+#133578 70%,
+#1d4fa8 100%
+);
+
+min-height:100vh;
+overflow-x:hidden;
+color:white;
+position:relative;
+}
+
+/* =========================================
+FLOATING PAWS
+========================================= */
+
+#paw-container{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+overflow:hidden;
+pointer-events:none;
+}
+
+.paw{
+position:absolute;
+bottom:-120px;
+
+color:rgba(255,255,255,0.13);
+
+animation:floatUp linear infinite;
+
+filter:drop-shadow(0 0 10px rgba(255,255,255,0.15));
+}
+
+@keyframes floatUp{
+
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:0;
+}
+
+10%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-120vh) rotate(360deg);
+opacity:0;
+}
+
+}
+
+/* =========================================
+NAVBAR
+========================================= */
+
+.top-navbar{
+position:sticky;
+top:0;
+z-index:999;
+
+padding:14px 40px;
+
+background:rgba(7,15,35,0.72);
+
+backdrop-filter:blur(18px);
+
+border-bottom:1px solid rgba(255,255,255,0.08);
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:24px;
+font-weight:700;
+display:flex;
+align-items:center;
+gap:10px;
+color:white;
+}
+
+.logo i{
+color:#72b4ff;
+}
+
+.nav-links{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#dce7ff;
+padding:10px 18px;
+border-radius:12px;
+transition:.3s;
+font-size:14px;
+font-weight:600;
+}
+
+.nav-links a:hover{
+background:rgba(255,255,255,0.08);
+transform:translateY(-2px);
+color:white;
+}
+
+.active-link{
+background:linear-gradient(
+90deg,
+#2563eb,
+#3b82f6
+);
+color:white !important;
+}
+
+/* =========================================
+MAIN CONTAINER
+========================================= */
+
+.main-container{
+padding:35px;
+max-width:1450px;
+margin:auto;
+}
+
+/* =========================================
+HEADER
+========================================= */
+
+.dashboard-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.dashboard-header h2{
+font-size:34px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.dashboard-header p{
+margin:0;
+color:#b8c7e6;
+}
+
+/* FILTER */
+
+.filterSelect{
+background:rgba(255,255,255,0.08);
+border:none;
+color:white;
+padding:12px 16px;
+border-radius:14px;
+width:190px;
+font-weight:600;
+outline:none;
+}
+
+.filterSelect option{
+color:black;
+}
+
+/* =========================================
+CARDS
+========================================= */
+
+.analytics-card{
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,0.08);
+
+border-radius:24px;
+
+padding:24px;
+
+height:100%;
+
+box-shadow:
+0 8px 30px rgba(0,0,0,0.28);
+
+transition:.35s;
+}
+
+.analytics-card:hover{
+transform:translateY(-4px);
+
+box-shadow:
+0 12px 35px rgba(0,0,0,0.38);
+}
+
+/* KPI */
+
+.kpi-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.kpi-text p{
+margin-bottom:5px;
+font-size:14px;
+color:#c7d4f2;
+}
+
+.kpi-text h3{
+margin-top:6px;
+margin-bottom:6px;
+font-size:32px;
+font-weight:500;
+color:white;
+}
+
+.kpi-icon{
+margin-top: 5px;
+width:62px;
+height:62px;
+border-radius:18px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:24px;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#60a5fa
+);
+
+box-shadow:
+0 8px 18px rgba(37,99,235,.35);
+}
+
+/* =========================================
+SECTION TITLES
+========================================= */
+
+.section-title{
+font-size:18px;
+font-weight:700;
+margin-bottom:18px;
+color:rgb(255, 255, 255);
+}
+
+/* =========================================
+CHARTS
+========================================= */
+
+.chart-container{
+height:320px;
+position:relative;
+}
+
+.small-chart{
+height:320px;
+position:relative;
+}
+
+canvas{
+width:100% !important;
+height:100% !important;
+}
+
+#calendar{
+margin-top:10px;
+background:#c7c9cc;
+padding:12px;
+border-radius:18px;
+height:300px;
+overflow:hidden;
+}
+
+.kpi-text h3{
+margin-top:6px;
+font-size:28px;
+font-weight:700;
+color:white;
+}
+
+
+.icon-blue{
+background:linear-gradient(135deg,#3b82f6,#60a5fa);
+}
+
+.icon-green{
+background:linear-gradient(135deg,#22c55e,#4ade80);
+}
+
+.icon-orange{
+background:linear-gradient(135deg,#f59e0b,#fbbf24);
+}
+
+.icon-red{
+background:linear-gradient(135deg,#ef4444,#f87171);
+}
+
+.icon-purple{
+background:linear-gradient(135deg,#8b5cf6,#a78bfa);
+}
+
+.icon-cyan{
+background:linear-gradient(135deg,#06b6d4,#22d3ee);
+}
+
+
+.section-title{
+font-size:20px;
+font-weight:700;
+margin-bottom:20px;
+color:white;
+}
+
+
+
+
+#calendar{
+
+    margin-top:20px;
+
+    background:rgb(193, 194, 196);
+
+    padding:15px;
+
+    border-radius:20px;
+}
+
+.fc-toolbar-title{
+
+    color:#18697e !important;
+
+    font-size:20px !important;
+}
+
+.fc-daygrid-event{
+
+    border:none !important;
+
+    padding:4px !important;
+
+    border-radius:8px !important;
+}
+
+
+
+
+/* =========================================
+TABLE
+========================================= */
+
+.table{
+color:white;
+margin-bottom:0;
+}
+
+.table td{
+padding:14px 10px;
+border-color:rgba(255,255,255,0.08);
+vertical-align:middle;
+font-size:14px;
+}
+
+.table tr:last-child td{
+border-bottom:none;
+}
+
+/* =========================================
+STATUS BADGES
+========================================= */
+
+.status-badge{
+padding:7px 14px;
+border-radius:30px;
+font-size:12px;
+font-weight:700;
+text-transform:capitalize;
+display:inline-block;
+}
+
+.pending{
+background:rgba(255,193,7,.18);
+color:#ffd76a;
+}
+
+.confirmed{
+background:rgba(40,167,69,.18);
+color:#7ef7a2;
+}
+
+.completed{
+background:rgba(13,110,253,.18);
+color:#78b5ff;
+}
+
+.rejected{
+background:rgba(220,53,69,.18);
+color:#ff92a0;
+}
+
+/* =========================================
+SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#2d5ac7;
+border-radius:10px;
+}
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media(max-width:992px){
+
+.top-navbar{
+padding:14px 20px;
+flex-direction:column;
+gap:15px;
+}
+
+.dashboard-header{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.main-container{
+padding:20px;
+}
+
+
+.nav-links{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- FLOATING PAWS -->
+
+<div id="paw-container"></div>
+
+<!-- NAVBAR -->
+
+<nav class="top-navbar">
+
+<div class="logo">
+<i class="fas fa-paw"></i>
+<span>PawDoctor Analytics</span>
+</div>
+
+<div class="nav-links">
+
+<a href="/doctor_home">
+<i class="fas fa-home"></i>
+Home
+</a>
+
+<a href="/doctor-requests">
+<i class="fas fa-calendar-check"></i>
+Appointments
+</a>
+
+<a href="/doctor-analysis" class="active-link">
+<i class="fas fa-chart-line"></i>
+Analytics
+</a>
+
+<a href="/logout">
+<i class="fas fa-sign-out-alt"></i>
+Logout
+</a>
+
+</div>
+
+</nav>
+
+<!-- MAIN -->
+
+<div class="main-container">
+
+<!-- HEADER -->
+
+<div class="dashboard-header">
+
+<div>
+
+<h2 id="doctorName">
+Doctor Analytics
+</h2>
+
+
+<p id="doctorSpecialization">
+Veterinary Specialist
+</p>
+
+
+<p>
+Performance insights & appointment analysis
+</p>
+
+</div>
+
+<select id="filterSelect" class="filterSelect">
+
+<option value="7">
+Last 7 Days
+</option>
+
+<option value="30" selected>
+Last 30 Days
+</option>
+
+<option value="all">
+All Time
+</option>
+
+</select>
+
+</div>
+
+<!-- KPI ROW -->
+
+<div class="row g-4 mb-4">
+
+<div class="col-md-2">
+
+<div class="analytics-card">
+
+<div class="kpi-card">
+
+<div class="kpi-text">
+<p>Appointments</p>
+<h3 id="appointmentsCount">0</h3>
+</div>
+
+<div class="kpi-icon icon-blue">
+<i class="fas fa-calendar"></i>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-2">
+
+<div class="analytics-card">
+
+<div class="kpi-card">
+
+<div class="kpi-text">
+<p>Total Revenue</p>
+<h3 id="revenueCount">₹0</h3>
+</div>
+
+<div class="kpi-icon icon-green">
+<i class="fas fa-wallet"></i>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-2">
+
+<div class="analytics-card">
+
+<div class="kpi-card">
+
+<div class="kpi-text">
+<p>Completed</p>
+<h3 id="completedCount">0</h3>
+</div>
+
+<div class="kpi-icon icon-orange">
+<i class="fas fa-check-circle"></i>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-2">
+
+<div class="analytics-card">
+
+<div class="kpi-card">
+
+<div class="kpi-text">
+<p>Pending</p>
+<h3 id="pendingCount">0</h3>
+</div>
+
+<div class="kpi-icon icon-purple">
+<i class="fas fa-clock"></i>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-md-2">
+
+<div class="analytics-card">
+
+<div class="kpi-card">
+
+<div class="kpi-text">
+<p>Confirmed</p>
+<h3 id="confirmedCount">0</h3>
+</div>
+
+<div class="kpi-icon icon-cyan">
+<i class="fas fa-check"></i>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-2">
+
+<div class="analytics-card">
+
+<div class="kpi-card">
+
+<div class="kpi-text">
+<p>Rejected</p>
+<h3 id="rejectedCount">0</h3>
+</div>
+
+<div class="kpi-icon icon-red">
+<i class="fas fa-xmark"></i>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ROW 1 -->
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-8">
+
+        <div class="analytics-card">
+
+            <div class="section-title">
+                Weekly Appointments
+            </div>
+
+            <div class="chart-container">
+                <canvas id="weeklyChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="analytics-card">
+
+            <div class="section-title">
+                Appointment Status
+            </div>
+
+            <div class="small-chart">
+                <canvas id="statusChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ROW 2 -->
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-5">
+
+        <div class="analytics-card">
+
+            <div class="section-title">
+                Upcoming Appointment Calendar
+            </div>
+
+            <div id="calendar"></div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-7">
+
+        <div class="analytics-card">
+
+            <div class="section-title">
+                Peak Booking Hours
+            </div>
+
+            <div class="small-chart">
+                <canvas id="hoursChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ROW 3 -->
+
+<div class="row g-4">
+
+    <div class="col-lg-7">
+
+        <div class="analytics-card">
+
+            <div class="section-title">
+                Monthly Appointment Trend
+            </div>
+
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-5">
+
+        <div class="analytics-card">
+
+            <div class="section-title">
+                Pet Type Distribution
+            </div>
+
+            <div class="chart-container">
+                <canvas id="petsChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
+
+
+<script>
+
+let statusChart;
+let weeklyChart;
+let hoursChart;
+let petsChart;
+let monthlyChart;
+let calendar;
+
+async function loadAnalysis() {
+
+    const filter =
+    document.getElementById("filterSelect").value;
+
+    const res =
+    await fetch(
+        `/api/doctor-analysis?filter=${filter}`
+    );
+
+    const data = await res.json();
+
+    console.log(data);
+
+
+    /* ===============================
+       DOCTOR INFO
+    =============================== */
+
+    document.getElementById("doctorName").innerText =
+        data.doctor.name;
+
+    document.getElementById("doctorSpecialization").innerText =
+        data.doctor.specialization;
+
+    /* ===============================
+       SUMMARY CARDS
+    =============================== */
+
+    document.getElementById("appointmentsCount").innerText =
+        data.cards.appointments;
+
+    document.getElementById("revenueCount").innerText =
+        "₹" + data.cards.revenue;
+
+    document.getElementById("completedCount").innerText =
+        data.cards.completed;
+
+    document.getElementById("pendingCount").innerText =
+        data.cards.pending;
+
+    document.getElementById("confirmedCount").innerText =
+        data.cards.confirmed;
+
+    document.getElementById("rejectedCount").innerText =
+        data.cards.rejected;
+
+    /* ===============================
+       STATUS CHART
+    =============================== */
+
+    if(statusChart){
+        statusChart.destroy();
+    }
+
+    statusChart =
+    new Chart(
+        document.getElementById("statusChart"),
+        {
+            type:"doughnut",
+            data:{
+                labels:data.status.labels,
+                datasets:[{
+                    data:data.status.values,
+                    backgroundColor:[
+                        "#f59e0b",
+                        "#22c55e",
+                        "#3b82f6",
+                        "#ef4444"
+                    ]
+                }]
+            },
+            options:{
+                responsive:true,
+                plugins:{
+                    legend:{
+                        labels:{
+                            color:"#fff"
+                        }
+                    }
+                },
+                
+            }
+        }
+    );
+
+    /* ===============================
+       WEEKLY CHART
+    =============================== */
+
+    if(weeklyChart){
+        weeklyChart.destroy();
+    }
+
+    weeklyChart =
+    new Chart(
+        document.getElementById("weeklyChart"),
+        {
+            type:"bar",
+            data:{
+                labels:data.weekly.labels,
+                datasets:[{
+                    label:"Appointments",
+                    data:data.weekly.values,
+                    backgroundColor:"#c7d4f2",
+                    borderRadius:10
+                }]
+            },
+            options:{
+                responsive:true,
+                plugins:{
+                    legend:{
+                        labels:{
+                            color:"#fff"
+                        }
+                    }
+                },
+                scales:{
+                    x:{
+                        ticks:{color:"#fff"},
+                        grid:{display:false}
+                    },
+                    y:{
+                        ticks:{color:"#fff"},
+                        beginAtZero:true
+                    }
+                }
+            }
+        }
+    );
+
+    /* ===============================
+       PEAK HOURS
+    =============================== */
+
+    if(hoursChart){
+        hoursChart.destroy();
+    }
+
+    hoursChart =
+    new Chart(
+        document.getElementById("hoursChart"),
+        {
+            type:"bar",
+            data:{
+                labels:data.hours.labels,
+                datasets:[{
+                    label:"Appointments",
+                    data:data.hours.values,
+                    backgroundColor:"#22c55e",
+                    borderRadius:5
+                }]
+            },
+            options:{
+                responsive:true,
+                plugins:{
+                    legend:{
+                        labels:{
+                            color:"#fff"
+                        }
+                    }
+                },
+                scales:{
+                    x:{
+                        ticks:{color:"#fff"},
+                        grid:{display:false}
+                    },
+                    y:{
+                        ticks:{color:"#fff"},
+                        beginAtZero:true
+                    }
+                }
+            }
+        }
+    );
+    /* ===============================
+       PET TYPES
+    =============================== */
+
+    if(petsChart){
+        petsChart.destroy();
+    }
+
+    petsChart =
+    new Chart(
+        document.getElementById("petsChart"),
+        {
+            type:"pie",
+            data:{
+                labels:data.pets.labels,
+                datasets:[{
+                    data:data.pets.values,
+                    backgroundColor:[
+                        "#60a5fa",
+                        "#22c55e",
+                        "#f59e0b",
+                        "#ef4444",
+                        "#8b5cf6",
+                        "#06b6d4"
+                    ]
+                }]
+            },
+            options:{
+                responsive:true,
+                plugins:{
+                    legend:{
+                        labels:{
+                            color:"#fff"
+                        }
+                    }
+                },
+            }
+        }
+    );
+
+    /* ===============================
+       MONTHLY TREND
+    =============================== */
+
+    if(monthlyChart){
+        monthlyChart.destroy();
+    }
+
+    monthlyChart =
+    new Chart(
+        document.getElementById("monthlyChart"),
+        {
+            type:"line",
+            data:{
+                labels:data.monthly.labels,
+                datasets:[{
+                    label:"Appointments",
+                    data:data.monthly.values,
+                    borderColor:"#f97316",
+                    backgroundColor:"rgba(249,115,22,0.2)",
+                    tension:0.4,
+                    fill:true
+                }]
+            },
+            options:{
+                responsive:true,
+                plugins:{
+                    legend:{
+                        labels:{
+                            color:"#fff"
+                        }
+                    }
+                },
+                scales:{
+                    x:{
+                        ticks:{color:"#fff"},
+                        grid:{display:false}
+                    },
+                    y:{
+                        ticks:{color:"#fff"},
+                    }
+                }
+            }
+        }
+    );
+
+    /* ===============================
+       UPCOMING APPOINTMENT CALENDAR
+    =============================== */
+
+    if(calendar){
+        calendar.destroy();
+    }
+
+    const calendarEl =
+    document.getElementById("calendar");
+
+    calendar =
+    new FullCalendar.Calendar(
+        calendarEl,
+        {
+            initialView:"dayGridMonth",
+            height:400,
+
+            events:data.upcoming.map(a => ({
+                title:
+                a.title +
+                " (" +
+                a.time +
+                ")",
+
+                start:a.start
+            }))
+        }
+    );
+
+    calendar.render();
+}
+
+/* ===============================
+   INITIAL LOAD
+=============================== */
+
+document
+.getElementById("filterSelect")
+.addEventListener(
+    "change",
+    loadAnalysis
+);
+
+loadAnalysis();
+
+</script>
+
+
+
+</body>
+</html>

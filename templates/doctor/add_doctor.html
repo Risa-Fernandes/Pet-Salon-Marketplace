@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Doctor • PawFect Care</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+:root{
+
+    --bg1:#020617;
+    --bg2:#071330;
+    --bg3:#0f172a;
+
+    --card:#0f172acc;
+
+    --primary:#2563eb;
+    --primary2:#38bdf8;
+
+    --text:#f8fafc;
+    --muted:#94a3b8;
+
+    --border:rgba(96,165,250,0.18);
+}
+
+/* ===================================================
+GLOBAL
+=================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--bg1),
+    var(--bg2),
+    #1e3a8a
+    );
+
+    min-height:100vh;
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+    position:relative;
+}
+
+/* ===================================================
+FLOATING PAWS
+=================================================== */
+
+#paw-container{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    z-index:0;
+
+    pointer-events:none;
+}
+
+.paw-bubble{
+
+    position:absolute;
+
+    bottom:-100px;
+
+    color:rgba(96,165,250,0.12);
+
+    animation:floatPaw linear infinite;
+}
+
+@keyframes floatPaw{
+
+    0%{
+
+        transform:
+        translateY(0)
+        rotate(0deg);
+
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    100%{
+
+        transform:
+        translateY(-120vh)
+        rotate(30deg);
+
+        opacity:0;
+    }
+}
+
+/* ===================================================
+NAVBAR
+=================================================== */
+
+.navbar-custom{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    margin:18px auto 0 auto;
+
+    width:95%;
+
+    padding:14px 28px;
+
+    border-radius:24px;
+
+    background:
+    rgba(2,6,23,0.72);
+
+    backdrop-filter:blur(18px);
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,0.35);
+}
+
+.brand{
+
+    font-size:30px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    text-decoration:none;
+}
+
+.paw-text{
+
+    background:
+    linear-gradient(
+    to right,
+    #ffffff,
+    #60a5fa
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.doctor-text{
+
+    color:white;
+}
+
+.navbar-nav{
+
+    gap:12px;
+}
+
+.nav-link{
+
+    color:#cbd5e1 !important;
+
+    font-weight:600;
+
+    padding:12px 18px !important;
+
+    border-radius:14px;
+
+    transition:0.3s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.nav-link:hover{
+
+    background:
+    rgba(59,130,246,0.16);
+
+    color:white !important;
+
+    transform:translateY(-1px);
+}
+
+.active-link{
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(37,99,235,0.35),
+    rgba(14,165,233,0.18)
+    );
+
+    color:white !important;
+
+    border:
+    1px solid rgba(96,165,250,0.2);
+}
+
+.manage-btn{
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #38bdf8
+    );
+
+    border:none;
+
+    color:white;
+
+    padding:12px 22px;
+
+    border-radius:14px;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.manage-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 25px rgba(59,130,246,0.45);
+}
+
+.navbar-toggler{
+
+    border:none !important;
+
+    box-shadow:none !important;
+}
+
+.navbar-toggler-icon{
+
+    filter:invert(1);
+}
+
+/* ===================================================
+MAIN
+=================================================== */
+
+.main-container{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:35px;
+}
+
+/* ===================================================
+HERO
+=================================================== */
+
+.hero{
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(15,23,42,0.95),
+    rgba(30,58,138,0.85)
+    );
+
+    border:
+    1px solid var(--border);
+
+    border-radius:32px;
+
+    padding:20px;
+
+    margin-bottom:35px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+    0 0 50px rgba(37,99,235,0.15);
+}
+
+.hero h1{
+
+    font-size:40px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+    background:
+    linear-gradient(
+    to right,
+    #ffffff,
+    #60a5fa
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+
+    margin-top:15px;
+
+    color:#cbd5e1;
+
+    font-size:17px;
+
+    max-width:650px;
+
+    line-height:1.7;
+}
+
+.hero-icon{
+
+    font-size:100px;
+
+    color:rgba(255,255,255,0.08);
+}
+
+/* ===================================================
+CARDS
+=================================================== */
+
+.custom-card{
+
+    background:
+    rgba(15,23,42,0.82);
+
+    border:
+    1px solid var(--border);
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+    0 0 35px rgba(37,99,235,0.12);
+
+    transition:0.3s;
+}
+
+.custom-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 0 40px rgba(59,130,246,0.2);
+}
+
+.card-title-custom{
+
+    padding:22px 28px;
+
+    font-size:20px;
+
+    font-weight:800;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(37,99,235,0.35),
+    rgba(14,165,233,0.12)
+    );
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.06);
+}
+
+.card-content{
+
+    padding:28px;
+}
+
+/* ===================================================
+INPUTS
+=================================================== */
+
+.form-label{
+
+    color:#dbeafe;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+}
+
+.custom-input{
+
+    background:
+    rgba(2,6,23,0.7) !important;
+
+    border:
+    1px solid rgba(255,255,255,0.08) !important;
+
+    color:white !important;
+
+    border-radius:16px !important;
+
+    padding:14px 16px !important;
+}
+
+.custom-input:focus{
+
+    box-shadow:
+    0 0 0 4px rgba(59,130,246,0.15) !important;
+
+    border-color:#60a5fa !important;
+}
+
+.custom-input::placeholder{
+
+    color:#94a3b8;
+}
+
+.form-select option{
+
+    background:#0f172a;
+}
+
+/* ===================================================
+CHECKBOXES
+=================================================== */
+
+.days-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:14px;
+
+    margin-top:12px;
+}
+
+.form-check{
+
+    background:
+    rgba(255,255,255,0.03);
+
+    border:
+    1px solid rgba(255,255,255,0.05);
+
+    border-radius:16px;
+
+    padding:14px;
+}
+
+.form-check-input{
+
+    background-color:#0f172a;
+
+    border-color:#60a5fa;
+}
+
+.form-check-input:checked{
+
+    background-color:#2563eb;
+
+    border-color:#2563eb;
+}
+
+.form-check-label{
+
+    color:#e2e8f0;
+
+    font-weight:600;
+}
+
+/* ===================================================
+PREVIEW IMAGE
+=================================================== */
+
+.preview-image{
+
+    max-height:220px;
+
+    border-radius:18px;
+
+    border:
+    2px solid rgba(255,255,255,0.08);
+}
+
+/* ===================================================
+BUTTONS
+=================================================== */
+
+.form-actions{
+
+    margin-top:35px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+}
+
+.submit-btn{
+
+    border:none;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #38bdf8
+    );
+
+    color:white;
+
+    padding:15px 30px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+    font-size:16px;
+
+    transition:0.3s;
+}
+
+.submit-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 30px rgba(59,130,246,0.35);
+}
+
+.back-btn{
+
+    border:none;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    color:white;
+
+    padding:15px 30px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.back-btn:hover{
+
+    background:
+    rgba(255,255,255,0.12);
+}
+
+/* ===================================================
+RESPONSIVE
+=================================================== */
+
+@media(max-width:992px){
+
+    .hero{
+
+        flex-direction:column;
+
+        text-align:center;
+    }
+
+    .hero h1{
+
+        font-size:38px;
+    }
+}
+
+@media(max-width:768px){
+
+    .days-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+}
+
+@media(max-width:991px){
+
+    .navbar-custom{
+
+        padding:18px;
+    }
+
+    .navbar-collapse{
+
+        margin-top:18px;
+    }
+
+    .navbar-nav{
+
+        gap:10px;
+    }
+
+    .manage-btn{
+
+        margin-top:16px;
+
+        width:100%;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- FLOATING PAWS -->
+
+<div id="paw-container"></div>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+
+    <div class="container-fluid px-4">
+
+        <!-- BRAND -->
+
+        <a class="navbar-brand brand" href="/doctor_home">
+
+            <span class="paw-text">
+                <i class="fas fa-paw"></i> Paw
+            </span>
+
+            <span class="doctor-text">
+                Doctor
+            </span>
+
+        </a>
+
+        <!-- TOGGLER -->
+
+        <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <!-- NAV LINKS -->
+
+        <div
+        class="collapse navbar-collapse"
+        id="navbarNav">
+
+            <ul class="navbar-nav mx-auto">
+
+                
+
+                
+
+              
+
+            </ul>
+
+            <!-- RIGHT BUTTON -->
+
+            <div class="d-flex align-items-center">
+
+                <a class="nav-link"
+                    href="/doctor_home">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Back to Home Page
+
+                    </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- MAIN -->
+
+<div class="main-container">
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                Create your Veterinarian Profile
+            </h1>
+
+        </div>
+
+        <div class="hero-icon">
+
+            <i class="fa-solid fa-user-doctor"></i>
+
+        </div>
+
+    </div>
+
+    <!-- FORM -->
+
+    <div class="container-fluid">
+
+    <form id="doctorForm" enctype="multipart/form-data">
+
+    <input
+    type="hidden"
+    id="user_id"
+    name="user_id"
+    value="{{ user_id }}">
+
+    <div class="row g-4">
+
+        <!-- LEFT COLUMN -->
+
+        <div class="col-lg-6 d-flex flex-column gap-4">
+
+            <!-- Doctor Information -->
+
+            <div class="custom-card h-100">
+
+                <div class="card-title-custom">
+
+                    <i class="fas fa-user-doctor"></i>
+
+                    Doctor Information
+
+                </div>
+
+                <div class="card-content">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Doctor Name *
+                        </label>
+
+                        <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="form-control custom-input"
+                        placeholder="Dr. John Smith"
+                        required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Specialization *
+                        </label>
+
+                        <select
+                        name="specialization"
+                        id="specialization"
+                        class="form-select custom-input"
+                        required>
+
+                            <option value="">
+                                Select specialization
+                            </option>
+
+                            <option>
+                                General Veterinarian
+                            </option>
+
+                            <option>
+                                Pet Surgeon
+                            </option>
+
+                            <option>
+                                Dermatologist
+                            </option>
+
+                            <option>
+                                Orthopedic Vet
+                            </option>
+
+                            <option>
+                                Dental Vet
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Phone *
+                            </label>
+
+                            <input
+                            type="tel"
+                            name="phone"
+                            id="phone"
+                            pattern="[0-9]{10}"
+                            class="form-control custom-input"
+                            placeholder="10 digit mobile number"
+                            required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Experience
+                            </label>
+
+                            <input
+                            type="number"
+                            name="experience"
+                            id="experience"
+                            class="form-control custom-input"
+                            min="0"
+                            max="50"
+                            placeholder="Example: 5">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Availability -->
+
+            <div class="custom-card h-100">
+
+                <div class="card-title-custom">
+
+                    <i class="fas fa-calendar-days"></i>
+
+                    Availability
+
+                </div>
+
+                <div class="card-content">
+
+                    <label class="form-label">
+
+                        Available Days
+
+                    </label>
+
+                    <div class="days-grid">
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                            type="checkbox"
+                            value="Mon"
+                            name="days">
+
+                            <label class="form-check-label">
+                                Mon
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                            type="checkbox"
+                            value="Tue"
+                            name="days">
+
+                            <label class="form-check-label">
+                                Tue
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                            type="checkbox"
+                            value="Wed"
+                            name="days">
+
+                            <label class="form-check-label">
+                                Wed
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                            type="checkbox"
+                            value="Thu"
+                            name="days">
+
+                            <label class="form-check-label">
+                                Thu
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                            type="checkbox"
+                            value="Fri"
+                            name="days">
+
+                            <label class="form-check-label">
+                                Fri
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                            type="checkbox"
+                            value="Sat"
+                            name="days">
+
+                            <label class="form-check-label">
+                                Sat
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-4">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Start Time
+                            </label>
+
+                            <input
+                            type="time"
+                            class="form-control custom-input"
+                            id="start_time">
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                End Time
+                            </label>
+
+                            <input
+                            type="time"
+                            class="form-control custom-input"
+                            id="end_time">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+
+        <div class="col-lg-6 d-flex flex-column gap-4">
+
+            <!-- Clinic Information -->
+
+            <div class="custom-card h-100">
+
+                <div class="card-title-custom">
+
+                    <i class="fas fa-hospital"></i>
+
+                    Clinic Information
+
+                </div>
+
+                <div class="card-content">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Clinic Name *
+                        </label>
+
+                        <input
+                        type="text"
+                        name="clinic_name"
+                        id="clinic_name"
+                        class="form-control custom-input"
+                        placeholder="Happy Pets Veterinary Clinic"
+                        required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Consultation Fee (₹)
+                        </label>
+
+                        <input
+                        type="number"
+                        step="1"
+                        min="0"
+                        name="consultation_fee"
+                        id="consultation_fee"
+                        class="form-control custom-input"
+                        placeholder="Example: 500">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Clinic Address *
+                        </label>
+
+                        <textarea
+                        name="address"
+                        id="address"
+                        class="form-control custom-input"
+                        rows="2"
+                        placeholder="Enter clinic address"
+                        required></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Doctor Profile -->
+
+            <div class="custom-card h-100">
+
+                <div class="card-title-custom">
+
+                    <i class="fas fa-id-card"></i>
+
+                    Doctor Profile
+
+                </div>
+
+                <div class="card-content">
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Doctor Bio
+                        </label>
+
+                        <textarea
+                        name="bio"
+                        id="bio"
+                        class="form-control custom-input"
+                        rows="5"
+                        placeholder="Write about doctor's experience and expertise"></textarea>
+
+                    </div>
+
+                    <div>
+
+                        <label class="form-label">
+                            Profile Picture
+                        </label>
+
+                        <input
+                        type="file"
+                        name="profile_pic"
+                        id="doctorImage"
+                        class="form-control custom-input"
+                        accept="image/*">
+
+                        <img
+                        id="previewImg"
+                        class="img-fluid mt-3 d-none preview-image">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+
+    <div class="form-actions">
+
+        <button
+        type="submit"
+        class="submit-btn">
+
+            <i class="fas fa-check"></i>
+
+            Add Doctor
+
+        </button>
+
+
+    </div>
+
+    </form>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+/* ===================================================
+FLOATING PAWS
+=================================================== */
+
+const container =
+document.getElementById('paw-container');
+
+for(let i=0;i<40;i++){
+
+    createPaw();
+}
+
+function createPaw(){
+
+    const paw =
+    document.createElement('div');
+
+    paw.className='paw-bubble';
+
+    paw.innerHTML =
+    '<i class="fas fa-paw"></i>';
+
+    paw.style.left =
+    Math.random()*100+'vw';
+
+    paw.style.fontSize =
+    (Math.random()*40+20)+'px';
+
+    paw.style.animationDuration =
+    (Math.random()*8+8)+'s';
+
+    container.appendChild(paw);
+
+    setTimeout(()=>{
+
+        paw.remove();
+
+        createPaw();
+
+    },15000);
+}
+
+/* ===================================================
+IMAGE PREVIEW
+=================================================== */
+
+document.getElementById("doctorImage")
+.addEventListener("change", function(){
+
+    const file=this.files[0];
+
+    if(file){
+
+        const preview =
+        document.getElementById("previewImg");
+
+        preview.src =
+        URL.createObjectURL(file);
+
+        preview.classList.remove("d-none");
+    }
+});
+
+/* ===================================================
+FORM SUBMIT
+=================================================== */
+
+document.getElementById("doctorForm")
+.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const formData = new FormData();
+
+let days = [];
+
+document.querySelectorAll(
+'input[name="days"]:checked'
+).forEach(d=>{
+
+    days.push(d.value);
+});
+
+const startTime =
+document.getElementById(
+"start_time"
+).value;
+
+const endTime =
+document.getElementById(
+"end_time"
+).value;
+
+formData.append(
+"name",
+document.getElementById("name").value
+);
+
+formData.append(
+"clinic_name",
+document.getElementById("clinic_name").value
+);
+
+formData.append(
+"specialization",
+document.getElementById("specialization").value
+);
+
+formData.append(
+"phone",
+document.getElementById("phone").value
+);
+
+formData.append(
+"experience",
+document.getElementById("experience").value
+);
+
+formData.append(
+"consultation_fee",
+document.getElementById("consultation_fee").value
+);
+
+formData.append(
+"address",
+document.getElementById("address").value
+);
+
+formData.append(
+"bio",
+document.getElementById("bio").value
+);
+
+formData.append(
+"available_days",
+days.join(",")
+);
+
+if(startTime && endTime){
+
+    formData.append(
+    "available_time",
+    startTime + "-" + endTime
+    );
+}
+
+const imageFile =
+document.getElementById(
+"doctorImage"
+).files[0];
+
+if(imageFile){
+
+    formData.append(
+    "profile_pic",
+    imageFile
+    );
+}
+
+fetch("/api/doctors", {
+
+    method:"POST",
+
+    body:formData
+})
+
+.then(res=>res.json())
+
+.then(res=>{
+
+    alert(res.message);
+
+    window.location.href=
+    "/doctor_home";
+})
+
+.catch(err=>console.error(err));
+
+});
+
+</script>
+
+</body>
+</html>

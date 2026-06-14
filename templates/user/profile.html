@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Profile</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+body{
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4,#a18cd1);
+    min-height:100vh;
+    padding:40px 0;
+    font-family:'Fredoka', sans-serif;
+}
+
+.profile-card{
+    background:white;
+    border-radius:30px;
+    padding:40px;
+    box-shadow:0 15px 50px rgba(0,0,0,0.2);
+}
+
+.profile-img{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #ff6b6b;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.pet-img{
+    width:130px;
+    height:130px;
+    border-radius:20px;
+    object-fit:cover;
+    border:4px solid #ff6b6b;
+    margin-top:15px;
+}
+
+.pet-box{
+    background:#fff5f5;
+    border-radius:20px;
+    padding:20px;
+    margin-top:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+.section-title{
+    color:#ff6b6b;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.form-control{
+    border-radius:15px;
+    padding:12px;
+    border:2px solid #eee;
+}
+
+.form-control:focus{
+    border-color:#ff6b6b;
+    box-shadow:none;
+}
+
+.save-btn{
+    background:#ff6b6b;
+    color:white;
+    border:none;
+    padding:12px 35px;
+    border-radius:30px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.save-btn:hover{
+    background:#ff4d4d;
+    transform:translateY(-2px);
+}
+
+.top-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:25px;
+    gap:15px;
+}
+
+.back-btn{
+    border:none;
+    padding:12px 25px;
+    border-radius:30px;
+    font-weight:600;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:0.3s;
+}
+
+.back-btn{
+    background:#343a40;
+    color:white;
+}
+
+.back-btn:hover{
+    background:#000;
+    color:white;
+}
+
+.appointment-btn{
+    background:#ff6b6b;
+    color:white;
+}
+
+.appointment-btn:hover{
+    background:#ff4d4d;
+    color:white;
+}
+
+.user-name{
+    font-weight:700;
+    margin-top:15px;
+}
+
+.user-email{
+    color:gray;
+}
+
+.pet-title{
+    color:#ff6b6b;
+    font-weight:700;
+}
+
+@media(max-width:768px){
+
+.profile-card{
+    padding:25px;
+}
+
+.top-buttons{
+    flex-direction:column;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="profile-card">
+
+<div class="row">
+
+<!-- LEFT SIDE -->
+<div class="col-md-4 text-center">
+
+{% if profile.profile_image %}
+
+<img src="{{ url_for('static', filename='uploads/' + profile.profile_image) }}"
+class="profile-img">
+
+{% else %}
+
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+class="profile-img">
+
+{% endif %}
+
+<h3 class="user-name">
+{{ profile.fullname or "User" }}
+</h3>
+
+<p class="user-email">
+{{ user.email }}
+</p>
+
+<!-- PET BOX -->
+<div class="pet-box">
+
+<h4 class="pet-title">
+🐾 My Pet
+</h4>
+
+{% if profile.pet_image %}
+
+<img src="{{ url_for('static', filename='uploads/' + profile.pet_image) }}"
+class="pet-img">
+
+{% else %}
+
+<img src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
+class="pet-img">
+
+{% endif %}
+
+<h5 class="mt-3 fw-bold">
+{{ profile.pet_name or "No Pet Added" }}
+</h5>
+
+<p class="mb-1">
+<b>Type:</b> {{ profile.pet_type or "Not Added" }}
+</p>
+
+<p>
+<b>Age:</b> {{ profile.pet_age or "Not Added" }}
+</p>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="col-md-8">
+
+<!-- TOP BUTTONS -->
+<div class="top-buttons">
+</div>
+
+<form action="/update-profile"
+method="POST"
+enctype="multipart/form-data">
+
+<h4 class="section-title">
+User Details
+</h4>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label>Full Name</label>
+
+<input type="text"
+name="fullname"
+class="form-control"
+value="{{ profile.fullname or '' }}">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>Phone</label>
+
+<input type="text"
+name="phone"
+class="form-control"
+value="{{ profile.phone or '' }}">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>City</label>
+
+<input type="text"
+name="city"
+class="form-control"
+value="{{ profile.city or '' }}">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>Profile Image</label>
+
+<input type="file"
+name="profile_image"
+class="form-control">
+
+</div>
+
+</div>
+
+<hr>
+
+<h4 class="section-title">
+Pet Details
+</h4>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label>Pet Name</label>
+
+<input type="text"
+name="pet_name"
+class="form-control"
+value="{{ profile.pet_name or '' }}">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>Pet Type</label>
+
+<input type="text"
+name="pet_type"
+class="form-control"
+value="{{ profile.pet_type or '' }}">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>Pet Age</label>
+
+<input type="text"
+name="pet_age"
+class="form-control"
+value="{{ profile.pet_age or '' }}">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>Pet Image</label>
+
+<input type="file"
+name="pet_image"
+class="form-control">
+
+</div>
+
+</div>
+
+<button type="submit" class="save-btn">
+<i class="fas fa-save"></i>
+Save Profile
+</button>
+
+<a href="/index" class="back-btn">
+<i class="fas fa-arrow-left" ></i>
+Back
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

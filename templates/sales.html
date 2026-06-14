@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pawfect Care</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+rel="stylesheet">
+
+<style>
+
+
+/* ================= NEW ANIMATED BACKGROUND ================= */
+
+body{
+font-family:'Plus Jakarta Sans',sans-serif;
+background:linear-gradient(135deg,#fff7ed 0%,#fdf2f8 35%,#eff6ff 70%,#ecfeff 100%);
+background-size:400% 400%;
+animation:bgMove 15s ease infinite;
+min-height:100vh;
+overflow-x:hidden;
+color:#0f172a;
+position:relative;
+}
+
+/* GRADIENT ANIMATION */
+
+@keyframes bgMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+/* BACKGROUND WRAPPER */
+
+.animated-bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:-5;
+}
+
+/* FLOATING BLOBS */
+
+.floating{
+position:absolute;
+border-radius:50%;
+filter:blur(80px);
+opacity:0.35;
+animation:floatBlob 12s ease-in-out infinite;
+}
+
+.floating-1{
+width:350px;
+height:350px;
+background:#fb923c;
+top:-100px;
+left:-100px;
+animation-delay:0s;
+}
+
+.floating-2{
+width:320px;
+height:320px;
+background:#38bdf8;
+bottom:-120px;
+right:-100px;
+animation-delay:2s;
+}
+
+.floating-3{
+width:260px;
+height:260px;
+background:#f472b6;
+top:40%;
+left:45%;
+animation-delay:4s;
+}
+
+.floating-4{
+width:240px;
+height:240px;
+background:#4ade80;
+bottom:20%;
+left:10%;
+animation-delay:6s;
+}
+
+@keyframes floatBlob{
+
+0%{
+transform:translateY(0) translateX(0) scale(1);
+}
+
+25%{
+transform:translateY(-30px) translateX(20px) scale(1.08);
+}
+
+50%{
+transform:translateY(20px) translateX(-20px) scale(0.95);
+}
+
+75%{
+transform:translateY(-15px) translateX(10px) scale(1.05);
+}
+
+100%{
+transform:translateY(0) translateX(0) scale(1);
+}
+
+}
+
+/* FLOATING PAWS */
+
+.paw{
+position:absolute;
+font-size:200px;
+opacity:0.12;
+animation:floatPaw linear infinite;
+}
+
+.paw1{
+left:10%;
+bottom:-100px;
+animation-duration:14s;
+}
+
+.paw2{
+left:30%;
+bottom:-120px;
+animation-duration:18s;
+animation-delay:2s;
+}
+
+.paw3{
+right:20%;
+bottom:-150px;
+animation-duration:16s;
+animation-delay:5s;
+}
+
+.paw4{
+right:8%;
+bottom:-180px;
+animation-duration:20s;
+animation-delay:7s;
+}
+
+@keyframes floatPaw{
+
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:0;
+}
+
+20%{
+opacity:0.15;
+}
+
+80%{
+opacity:0.15;
+}
+
+100%{
+transform:translateY(-120vh) rotate(360deg);
+opacity:0;
+}
+
+}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Plus Jakarta Sans',sans-serif;
+background:linear-gradient(135deg,#fff7ed 0%,#eff6ff 50%,#fdf2f8 100%);
+min-height:100vh;
+overflow-x:hidden;
+color:#0f172a;
+position:relative;
+}
+
+/* FLOATING BACKGROUND BLOBS */
+
+body::before{
+content:"";
+position:fixed;
+top:-150px;
+left:-150px;
+width:420px;
+height:420px;
+background:#fdba74;
+opacity:0.30;
+filter:blur(120px);
+border-radius:50%;
+z-index:-2;
+animation:floatBlob1 8s ease-in-out infinite;
+}
+
+body::after{
+content:"";
+position:fixed;
+bottom:-150px;
+right:-150px;
+width:420px;
+height:420px;
+background:#7dd3fc;
+opacity:0.28;
+filter:blur(120px);
+border-radius:50%;
+z-index:-2;
+animation:floatBlob2 10s ease-in-out infinite;
+}
+
+@keyframes floatBlob1{
+0%{
+transform:translate(0,0);
+}
+50%{
+transform:translate(50px,40px);
+}
+100%{
+transform:translate(0,0);
+}
+}
+
+@keyframes floatBlob2{
+0%{
+transform:translate(0,0);
+}
+50%{
+transform:translate(-40px,-30px);
+}
+100%{
+transform:translate(0,0);
+}
+}
+
+/* PAGE ANIMATION */
+
+.page-content{
+display:none;
+animation:fadeUp 0.5s ease;
+}
+
+.page-active{
+display:block;
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* GLASS NAVBAR */
+
+nav{
+background:rgba(255,255,255,0.65);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.5);
+box-shadow:0 8px 30px rgba(0,0,0,0.06);
+padding:18px 30px;
+border-radius:28px;
+margin:15px;
+}
+
+/* NAV LINKS */
+
+.nav-link{
+padding:12px 18px;
+border-radius:16px;
+font-weight:700;
+transition:0.3s;
+color:#334155;
+background:transparent;
+border:none;
+cursor:pointer;
+}
+
+.nav-link:hover{
+background:linear-gradient(135deg,#fb923c,#f472b6);
+color:white;
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(251,146,60,0.25);
+}
+
+/* MAIN BUTTON */
+
+.btn-main{
+background:linear-gradient(135deg,#f97316,#fb7185);
+color:white;
+padding:14px 26px;
+border-radius:18px;
+font-weight:800;
+border:none;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 12px 30px rgba(249,115,22,0.25);
+}
+
+.btn-main:hover{
+transform:translateY(-4px) scale(1.03);
+box-shadow:0 18px 40px rgba(249,115,22,0.35);
+}
+
+/* BUY BUTTON */
+
+.buy-btn{
+width:100%;
+padding:15px;
+border-radius:18px;
+font-weight:800;
+background:linear-gradient(135deg,#06b6d4,#3b82f6);
+color:white;
+border:none;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 10px 30px rgba(6,182,212,0.22);
+}
+
+.buy-btn:hover{
+transform:scale(1.03);
+box-shadow:0 18px 40px rgba(6,182,212,0.35);
+}
+
+/* HERO SECTION */
+
+.hero-section{
+padding:100px 20px;
+text-align:center;
+position:relative;
+}
+
+.hero-title{
+font-size:72px;
+font-weight:900;
+line-height:1.1;
+color:#0f172a;
+}
+
+.hero-title span{
+background:linear-gradient(135deg,#f97316,#06b6d4);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero-sub{
+max-width:720px;
+margin:auto;
+margin-top:24px;
+font-size:20px;
+line-height:1.8;
+color:#475569;
+}
+
+/* FLOATING PET ICONS */
+
+.hero-section::before{
+content:"🐶";
+position:absolute;
+left:8%;
+top:20%;
+font-size:60px;
+animation:floatPet 5s ease-in-out infinite;
+}
+
+.hero-section::after{
+content:"🐱";
+position:absolute;
+right:10%;
+top:30%;
+font-size:55px;
+animation:floatPet 6s ease-in-out infinite;
+}
+
+@keyframes floatPet{
+0%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-15px);
+}
+100%{
+transform:translateY(0);
+}
+}
+
+/* GLASS CARDS */
+
+.glass-card{
+background:rgba(255,255,255,0.65);
+backdrop-filter:blur(16px);
+border-radius:30px;
+padding:24px;
+border:1px solid rgba(255,255,255,0.5);
+box-shadow:0 10px 40px rgba(0,0,0,0.06);
+transition:0.4s;
+overflow:hidden;
+position:relative;
+}
+
+.glass-card:hover{
+transform:translateY(-10px);
+box-shadow:0 20px 60px rgba(0,0,0,0.08);
+}
+
+/* CARD SHINE EFFECT */
+
+.glass-card::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.4),
+transparent
+);
+transition:0.7s;
+}
+
+.glass-card:hover::before{
+left:100%;
+}
+
+/* SEARCH BAR */
+
+#searchInput{
+background:white;
+padding:18px 24px;
+border-radius:20px;
+width:430px;
+border:none;
+outline:none;
+font-size:16px;
+box-shadow:0 10px 35px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+#searchInput:focus{
+transform:scale(1.02);
+box-shadow:0 15px 40px rgba(249,115,22,0.18);
+}
+
+/* STATS */
+
+.stats-box{
+background:rgba(255,255,255,0.7);
+backdrop-filter:blur(12px);
+padding:30px;
+border-radius:28px;
+text-align:center;
+box-shadow:0 10px 35px rgba(0,0,0,0.06);
+transition:0.3s;
+}
+
+.stats-box:hover{
+transform:translateY(-8px);
+}
+
+/* GALLERY */
+
+.gallery-img{
+height:300px;
+width:100%;
+object-fit:cover;
+border-radius:28px;
+transition:0.4s;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.gallery-img:hover{
+transform:scale(1.04) rotate(1deg);
+}
+
+/* INPUTS */
+
+input,
+textarea,
+select{
+background:white;
+border:1px solid #e2e8f0;
+padding:16px;
+border-radius:18px;
+transition:0.3s;
+font-size:15px;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+outline:none;
+border-color:#fb923c;
+box-shadow:0 0 0 5px rgba(251,146,60,0.15);
+}
+
+/* MODAL */
+
+#petModal .bg-white{
+background:rgba(255,255,255,0.9) !important;
+backdrop-filter:blur(18px);
+border-radius:32px;
+overflow:hidden;
+box-shadow:0 20px 80px rgba(0,0,0,0.18);
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+background:white;
+padding:12px 20px;
+border-radius:16px;
+font-weight:700;
+border:none;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.back-btn:hover{
+background:linear-gradient(135deg,#fb923c,#f472b6);
+color:white;
+transform:translateY(-2px);
+}
+
+/* PREVIEW IMAGE */
+
+.preview-image{
+width:100%;
+height:240px;
+object-fit:cover;
+border-radius:20px;
+margin-top:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+background:linear-gradient(#fb923c,#06b6d4);
+border-radius:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero-title{
+font-size:46px;
+}
+
+.hero-sub{
+font-size:17px;
+}
+
+#searchInput{
+width:100%;
+}
+
+.hero-section::before,
+.hero-section::after{
+display:none;
+}
+
+nav{
+padding:16px;
+}
+
+}
+/* ================= INSTAGRAM GALLERY ================= */
+
+.insta-title{
+background:linear-gradient(135deg,#f97316,#ec4899,#3b82f6);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.gallery-masonry{
+column-count:4;
+column-gap:20px;
+}
+
+.gallery-card{
+position:relative;
+break-inside:avoid;
+margin-bottom:20px;
+overflow:hidden;
+border-radius:28px;
+background:white;
+padding:10px;
+box-shadow:0 10px 35px rgba(0,0,0,0.08);
+transition:0.4s;
+}
+
+.gallery-card:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 45px rgba(0,0,0,0.12);
+}
+
+.gallery-card img{
+width:100%;
+border-radius:22px;
+display:block;
+transition:0.5s;
+}
+
+.gallery-card:hover img{
+transform:scale(1.05);
+}
+
+.gallery-overlay{
+position:absolute;
+inset:0;
+background:linear-gradient(to top,
+rgba(0,0,0,0.7),
+transparent);
+opacity:0;
+transition:0.4s;
+display:flex;
+align-items:flex-end;
+padding:20px;
+}
+
+.gallery-card:hover .gallery-overlay{
+opacity:1;
+}
+
+.gallery-info{
+color:white;
+}
+
+.gallery-info h3{
+font-size:24px;
+font-weight:800;
+}
+
+.gallery-info p{
+font-size:14px;
+opacity:0.9;
+}
+
+.insta-upload-btn{
+background:linear-gradient(135deg,#f97316,#ec4899);
+color:white;
+padding:16px 24px;
+border:none;
+border-radius:18px;
+font-weight:800;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:10px;
+transition:0.3s;
+box-shadow:0 10px 30px rgba(236,72,153,0.25);
+}
+
+.insta-upload-btn:hover{
+transform:translateY(-4px) scale(1.03);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1200px){
+
+.gallery-masonry{
+column-count:3;
+}
+
+}
+
+@media(max-width:768px){
+
+.gallery-masonry{
+column-count:2;
+}
+
+}
+
+@media(max-width:500px){
+
+.gallery-masonry{
+column-count:1;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+<!-- GALLERY IMAGE UPLOAD -->
+
+<div class="fixed bottom-6 right-6 z-50">
+
+<button onclick="document.getElementById('galleryUpload').click()"
+class="btn-main">
+
+<i class="fas fa-image"></i> Add Gallery Image
+
+</button>
+
+<input type="file"
+id="galleryUpload"
+accept="image/*"
+hidden
+onchange="uploadGalleryImage(event)">
+
+</div>
+    <!-- ================= ANIMATED BACKGROUND ================= -->
+
+<div class="animated-bg">
+
+<div class="floating floating-1"></div>
+<div class="floating floating-2"></div>
+<div class="floating floating-3"></div>
+<div class="floating floating-4"></div>
+
+<div class="paw paw1">🐾</div>
+<div class="paw paw2">🐾</div>
+<div class="paw paw3">🐾</div>
+<div class="paw paw4">🐾</div>
+
+</div>
+
+<!-- NAVBAR -->
+
+<nav class="bg-white/90 backdrop-blur-lg shadow sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+
+<div class="flex items-center gap-3 text-3xl font-black text-indigo-700">
+
+<i class="fas fa-paw"></i>
+
+Pawfect Care
+
+</div>
+
+<div class="hidden lg:flex items-center gap-4">
+
+<button onclick="showPage('market')" class="nav-link"><a href="/index">Home</a></button>
+
+<button onclick="showPage('about')" class="nav-link"><a href="/about">About</a></button>
+
+<button onclick="showPage('gallery')" class="nav-link">Gallery</button>
+
+<button onclick="showPage('market')" class="nav-link">Explore</button>
+
+<button onclick="showPage('listings')" class="nav-link">My Posts</button>
+
+</div>
+
+<button onclick="startAddMode()" class="btn-main">
+
++ LIST A PET
+
+</button>
+
+</nav>
+
+<!-- HOME -->
+
+<main id="page-market"
+class="page-content page-active max-w-7xl mx-auto p-6">
+
+<div class="hero-section">
+
+<h1 class="hero-title">
+
+Find Your New
+<span class="text-indigo-600">Best Friend</span>
+
+</h1>
+
+<p class="hero-sub">
+
+Adopt premium pets, explore adorable companions,
+and connect with trusted pet lovers easily.
+
+</p>
+
+<button onclick="showPage('gallery')"
+class="btn-main hero-btn">
+
+Explore Pets
+
+</button>
+
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+
+<div class="stats-box">
+
+<h2 class="text-4xl font-black text-indigo-600">500+</h2>
+
+<p class="text-gray-500 mt-2">Happy Pets</p>
+
+</div>
+
+<div class="stats-box">
+
+<h2 class="text-4xl font-black text-pink-600">120+</h2>
+
+<p class="text-gray-500 mt-2">Pet Sellers</p>
+
+</div>
+
+<div class="stats-box">
+
+<h2 class="text-4xl font-black text-green-600">1000+</h2>
+
+<p class="text-gray-500 mt-2">Customers</p>
+
+</div>
+
+</div>
+
+<h2 class="text-5xl font-black text-center mb-10">
+
+Explore Pets
+
+</h2>
+
+<div class="flex justify-center mb-10">
+
+<input id="searchInput"
+onkeyup="searchPets()"
+placeholder="Search breed..."
+class="p-4 border rounded-2xl w-96 shadow focus:outline-none">
+
+</div>
+
+<div id="pet-grid"
+class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+</div>
+
+</main>
+
+<!-- GALLERY -->
+
+<main id="page-gallery"
+class="page-content max-w-7xl mx-auto p-6">
+
+<button onclick="showPage('market')" class="back-btn mb-8">
+← Back
+</button>
+
+<div class="flex flex-col lg:flex-row items-center justify-between mb-10 gap-6">
+
+<div>
+
+<h2 class="text-5xl font-black insta-title">
+
+Pet Gallery
+
+</h2>
+
+<p class="text-gray-500 text-lg mt-2">
+
+Cute moments shared by pet lovers 🐾
+
+</p>
+
+<div id="gallery-grid"
+class="gallery-masonry">
+</div>
+
+</main>
+
+<!-- BUY PAGE -->
+
+<main id="page-buy"
+class="page-content max-w-6xl mx-auto p-6">
+
+<button onclick="showPage('market')" class="back-btn">
+← Back
+</button>
+
+<div id="buy-page-content"></div>
+
+</main>
+
+<!-- ADD PET -->
+
+<main id="page-add-pet"
+class="page-content max-w-xl mx-auto p-6">
+
+<button onclick="showPage('market')" class="back-btn">
+← Back
+</button>
+
+<div class="glass-card">
+
+<h2 class="text-4xl font-black text-center mb-8">
+
+List Your Pet
+
+</h2>
+
+<form id="petForm"
+onsubmit="handleFormSubmit(event)"
+class="space-y-5"
+enctype="multipart/form-data">
+
+<input id="fn-name"
+type="text"
+placeholder="Pet Name"
+required
+class="w-full p-4 border rounded-2xl">
+
+<input id="fn-age"
+type="text"
+placeholder="Pet Age"
+required
+class="w-full p-4 border rounded-2xl">
+
+<select id="fn-breed"
+class="w-full p-4 border rounded-2xl">
+
+<option value="Golden Retriever">Golden Retriever</option>
+
+<option value="Labrador">Labrador</option>
+
+<option value="German Shepherd">German Shepherd</option>
+
+<option value="Persian">Persian Cat</option>
+
+<option value="Siamese">Siamese Cat</option>
+
+</select>
+
+<input id="fn-price"
+type="number"
+placeholder="Price"
+required
+class="w-full p-4 border rounded-2xl">
+
+<input id="fn-contact"
+type="text"
+placeholder="Contact Number"
+required
+class="w-full p-4 border rounded-2xl">
+
+<textarea id="fn-desc"
+placeholder="Pet Description"
+class="w-full p-4 border rounded-2xl"></textarea>
+
+<input type="file"
+id="file-in"
+accept="image/*"
+onchange="handlePreview(event)"
+class="w-full">
+
+<img id="form-preview"
+class="hidden preview-image">
+
+<button class="buy-btn">
+
+Publish Listing
+
+</button>
+
+</form>
+
+</div>
+
+</main>
+
+<!-- MY POSTS -->
+
+<main id="page-listings"
+class="page-content max-w-5xl mx-auto p-6">
+
+<button onclick="showPage('market')" class="back-btn">
+← Back
+</button>
+
+<h2 class="text-5xl font-black mb-8">
+
+My Listings
+
+</h2>
+
+<div id="my-listings"
+class="space-y-5"></div>
+
+</main>
+
+<!-- MODAL -->
+
+<div id="petModal"
+class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4 backdrop-blur-sm">
+
+<div class="bg-white rounded-[30px] shadow-2xl max-w-lg w-full relative overflow-hidden">
+
+<button onclick="closeModal()"
+class="absolute top-4 right-5 text-3xl text-gray-500 hover:text-red-500">
+
+✕
+
+</button>
+
+<div id="modalImg"
+class="w-full h-72 overflow-hidden bg-gray-100">
+</div>
+
+<div class="p-6">
+
+<h2 id="modalName"
+class="text-4xl font-black mb-2"></h2>
+
+<p id="modalBreed"
+class="text-indigo-600 text-xl font-bold mb-3"></p>
+
+<div class="flex items-center justify-between mb-4">
+
+<p id="modalPrice"
+class="text-3xl font-black text-green-600"></p>
+
+<p id="modalAge"
+class="text-gray-500 font-semibold"></p>
+
+</div>
+
+<p id="modalDesc"
+class="text-gray-500 leading-7 mb-8"></p>
+
+<div class="space-y-4">
+
+<button id="buyPetBtn"
+class="buy-btn">
+
+📞 Contact No.
+
+</button>
+
+<button id="accessoriesBtn"
+class="w-full p-4 rounded-2xl font-bold text-white bg-gradient-to-r from-green-500 to-emerald-600">
+
+🛒 Buy Pet
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const API_URL="/api/pets";
+
+let allPets=[];
+
+let editingPetId=null;
+
+let selectedPetId = null;
+
+
+function showPage(id){
+
+document.querySelectorAll(".page-content")
+.forEach(p=>p.style.display="none");
+
+document.getElementById("page-"+id)
+.style.display="block";
+
+closeModal();
+
+if(id==="listings"){
+renderManagement();
+}
+
+}
+
+async function loadPetsFromServer(){
+
+try{
+
+const res=await fetch(API_URL);
+
+allPets=await res.json();
+
+renderPets();
+
+renderGallery();
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function renderPets(){
+
+const grid=document.getElementById("pet-grid");
+
+grid.innerHTML="";
+
+allPets.forEach(p=>{
+
+const imgSrc=p.img
+? `/static/${p.img}`
+: "";
+
+grid.innerHTML+=`
+
+<div class="glass-card">
+
+${p.img
+? `<img src="${imgSrc}" class="w-full h-56 object-cover rounded-3xl mb-5">`
+: `<div class="w-full h-56 bg-gray-100 rounded-3xl flex items-center justify-center text-7xl">🐾</div>`
+}
+
+<div class="flex items-center justify-between">
+
+<div>
+
+<h3 class="font-black text-2xl">
+${p.name}
+</h3>
+
+<p class="text-indigo-600 font-bold">
+${p.breed}
+</p>
+
+</div>
+
+<div class="text-right">
+
+<p class="text-green-600 font-black text-2xl">
+${p.price}
+</p>
+
+<p class="text-sm text-gray-500">
+${p.age}
+</p>
+
+</div>
+
+</div>
+
+<button onclick="openPet(${p.id})"
+class="buy-btn mt-6">
+
+View Details
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+async function renderGallery(){
+
+const gallery = document.getElementById("gallery-grid");
+
+gallery.innerHTML = "";
+
+try{
+
+const res = await fetch("/api/gallery");
+
+const images = await res.json();
+
+/* RANDOMIZE IMAGE ORDER */
+images.sort(() => Math.random() - 0.5);
+
+images.forEach((img,index) => {
+
+/* RANDOM CARD STYLES */
+const styles = [
+
+"height:auto;",
+"aspect-ratio:4/5;",
+"aspect-ratio:1/1;",
+"aspect-ratio:16/9;",
+"aspect-ratio:3/4;",
+"aspect-ratio:9/16;"
+
+];
+
+const randomStyle =
+styles[Math.floor(Math.random() * styles.length)];
+
+gallery.innerHTML += `
+
+<div class="gallery-card">
+
+<img src="/static/gallery/${img}"
+style="${randomStyle} width:100%; object-fit:cover;">
+
+<div class="gallery-overlay">
+
+<div class="gallery-info">
+
+<h3>🐾 Pawfect Care</h3>
+
+<p>Pet Community Gallery</p>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function uploadGalleryImage(event){
+
+const file = event.target.files[0];
+
+if(!file) return;
+
+const formData = new FormData();
+
+formData.append("image", file);
+
+try{
+
+const res = await fetch("/api/gallery-upload",{
+method:"POST",
+body:formData
+});
+
+const data = await res.json();
+
+alert(data.message);
+
+renderGallery();
+
+}catch(err){
+
+console.log(err);
+
+alert("Upload Failed");
+
+}
+
+}
+
+
+function searchPets(){
+
+const value=document.getElementById("searchInput")
+.value.toLowerCase();
+
+const cards=document.querySelectorAll("#pet-grid .glass-card");
+
+cards.forEach(card=>{
+
+const text=card.innerText.toLowerCase();
+
+card.style.display=text.includes(value)
+? "block"
+: "none";
+
+});
+
+}
+
+function openPet(id){
+
+const pet=allPets.find(p=>p.id===id);
+
+const imgSrc=pet.img
+? `/static/${pet.img}`
+: "";
+
+document.getElementById("modalName").innerText=pet.name;
+
+document.getElementById("modalBreed").innerText=pet.breed;
+
+document.getElementById("modalPrice").innerText=`${pet.price}`;
+
+document.getElementById("modalAge").innerText=`Age: ${pet.age}`;
+
+document.getElementById("modalDesc").innerText=pet.desc;
+
+document.getElementById("modalImg").innerHTML=imgSrc
+? `<img src="${imgSrc}" class="w-full h-full object-cover">`
+: "";
+
+document.getElementById("buyPetBtn").onclick=function(){
+
+alert("📞 Contact: " + pet.contact);
+
+};
+
+document.getElementById("accessoriesBtn").onclick=function(){
+
+showBuyPage(pet);
+
+};
+
+document.getElementById("petModal")
+.classList.remove("hidden");
+
+document.getElementById("petModal")
+.classList.add("flex");
+
+}
+
+function showBuyPage(pet){
+
+closeModal();
+
+showPage("buy");
+
+const imgSrc=pet.img
+? `/static/${pet.img}`
+: "";
+
+document.getElementById("buy-page-content")
+.innerHTML=`
+
+<div class="grid lg:grid-cols-2 gap-10 items-center">
+
+<div class="glass-card">
+
+<img src="${imgSrc}"
+class="w-full h-[500px] object-cover rounded-3xl">
+
+</div>
+
+<div class="glass-card">
+
+<h2 class="text-5xl font-black mb-3">
+
+${pet.name}
+
+</h2>
+
+<p class="text-indigo-600 text-2xl font-bold mb-5">
+
+${pet.breed}
+
+</p>
+
+<p class="text-green-600 text-3xl font-black mb-5">
+
+${pet.price}
+
+</p>
+
+<p class="text-gray-600 leading-8 text-lg mb-8">
+
+${pet.desc}
+
+</p>
+
+<div class="space-y-4">
+
+<button
+onclick="alert('📞 Contact Seller: ${pet.contact}')"
+class="buy-btn">
+
+📞 Contact Seller
+
+</button>
+
+<button
+onclick="openPurchaseForm(${pet.id})"
+class="w-full p-4 rounded-2xl font-bold text-white bg-gradient-to-r from-green-500 to-emerald-600">
+
+🛒 Buy Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+async function confirmPurchase(){
+
+
+    const buyerName =
+        document.getElementById("buyerName").value;
+
+    const buyerPhone =
+        document.getElementById("buyerPhone").value;
+
+    if(!buyerName || !buyerPhone){
+
+        alert("Please fill all fields");
+
+        return;
+    }
+
+    try{
+
+        const res = await fetch(
+            `/api/buy/${selectedPetId}`,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    buyer_name:buyerName,
+                    buyer_phone:buyerPhone
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if(res.ok){
+
+            alert(data.message);
+
+            closePurchaseModal();
+
+            await loadPetsFromServer();
+
+            showPage("market");
+
+        }else{
+
+            alert(data.message);
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        alert("Purchase Failed");
+
+    }
+}
+
+
+function closeModal(){
+
+document.getElementById("petModal")
+.classList.add("hidden");
+
+}
+
+function startAddMode(){
+
+document.getElementById("petForm").reset();
+
+document.getElementById("form-preview")
+.classList.add("hidden");
+
+showPage("add-pet");
+
+}
+
+function handlePreview(e){
+
+const file=e.target.files[0];
+
+if(!file) return;
+
+const reader=new FileReader();
+
+reader.onload=function(event){
+
+const img=document.getElementById("form-preview");
+
+img.src=event.target.result;
+
+img.classList.remove("hidden");
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+async function handleFormSubmit(e){
+
+e.preventDefault();
+
+const formData=new FormData();
+
+formData.append(
+"name",
+document.getElementById("fn-name").value
+);
+
+formData.append(
+"breed",
+document.getElementById("fn-breed").value
+);
+
+formData.append(
+"age",
+document.getElementById("fn-age").value
+);
+
+formData.append(
+"price",
+document.getElementById("fn-price").value
+);
+
+formData.append(
+"contact",
+document.getElementById("fn-contact").value
+);
+
+formData.append(
+"desc",
+document.getElementById("fn-desc").value
+);
+
+const fileInput=
+document.getElementById("file-in");
+
+if(fileInput.files[0]){
+
+formData.append(
+"img",
+fileInput.files[0]
+);
+
+}
+
+try{
+
+let url = API_URL;
+
+let method = "POST";
+
+/* EDIT MODE */
+if(editingPetId !== null){
+
+url = `${API_URL}/${editingPetId}`;
+
+method = "PUT";
+
+}
+
+const res=await fetch(url,{
+method:method,
+body:formData
+});
+
+const data=await res.json();
+
+alert(data.message || "Success");
+
+document.getElementById("petForm").reset();
+
+document.getElementById("form-preview")
+.classList.add("hidden");
+
+editingPetId = null;
+
+await loadPetsFromServer();
+
+showPage("market");
+
+}catch(err){
+
+console.log(err);
+
+alert("Upload Failed");
+
+}
+
+}
+
+
+
+
+
+function renderManagement(){
+
+const box=document.getElementById("my-listings");
+
+box.innerHTML="";
+
+allPets.forEach(p=>{
+
+box.innerHTML+=`
+
+<div class="glass-card flex justify-between items-center">
+
+<div class="flex items-center gap-5">
+
+${p.img
+? `<img src="/static/${p.img}" class="w-24 h-24 rounded-2xl object-cover">`
+: `<div class="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center text-4xl">🐾</div>`
+}
+
+<div>
+
+<h3 class="font-black text-2xl">
+${p.name}
+</h3>
+
+<p class="text-gray-500">
+${p.breed}
+</p>
+
+<p class="text-green-600 font-bold mt-1">
+${p.price}
+</p>
+
+<p class="text-indigo-600 font-bold mt-1">
+📞 ${p.contact}
+</p>
+
+</div>
+
+</div>
+
+<div class="flex gap-3">
+
+<button
+onclick="editPet(${p.id})"
+class="bg-indigo-500 hover:bg-indigo-600 transition text-white px-6 py-3 rounded-2xl font-bold">
+
+Edit
+
+</button>
+
+<button
+onclick="deletePet(${p.id})"
+class="bg-red-500 hover:bg-red-600 transition text-white px-6 py-3 rounded-2xl font-bold">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+function editPet(id){
+
+const pet = allPets.find(
+p => Number(p.id) === Number(id)
+);
+
+if(!pet){
+
+alert("Pet not found");
+
+return;
+
+}
+
+editingPetId = id;
+
+showPage("add-pet");
+
+document.getElementById("fn-name").value = pet.name || "";
+
+document.getElementById("fn-age").value = pet.age || "";
+
+document.getElementById("fn-breed").value = pet.breed || "";
+
+document.getElementById("fn-price").value = pet.price || "";
+
+document.getElementById("fn-contact").value = pet.contact || "";
+
+document.getElementById("fn-desc").value = pet.desc || "";
+
+if(pet.img){
+
+document.getElementById("form-preview").src =
+`/static/${pet.img}`;
+
+document.getElementById("form-preview")
+.classList.remove("hidden");
+
+}
+
+}
+
+
+
+async function deletePet(id){
+
+if(confirm("Delete this pet?")){
+
+await fetch(`${API_URL}/${id}`,{
+method:"DELETE"
+});
+
+await loadPetsFromServer();
+
+renderManagement();
+
+}
+
+}
+
+
+
+
+function openPurchaseForm(id){
+
+    selectedPetId = id;
+
+    document.getElementById("buyerName").value = "";
+    document.getElementById("buyerPhone").value = "";
+
+    document.getElementById("purchaseModal")
+        .classList.remove("hidden");
+
+    document.getElementById("purchaseModal")
+        .classList.add("flex");
+}
+
+function closePurchaseModal(){
+
+    document.getElementById("purchaseModal")
+        .classList.add("hidden");
+}
+
+
+
+loadPetsFromServer();
+
+</script>
+
+
+<div id="purchaseModal"
+class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+
+    <div class="bg-white p-8 rounded-3xl w-full max-w-md">
+
+        <h2 class="text-3xl font-bold mb-6">
+            Purchase Pet
+        </h2>
+
+        <input
+            type="text"
+            id="buyerName"
+            placeholder="Buyer Name"
+            class="w-full p-4 border rounded-xl mb-4">
+
+        <input
+            type="text"
+            id="buyerPhone"
+            placeholder="Contact Number"
+            class="w-full p-4 border rounded-xl mb-6">
+
+        <div class="flex gap-3">
+
+            <button
+                onclick="closePurchaseModal()"
+                class="w-1/2 bg-gray-300 py-3 rounded-xl font-bold">
+
+                Cancel
+
+            </button>
+
+            <button
+    id="confirmPurchaseBtn"
+    onclick="confirmPurchase()"
+    class="w-1/2 bg-green-600 text-white py-3 rounded-xl font-bold">
+
+    Buy Pet
+
+</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

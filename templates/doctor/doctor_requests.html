@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Doctor Requests</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial;
+    background:
+    linear-gradient(135deg,#020617,#0f172a,#1e3a8a);
+    min-height:100vh;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ================= FLOATING PAWS ================= */
+
+.paw{
+    position:fixed;
+    color:rgba(96,165,250,0.1);
+    font-size:45px;
+    animation:floatPaw linear infinite;
+    z-index:0;
+}
+
+@keyframes floatPaw{
+
+    0%{
+        transform:translateY(100vh);
+    }
+
+    100%{
+        transform:translateY(-120px);
+    }
+
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar-custom{
+
+    background:rgba(1, 1, 20, 0.85);
+    backdrop-filter:blur(15px);
+    padding:16px 40px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.brand{
+
+    font-size:28px;
+    font-weight:700;
+
+    background:linear-gradient(to right,#60a5fa,#38bdf8);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.nav-links{
+
+    display:flex;
+    gap:14px;
+}
+
+.nav-links a{
+
+    color:#cbd5e1;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:12px;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+
+    background:#2563eb;
+    color:white;
+}
+
+/* ================= MAIN ================= */
+
+.main-container{
+
+    position:relative;
+    z-index:2;
+    padding:35px;
+}
+
+/* ================= HEADER ================= */
+
+.page-title{
+
+    font-size:36px;
+    font-weight:700;
+
+    background:linear-gradient(to right,#fff,#60a5fa);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.page-subtitle{
+
+    color:#94a3b8;
+    margin-top:8px;
+}
+
+/* ================= TOP BAR ================= */
+
+.top-bar{
+
+    margin-top:30px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+
+    background:rgba(15,23,42,0.65);
+
+    border:1px solid rgba(96,165,250,0.12);
+
+    padding:18px 22px;
+
+    border-radius:22px;
+
+    backdrop-filter:blur(14px);
+
+    flex-wrap:nowrap;
+}
+
+/* LEFT SIDE */
+
+.top-left{
+
+    display:flex;
+    align-items:center;
+    gap:25px;
+
+    min-width:0;
+}
+
+/* RIGHT SIDE */
+
+.top-right{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* TITLE AREA */
+
+.title-section{
+
+    min-width:260px;
+}
+
+.page-title{
+
+    font-size:30px;
+    font-weight:700;
+
+    line-height:1.1;
+
+    background:linear-gradient(to right,#fff,#60a5fa);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.page-subtitle{
+
+    color:#94a3b8;
+    margin-top:4px;
+    font-size:14px;
+}
+
+/* ================= STATS ================= */
+
+.stats-row{
+
+    display:flex;
+    gap:12px;
+
+    flex-wrap:nowrap;
+
+    align-items:center;
+}
+
+.stat-card{
+
+    background:rgba(15,23,42,0.75);
+
+    border:1px solid rgba(96,165,250,0.15);
+
+    padding:12px 18px;
+
+    border-radius:16px;
+
+    min-width:130px;
+
+    height:85px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+.stat-title{
+
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.stat-value{
+
+    font-size:28px;
+    font-weight:700;
+
+    color:#60a5fa;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+
+    position:relative;
+}
+
+.search-box input{
+
+    width:260px;
+
+    background:rgba(15,23,42,0.8);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:14px;
+
+    padding:12px 14px 12px 42px;
+
+    color:white;
+}
+
+.search-box i{
+
+    position:absolute;
+    top:14px;
+    left:14px;
+    color:#60a5fa;
+}
+
+/* ================= FILTER ================= */
+
+.filter-select{
+
+    background:rgba(15,23,42,0.8);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:12px;
+
+    padding:12px 15px;
+
+    color:white;
+}
+
+/* ================= GRID ================= */
+
+.appointments-grid{
+
+    margin-top:35px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(330px,1fr));
+
+    gap:24px;
+}
+
+/* ================= CARDS ================= */
+
+.appointment-card{
+
+    background:rgba(15,23,42,0.78);
+
+    border:1px solid rgba(96,165,250,0.15);
+
+    border-radius:22px;
+
+    padding:22px;
+
+    transition:0.3s;
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+    0 0 30px rgba(37,99,235,0.12);
+}
+
+.appointment-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 0 40px rgba(59,130,246,0.3);
+}
+
+.card-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* ================= PET ================= */
+
+.pet-info{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.pet-avatar{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(135deg,#2563eb,#38bdf8);
+
+    font-size:22px;
+}
+
+.pet-name{
+
+    font-size:22px;
+    font-weight:700;
+}
+
+.owner{
+
+    color:#94a3b8;
+    margin-top:4px;
+}
+
+/* ================= STATUS ================= */
+
+.status-badge{
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.pending{
+    background:rgba(245,158,11,0.2);
+    color:#fbbf24;
+}
+
+.confirmed{
+    background:rgba(34,197,94,0.2);
+    color:#4ade80;
+}
+
+.completed{
+    background:rgba(59,130,246,0.2);
+    color:#60a5fa;
+}
+
+.rejected{
+    background:rgba(239,68,68,0.2);
+    color:#f87171;
+}
+
+/* ================= INFO ================= */
+
+.appointment-time{
+
+    margin-top:20px;
+    color:#dbeafe;
+}
+
+.symptom-preview{
+
+    margin-top:16px;
+
+    background:rgba(255,255,255,0.04);
+
+    border-radius:12px;
+
+    padding:14px;
+
+    color:#cbd5e1;
+
+    line-height:1.6;
+}
+
+/* ================= BUTTON ================= */
+
+.view-btn{
+
+    margin-top:22px;
+
+    width:100%;
+
+    border:none;
+
+    background:
+    linear-gradient(135deg,#2563eb,#38bdf8);
+
+    padding:13px;
+
+    border-radius:14px;
+
+    color:white;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.view-btn:hover{
+
+    transform:translateY(-2px);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="paw" style="left:5%; animation-duration:20s;">
+<i class="fa-solid fa-paw"></i>
+</div>
+
+<div class="paw" style="left:25%; animation-duration:25s;">
+<i class="fa-solid fa-paw"></i>
+</div>
+
+<div class="paw" style="left:45%; animation-duration:18s;">
+<i class="fa-solid fa-paw"></i>
+</div>
+
+<div class="paw" style="left:70%; animation-duration:23s;">
+<i class="fa-solid fa-paw"></i>
+</div>
+
+<div class="paw" style="left:90%; animation-duration:20s;">
+<i class="fa-solid fa-paw"></i>
+</div>
+
+<!-- NAVBAR -->
+
+<nav class="navbar-custom">
+
+    <div class="brand">
+        PawfectCare Doctor
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/doctor_home">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </a>
+
+        <a href="/doctor-analysis">
+            <i class="fa-solid fa-chart-line"></i>
+            Analytics
+        </a>
+
+        <a href="/doctor-requests">
+            <i class="fa-solid fa-calendar-check"></i>
+            Requests
+        </a>
+
+        <a href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<!-- MAIN -->
+
+<div class="main-container">
+
+    <!-- TOP BAR -->
+
+<div class="top-bar">
+
+    <!-- LEFT -->
+
+    <div class="top-left">
+
+        <!-- TITLE -->
+
+        <div class="title-section">
+
+            <div class="page-title">
+                Appointment Dashboard
+            </div>
+
+            <div class="page-subtitle">
+                Manage all appointments efficiently
+            </div>
+
+        </div>
+
+        <!-- STATS -->
+
+        <div class="stats-row">
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Pending
+                </div>
+
+                <div class="stat-value" id="pendingCount">
+                    0
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Confirmed
+                </div>
+
+                <div class="stat-value" id="confirmedCount">
+                    0
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Rejected
+                </div>
+
+                <div class="stat-value" id="rejectedCount">
+                    0
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Completed
+                </div>
+
+                <div class="stat-value" id="completedCount">
+                    0
+                </div>
+
+            </div>
+
+
+            
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="top-right">
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+            type="text"
+            id="searchInput"
+            placeholder="Search appointments"
+            onkeyup="loadRequests()">
+
+        </div>
+
+        <!-- FILTER -->
+
+        <select
+        id="statusFilter"
+        class="filter-select"
+        onchange="loadRequests()">
+
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+    <!-- APPOINTMENTS -->
+
+    <div id="requests" class="appointments-grid"></div>
+
+</div>
+
+<script>
+
+function loadRequests(){
+
+    fetch("/api/doctor/appointments")
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        let html = ""
+
+        let pending = 0
+        let confirmed = 0
+        let completed = 0
+        let rejected = 0
+
+        const search =
+        document.getElementById("searchInput")
+        .value.toLowerCase()
+
+        const filter =
+        document.getElementById("statusFilter").value
+
+        let filtered = data.filter(a => {
+
+            const matchesSearch =
+
+            a.pet_name.toLowerCase().includes(search)
+
+            ||
+
+            a.owner_name.toLowerCase().includes(search)
+
+            const matchesFilter =
+
+            filter === "all"
+
+            ||
+
+            a.status === filter
+
+            return matchesSearch && matchesFilter
+
+        })
+
+        filtered.forEach(a => {
+
+            if(a.status === "pending") pending++
+
+            if(a.status === "confirmed") confirmed++
+
+            if(a.status === "completed") completed++
+
+            if(a.status === "rejected") rejected++
+
+            html += `
+
+            <div class="appointment-card">
+
+                <div class="card-top">
+
+                    <div class="pet-info">
+
+                        <div class="pet-avatar">
+
+                            <i class="fa-solid fa-paw"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="pet-name">
+                                ${a.pet_name}
+                            </div>
+
+                            <div class="owner">
+                                Owner: ${a.owner_name}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-badge ${a.status}">
+                        ${a.status}
+                    </div>
+
+                </div>
+
+                <div class="appointment-time">
+
+                    <i class="fa-solid fa-calendar"></i>
+
+                    ${a.date} • ${a.time}
+
+                </div>
+
+                <div class="symptom-preview">
+
+                    ${a.symptoms
+                    ?
+                    a.symptoms.substring(0,80)
+                    :
+                    "No symptoms provided"}
+
+                    ...
+
+                </div>
+
+                <button
+                class="view-btn"
+                onclick="window.location.href='/appointment/${a.id}'">
+
+                    View Full Details
+
+                </button>
+
+            </div>
+
+            `
+        })
+
+        document.getElementById("requests").innerHTML = html
+
+        document.getElementById("pendingCount").innerText = pending
+
+        document.getElementById("confirmedCount").innerText = confirmed
+
+        document.getElementById("completedCount").innerText = completed
+
+        document.getElementById("rejectedCount").innerText = rejected
+
+    })
+
+}
+
+loadRequests()
+
+</script>
+
+</body>
+</html>

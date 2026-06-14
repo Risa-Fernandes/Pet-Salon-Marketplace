@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Pet Health Care</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+
+/* ================= GLOBAL ================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#eef2ff;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* ================= NAVBAR ================= */
+
+.custom-navbar{
+
+background:linear-gradient(90deg,#0d6efd,#3d7eff);
+
+padding:15px 30px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+
+}
+
+.navbar-brand{
+
+color:white !important;
+
+font-size:26px;
+
+font-weight:700;
+
+display:flex;
+align-items:center;
+gap:10px;
+
+text-decoration:none;
+
+}
+
+/* ================= MAIN ================= */
+
+.main-section{
+
+padding:35px 15px;
+
+}
+
+.main-wrapper{
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+/* ================= CARDS ================= */
+
+.info-card,
+.chat-card{
+
+background:white;
+
+border-radius:24px;
+
+padding:22px;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.06);
+
+border:1px solid #edf0f7;
+
+height:100%;
+
+}
+
+/* ================= LEFT CARD ================= */
+
+.info-card{
+
+max-width:360px;
+
+margin:auto;
+
+}
+
+/* Avatar */
+
+.pet-avatar{
+
+width:90px;
+height:90px;
+
+background:linear-gradient(135deg,#0d6efd,#4f8cff);
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+margin:auto;
+
+box-shadow:0 10px 20px rgba(13,110,253,0.25);
+
+}
+
+.pet-avatar i{
+
+font-size:36px;
+color:white;
+
+}
+
+/* Profile */
+
+.pet-profile{
+
+text-align:center;
+
+margin-top:18px;
+margin-bottom:28px;
+
+}
+
+.pet-profile h3{
+
+font-size:24px;
+
+font-weight:700;
+
+margin-bottom:8px;
+
+}
+
+.pet-profile p{
+
+font-size:13px;
+
+color:#7a7a7a;
+
+}
+
+/* Inputs */
+
+.modern-input{
+
+margin-bottom:18px;
+
+}
+
+.modern-input label{
+
+font-size:13px;
+
+font-weight:600;
+
+margin-bottom:8px;
+
+display:block;
+
+color:#444;
+
+}
+
+.form-control,
+.form-select{
+
+border-radius:14px;
+
+padding:12px;
+
+font-size:14px;
+
+border:1px solid #dce3f0;
+
+background:#f8fbff;
+
+}
+
+textarea.form-control{
+
+height:100px;
+
+resize:none;
+
+}
+
+/* ================= BUTTONS ================= */
+
+.action-row{
+
+display:flex;
+
+gap:10px;
+
+margin-top:10px;
+margin-bottom:20px;
+
+}
+
+/* Voice */
+
+.modern-voice-btn{
+
+width:50px;
+height:50px;
+
+border:none;
+
+border-radius:15px;
+
+background:linear-gradient(135deg,#ff4d6d,#ff758f);
+
+color:white;
+
+font-size:18px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+transition:0.3s;
+
+}
+
+/* Analyze */
+
+.modern-check-btn{
+
+flex:1;
+
+height:50px;
+
+border:none;
+
+border-radius:15px;
+
+background:linear-gradient(135deg,#0d6efd,#4f8cff);
+
+color:white;
+
+font-size:15px;
+
+font-weight:600;
+
+transition:0.3s;
+
+}
+
+/* Back */
+
+.modern-back-btn{
+
+width:50px;
+height:50px;
+
+border:none;
+
+border-radius:15px;
+
+background:#f1f3f5;
+
+color:#333;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+text-decoration:none;
+
+font-size:18px;
+
+transition:0.3s;
+
+}
+
+/* Hover */
+
+.modern-voice-btn:hover,
+.modern-check-btn:hover,
+.modern-back-btn:hover{
+
+transform:translateY(-2px);
+
+}
+
+/* ================= TIP CARD ================= */
+
+.tip-card{
+
+background:#f8fbff;
+
+border-radius:18px;
+
+padding:18px;
+
+border:1px solid #edf1f7;
+
+}
+
+.tip-card h5{
+
+font-size:16px;
+font-weight:700;
+
+margin-bottom:15px;
+
+}
+
+.tip-card ul{
+
+padding-left:18px;
+
+margin:0;
+
+}
+
+.tip-card li{
+
+font-size:13px;
+
+margin-bottom:10px;
+
+color:#555;
+
+}
+
+/* ================= CHAT CARD ================= */
+
+.chat-card{
+
+padding:20px;
+
+}
+
+/* Header */
+
+.chat-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.ai-header{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+}
+
+.ai-icon{
+
+width:50px;
+height:50px;
+
+background:linear-gradient(135deg,#0d6efd,#4f8cff);
+
+border-radius:14px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:white;
+
+font-size:24px;
+
+}
+
+.ai-title h4{
+
+font-size:18px;
+
+font-weight:700;
+
+margin:0;
+
+}
+
+.ai-title p{
+
+font-size:12px;
+
+color:#777;
+
+margin:0;
+
+}
+
+/* Top Buttons */
+
+.nav-actions{
+
+display:flex;
+gap:10px;
+
+}
+
+.nav-btn{
+
+border:none;
+
+padding:10px 15px;
+
+border-radius:12px;
+
+font-size:12px;
+
+font-weight:600;
+
+background:#f4f5f7;
+
+transition:0.3s;
+
+}
+
+.nav-btn:hover{
+
+transform:translateY(-2px);
+
+}
+
+/* ================= CHAT BOX ================= */
+
+.chat-box{
+
+height:800px;
+
+overflow-y:auto;
+
+background:#f8fbff;
+
+border-radius:20px;
+
+padding:18px;
+
+border:1px solid #e3e7f0;
+
+}
+
+/* Messages */
+
+.message{
+
+display:flex;
+
+margin-bottom:16px;
+
+}
+
+.user-message{
+
+justify-content:flex-end;
+
+}
+
+.ai-message{
+
+justify-content:flex-start;
+
+}
+
+.msg{
+
+padding:14px 18px;
+
+border-radius:18px;
+
+max-width:75%;
+
+font-size:14px;
+
+line-height:1.6;
+
+}
+
+/* User */
+
+.user-message .msg{
+
+background:linear-gradient(135deg,#0d6efd,#4f8cff);
+
+color:white;
+
+border-bottom-right-radius:6px;
+
+}
+
+/* AI */
+
+.ai-message .msg{
+
+background:white;
+
+border-bottom-left-radius:6px;
+
+box-shadow:0 4px 12px rgba(0,0,0,0.05);
+
+color:#333;
+
+}
+
+small{
+
+display:block;
+
+font-size:10px;
+
+margin-top:5px;
+
+color:#777;
+
+}
+
+/* ================= SCROLLBAR ================= */
+
+.chat-box::-webkit-scrollbar{
+
+width:7px;
+
+}
+
+.chat-box::-webkit-scrollbar-thumb{
+
+background:#c7cfdb;
+
+border-radius:10px;
+
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+.info-card{
+
+max-width:100%;
+
+}
+
+.chat-box{
+
+height:450px;
+
+margin-top:20px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.chat-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:12px;
+
+}
+
+.nav-actions{
+
+width:100%;
+
+}
+
+.nav-btn{
+
+flex:1;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar custom-navbar">
+
+<div class="container-fluid">
+
+<a class="navbar-brand" href="#">
+
+🐾 AI Pet Health Care
+
+</a>
+
+</div>
+
+</nav>
+
+<!-- ================= MAIN ================= -->
+
+<div class="container main-section">
+
+<div class="main-wrapper">
+
+<div class="row g-4">
+
+<!-- ================= LEFT SIDE ================= -->
+
+<div class="col-lg-4">
+
+<div class="info-card">
+
+<!-- Avatar -->
+
+<div class="pet-avatar">
+
+<i class="fa-solid fa-shield-dog"></i>
+
+</div>
+
+<!-- Profile -->
+
+<div class="pet-profile">
+
+<h3>Pet Health Analyzer</h3>
+
+<p>
+Smart AI veterinary assistant for instant health analysis
+</p>
+
+</div>
+
+<!-- Pet Type -->
+
+<div class="modern-input">
+
+<label>🐾 Pet Type</label>
+
+<select id="petType" class="form-select">
+
+<option>Dog</option>
+<option>Cat</option>
+<option>Bird</option>
+<option>Rabbit</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<!-- Pet Age -->
+
+<div class="modern-input">
+
+<label>📅 Pet Age</label>
+
+<input type="number"
+id="petAge"
+class="form-control"
+placeholder="Enter pet age">
+
+</div>
+
+<!-- Symptoms -->
+
+<div class="modern-input">
+
+<label>🩺 Describe Symptoms</label>
+
+<textarea
+id="symptoms"
+class="form-control"
+placeholder="Type or speak symptoms..."></textarea>
+
+</div>
+
+<!-- Upload -->
+
+<div class="modern-input">
+
+<label>📷 Upload Pet Image</label>
+
+<input type="file"
+class="form-control">
+
+</div>
+
+<!-- Buttons -->
+
+<div class="action-row">
+
+<button type="button"
+class="modern-voice-btn"
+onclick="startVoice()">
+
+<i class="fa-solid fa-microphone"></i>
+
+</button>
+
+<button class="modern-check-btn"
+onclick="askAI()">
+
+Analyze Health
+
+</button>
+
+<a href="/index"
+class="modern-back-btn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+</div>
+
+<!-- Tips -->
+
+<div class="tip-card">
+
+<h5>
+💡 Pet Health Tips
+</h5>
+
+<ul>
+
+<li>Provide clean water daily</li>
+
+<li>Regular vaccinations are important</li>
+
+<li>Healthy diet keeps pets active</li>
+
+<li>Daily exercise improves health</li>
+
+<li>Visit veterinarian regularly</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= RIGHT SIDE ================= -->
+
+<div class="col-lg-8">
+
+<div class="chat-card">
+
+<!-- Header -->
+
+<div class="chat-header">
+
+<div class="ai-header">
+
+<div class="ai-icon">
+
+<i class="fa-solid fa-robot"></i>
+
+</div>
+
+<div class="ai-title">
+
+<h4>AI Veterinary Assistant</h4>
+
+<p>Smart AI health suggestions for pets</p>
+
+</div>
+
+</div>
+
+<!-- Top Buttons -->
+
+<div class="nav-actions">
+
+<button class="nav-btn"
+onclick="showHistory()">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+ History
+
+</button>
+
+<button class="nav-btn"
+onclick="clearChat()">
+
+<i class="fa-solid fa-trash"></i>
+ Clear
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Chat Box -->
+
+<div id="chatBox" class="chat-box">
+
+<div class="message ai-message">
+
+<div>
+
+<div class="msg">
+
+👋 Hello! I am your AI Pet Doctor.<br>
+Describe your pet symptoms to get health suggestions.
+
+</div>
+
+<small>AI Assistant</small>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- USER SESSION -->
+
+<script>
+
+const currentUser = "{{ session.get('user_id', 'guest') }}"
+
+</script>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+/* Load Chat History */
+
+window.onload = function(){
+
+let savedChat = localStorage.getItem(
+"pet_chat_history_" + currentUser
+)
+
+if(savedChat){
+
+document.getElementById("chatBox").innerHTML = savedChat
+
+}
+
+}
+
+/* Ask AI */
+
+function askAI(){
+
+let symptoms =
+document.getElementById("symptoms").value
+
+if(symptoms==""){
+
+alert("Please enter symptoms")
+return
+
+}
+
+let chatBox =
+document.getElementById("chatBox")
+
+let time =
+new Date().toLocaleTimeString()
+
+/* User Message */
+
+chatBox.innerHTML += `
+
+<div class="message user-message">
+
+<div>
+
+<div class="msg">
+${symptoms}
+</div>
+
+<small>${time}</small>
+
+</div>
+
+</div>
+
+`
+
+/* Loading */
+
+chatBox.innerHTML += `
+
+<div id="loading" class="message ai-message">
+
+<div class="msg">
+⏳ AI is analyzing symptoms...
+</div>
+
+</div>
+
+`
+
+chatBox.scrollTop =
+chatBox.scrollHeight
+
+/* API */
+
+fetch("/api/ai-health",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+symptoms:symptoms
+})
+
+})
+
+.then(res=>res.json())
+
+.then(data=>{
+
+/* Remove Loading */
+
+document.getElementById("loading").remove()
+
+/* AI Message */
+
+chatBox.innerHTML += `
+
+<div class="message ai-message">
+
+<div>
+
+<div class="msg">
+${data.response}
+</div>
+
+<small>${time}</small>
+
+</div>
+
+</div>
+
+`
+
+/* Save History */
+
+localStorage.setItem(
+
+"pet_chat_history_" + currentUser,
+
+chatBox.innerHTML
+
+)
+
+chatBox.scrollTop =
+chatBox.scrollHeight
+
+})
+
+document.getElementById("symptoms").value=""
+
+}
+
+/* Clear Chat */
+
+function clearChat(){
+
+localStorage.removeItem(
+"pet_chat_history_" + currentUser
+)
+
+document.getElementById("chatBox").innerHTML = `
+
+<div class="message ai-message">
+
+<div>
+
+<div class="msg">
+👋 Chat cleared successfully.
+</div>
+
+</div>
+
+`
+
+}
+
+/* Show History */
+
+function showHistory(){
+
+    let key = "pet_chat_history_" + currentUser;
+
+    console.log("History Key:", key);
+
+    let savedChat = localStorage.getItem(key);
+
+    console.log("Saved Chat:", savedChat);
+
+    if(savedChat){
+
+        document.getElementById("chatBox").innerHTML = savedChat;
+
+    }else{
+
+        alert("No chat history found.");
+
+    }
+}
+
+/* Voice Input */
+
+function startVoice(){
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition
+
+if(!SpeechRecognition){
+
+alert("Voice recognition not supported.")
+return
+
+}
+
+const recognition =
+new SpeechRecognition()
+
+recognition.lang = "en-US"
+
+recognition.interimResults = false
+
+recognition.maxAlternatives = 1
+
+recognition.start()
+
+alert("🎤 Listening... Speak now")
+
+recognition.onresult = function(event){
+
+const transcript =
+event.results[0][0].transcript
+
+document.getElementById("symptoms").value =
+transcript
+
+}
+
+recognition.onerror = function(event){
+
+alert("Voice recognition failed: " + event.error)
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

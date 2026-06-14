@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Appointment Details</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #020617,
+        #071127,
+        #0f172a,
+        #172554,
+        #1e3a8a
+    );
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    color:white;
+
+    position:relative;
+}
+
+/* ======================================================
+BIG FLOATING PAWS
+====================================================== */
+
+.paw{
+
+    position:fixed;
+
+    color:rgba(96,165,250,0.11);
+
+    z-index:0;
+
+    animation:floatPaw linear infinite;
+}
+
+.paw i{
+
+    font-size:85px;
+}
+
+.p1{
+    top:5%;
+    left:5%;
+    animation-duration:7s;
+}
+
+.p2{
+    top:15%;
+    left:85%;
+    animation-duration:8s;
+}
+
+.p3{
+    top:72%;
+    left:10%;
+    animation-duration:6s;
+}
+
+.p4{
+    top:65%;
+    left:88%;
+    animation-duration:9s;
+}
+
+.p5{
+    top:42%;
+    left:48%;
+    animation-duration:7s;
+}
+
+.p6{
+    top:85%;
+    left:55%;
+    animation-duration:8s;
+}
+
+.p7{
+    top:30%;
+    left:25%;
+    animation-duration:6s;
+}
+
+.p8{
+    top:50%;
+    left:75%;
+    animation-duration:7s;
+}
+
+@keyframes floatPaw{
+
+    0%{
+
+        transform:
+        translateY(0px)
+        rotate(0deg)
+        scale(1);
+    }
+
+    50%{
+
+        transform:
+        translateY(-45px)
+        rotate(18deg)
+        scale(1.12);
+    }
+
+    100%{
+
+        transform:
+        translateY(0px)
+        rotate(0deg)
+        scale(1);
+    }
+}
+
+/* ======================================================
+NAVBAR
+====================================================== */
+
+.navbar-custom{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    backdrop-filter:blur(18px);
+
+    background:
+    rgba(2,6,23,0.78);
+
+    border-bottom:
+    1px solid rgba(96,165,250,0.12);
+
+    padding:18px 45px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.logo{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    background:
+    linear-gradient(90deg,#60a5fa,#38bdf8);
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.nav-links{
+
+    display:flex;
+    gap:28px;
+}
+
+.nav-links a{
+
+    color:#cbd5e1;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+
+    color:#60a5fa;
+}
+
+/* ======================================================
+MAIN WRAPPER
+====================================================== */
+
+.main-wrapper{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:35px;
+}
+
+/* ======================================================
+DETAILS CARD
+====================================================== */
+
+.details-card{
+
+    width:100%;
+
+    max-width:1600px;
+
+    margin:auto;
+
+    background:
+    rgba(15,23,42,0.84);
+
+    border-radius:30px;
+
+    border:
+    1px solid rgba(96,165,250,0.15);
+
+    backdrop-filter:blur(18px);
+
+    padding:32px;
+
+    box-shadow:
+    0 0 50px rgba(37,99,235,0.15);
+}
+
+/* ======================================================
+TOP SECTION
+====================================================== */
+
+.top-section{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:32px;
+}
+
+.pet-header{
+
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.pet-avatar{
+
+    width:95px;
+    height:95px;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #38bdf8
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:
+    0 0 35px rgba(59,130,246,0.5);
+}
+
+.pet-avatar i{
+
+    font-size:38px;
+}
+
+.pet-name{
+
+    font-size:36px;
+
+    font-weight:700;
+}
+
+.pet-type{
+
+    margin-top:7px;
+
+    color:#94a3b8;
+
+    font-size:17px;
+}
+
+/* ======================================================
+STATUS
+====================================================== */
+
+.status{
+
+    padding:13px 24px;
+
+    border-radius:40px;
+
+    font-weight:700;
+
+    text-transform:capitalize;
+
+    font-size:15px;
+}
+
+.pending{
+    background:#facc15;
+    color:#111827;
+}
+
+.confirmed{
+    background:#22c55e;
+    color:white;
+}
+
+.completed{
+    background:#3b82f6;
+    color:white;
+}
+
+.rejected{
+    background:#ef4444;
+    color:white;
+}
+
+/* ======================================================
+CONTENT LAYOUT
+====================================================== */
+
+.content-layout{
+
+    display:grid;
+
+    grid-template-columns:
+    1.7fr
+    1fr;
+
+    gap:26px;
+
+    align-items:start;
+}
+
+/* ======================================================
+SECTIONS
+====================================================== */
+
+.section{
+
+    background:
+    rgba(255,255,255,0.03);
+
+    border-radius:24px;
+
+    padding:24px;
+
+    border:
+    1px solid rgba(255,255,255,0.04);
+}
+
+.section-title{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+    color:#60a5fa;
+}
+
+/* ======================================================
+DETAILS GRID
+====================================================== */
+
+.details-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:16px;
+}
+
+.detail-box{
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border-radius:18px;
+
+    padding:16px;
+
+    transition:0.3s;
+}
+
+.detail-box:hover{
+
+    transform:translateY(-3px);
+
+    background:
+    rgba(59,130,246,0.08);
+}
+
+.detail-label{
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    color:#60a5fa;
+
+    margin-bottom:6px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+.detail-value{
+
+    color:#e2e8f0;
+
+    font-size:16px;
+}
+
+/* ======================================================
+RIGHT SECTIONS
+====================================================== */
+
+.right-sections{
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+/* ======================================================
+BIG BOXES
+====================================================== */
+
+.big-box{
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border-radius:20px;
+
+    padding:22px;
+
+    color:#e2e8f0;
+
+    line-height:1.9;
+
+    min-height:75px;
+
+    font-size:15px;
+}
+
+/* ======================================================
+BUTTONS
+====================================================== */
+
+.actions{
+
+    margin-top:28px;
+
+    display:flex;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+}
+
+.btn-custom{
+
+    border:none;
+
+    padding:15px 26px;
+
+    border-radius:15px;
+
+    color:white;
+
+    font-weight:700;
+
+    transition:0.3s;
+
+    font-size:15px;
+}
+
+.btn-custom:hover{
+
+    transform:translateY(-3px) scale(1.03);
+}
+
+.confirm-btn{
+
+    background:
+    linear-gradient(135deg,#16a34a,#22c55e);
+}
+
+.reject-btn{
+
+    background:
+    linear-gradient(135deg,#dc2626,#ef4444);
+}
+
+.complete-btn{
+
+    background:
+    linear-gradient(135deg,#2563eb,#3b82f6);
+}
+
+/* ======================================================
+RESPONSIVE
+====================================================== */
+
+@media(max-width:1100px){
+
+    .content-layout{
+
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:768px){
+
+    .top-section{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:18px;
+    }
+
+    .details-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .navbar-custom{
+
+        padding:16px 20px;
+    }
+
+    .nav-links{
+
+        gap:16px;
+
+        font-size:14px;
+    }
+
+    .main-wrapper{
+
+        padding:18px;
+    }
+
+    .pet-name{
+
+        font-size:28px;
+    }
+
+    .paw i{
+
+        font-size:60px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ======================================================
+FLOATING PAWS
+====================================================== -->
+
+<div class="paw p1"><i class="fa-solid fa-paw"></i></div>
+<div class="paw p2"><i class="fa-solid fa-paw"></i></div>
+<div class="paw p3"><i class="fa-solid fa-paw"></i></div>
+<div class="paw p4"><i class="fa-solid fa-paw"></i></div>
+<div class="paw p5"><i class="fa-solid fa-paw"></i></div>
+<div class="paw p6"><i class="fa-solid fa-paw"></i></div>
+<div class="paw p7"><i class="fa-solid fa-paw"></i></div>
+<div class="paw p8"><i class="fa-solid fa-paw"></i></div>
+
+<!-- ======================================================
+NAVBAR
+====================================================== -->
+
+<nav class="navbar-custom">
+
+    <div class="logo">
+        PawfectCare Doctor
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/doctor_home">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </a>
+
+        <a href="/doctor-analysis">
+            <i class="fa-solid fa-chart-line"></i>
+            Analytics
+        </a>
+
+        <a href="/doctor-requests">
+            <i class="fa-solid fa-calendar-check"></i>
+            Requests
+        </a>
+
+        <a href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<!-- ======================================================
+MAIN
+====================================================== -->
+
+<div class="main-wrapper">
+
+    <div class="details-card" id="detailsCard"></div>
+
+</div>
+
+<script>
+
+const appointmentId =
+window.location.pathname.split("/").pop()
+
+fetch(`/api/doctor/appointments/${appointmentId}`)
+
+.then(res => {
+
+    if(!res.ok){
+        throw new Error("Failed to load")
+    }
+
+    return res.json()
+})
+
+.then(a => {
+
+    document.getElementById("detailsCard").innerHTML = `
+
+    <div class="top-section">
+
+        <div class="pet-header">
+
+            <div class="pet-avatar">
+
+                <i class="fa-solid fa-paw"></i>
+
+            </div>
+
+            <div>
+
+                <div class="pet-name">
+                    ${a.pet_name}
+                </div>
+
+                <div class="pet-type">
+                    ${a.pet_type}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="status ${a.status}">
+            ${a.status}
+        </div>
+
+    </div>
+
+    <div class="content-layout">
+
+        <!-- LEFT -->
+
+        <div class="appointment-section section">
+
+            <div class="section-title">
+                Appointment Information
+            </div>
+
+            <div class="details-grid">
+
+                <div class="detail-box">
+                    <div class="detail-label">Owner Name</div>
+                    <div class="detail-value">${a.owner_name}</div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-label">Phone</div>
+                    <div class="detail-value">${a.owner_phone}</div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-label">Pet Gender</div>
+                    <div class="detail-value">${a.gender}</div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-label">Pet Age</div>
+                    <div class="detail-value">${a.pet_age}</div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-label">Appointment Date</div>
+                    <div class="detail-value">
+                        ${a.appointment_date}
+                    </div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-label">Appointment Time</div>
+                    <div class="detail-value">
+                        ${a.appointment_time}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="right-sections">
+
+            <div class="section">
+
+                <div class="section-title">
+                    Symptoms
+                </div>
+
+                <div class="big-box">
+
+                    ${a.symptoms || "Not provided"}
+
+                </div>
+
+            </div>
+
+            <div class="section mt-4">
+
+                <div class="section-title">
+                    Concern
+                </div>
+
+                <div class="big-box">
+
+                    ${a.concern || "No concern provided"}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        ${a.status === "pending" ? `
+
+        <button
+        class="btn-custom confirm-btn"
+        onclick="confirmAppointment(${a.id})">
+
+            <i class="fa-solid fa-check"></i>
+            Confirm
+
+        </button>
+
+        <button
+        class="btn-custom reject-btn"
+        onclick="rejectAppointment(${a.id})">
+
+            <i class="fa-solid fa-xmark"></i>
+            Reject
+
+        </button>
+
+        ` : ""}
+
+        ${a.status === "confirmed" ? `
+
+        <button
+        class="btn-custom complete-btn"
+        onclick="completeAppointment(${a.id})">
+
+            <i class="fa-solid fa-circle-check"></i>
+            Complete
+
+        </button>
+
+        ` : ""}
+
+    </div>
+
+    `
+})
+
+.catch(err => {
+
+    document.getElementById("detailsCard").innerHTML = `
+
+    <div style="padding:40px;text-align:center;">
+
+        Failed to load appointment details
+
+    </div>
+
+    `
+
+    console.log(err)
+})
+
+function confirmAppointment(id){
+
+    fetch(`/api/appointments/${id}/confirm`,{
+        method:"PUT"
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        alert(data.message)
+
+        location.reload()
+
+    })
+}
+
+function rejectAppointment(id){
+
+    fetch(`/api/appointments/${id}/reject`,{
+        method:"PUT"
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        alert(data.message)
+
+        location.reload()
+
+    })
+}
+
+function completeAppointment(id){
+
+    fetch(`/api/appointments/${id}/complete`,{
+        method:"PUT"
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        alert(data.message)
+
+        location.reload()
+
+    })
+}
+
+</script>
+
+</body>
+</html>

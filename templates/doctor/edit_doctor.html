@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Doctor • PawFect Care</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+:root{
+
+    --bg1:#020617;
+    --bg2:#071330;
+    --bg3:#0f172a;
+
+    --card:#0f172acc;
+
+    --primary:#2563eb;
+    --primary2:#38bdf8;
+
+    --text:#f8fafc;
+    --muted:#94a3b8;
+
+    --border:rgba(96,165,250,0.18);
+}
+
+/* ===================================================
+GLOBAL
+=================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--bg1),
+    var(--bg2),
+    #1e3a8a
+    );
+
+    min-height:100vh;
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+    position:relative;
+}
+
+/* ===================================================
+FLOATING PAWS
+=================================================== */
+
+#paw-container{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    z-index:0;
+
+    pointer-events:none;
+}
+
+.paw-bubble{
+
+    position:absolute;
+
+    bottom:-100px;
+
+    color:rgba(96,165,250,0.12);
+
+    animation:floatPaw linear infinite;
+}
+
+@keyframes floatPaw{
+
+    0%{
+
+        transform:
+        translateY(0)
+        rotate(0deg);
+
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    100%{
+
+        transform:
+        translateY(-120vh)
+        rotate(30deg);
+
+        opacity:0;
+    }
+}
+
+/* ===================================================
+NAVBAR
+=================================================== */
+
+.navbar{
+
+    margin-top:20px;
+
+    padding:0.9rem 2rem;
+
+    background:rgba(15,23,42,0.88);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:50px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:0 10px 40px rgba(0,0,0,0.35);
+
+    width:92%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    transition:0.4s ease;
+
+    z-index:1000;
+}
+
+.navbar-brand{
+
+    font-weight:800;
+
+    font-size:28px;
+
+    color:white !important;
+}
+
+.navbar-brand span{
+
+    color:#60a5fa;
+}
+
+.nav-link{
+
+    color:#dbeafe !important;
+
+    font-weight:600;
+
+    margin:0 10px;
+
+    position:relative;
+
+    transition:0.3s;
+}
+
+.nav-link::after{
+
+    content:'';
+
+    position:absolute;
+
+    width:0;
+
+    height:2px;
+
+    left:0;
+
+    bottom:0;
+
+    background:#60a5fa;
+
+    transition:0.3s;
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+}
+
+.nav-link:hover{
+
+    color:#60a5fa !important;
+}
+
+.btn-login{
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    color:white;
+
+    border-radius:14px;
+
+    padding:10px 18px;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.btn-login:hover{
+
+    background:rgba(59,130,246,0.2);
+
+    color:white;
+}
+
+.btn-owner{
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #38bdf8
+    );
+
+    border:none;
+
+    color:white;
+
+    border-radius:14px;
+
+    padding:10px 18px;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.btn-owner:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 25px rgba(59,130,246,0.4);
+
+    color:white;
+}
+
+/* ===================================================
+MAIN
+=================================================== */
+
+.main-container{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:35px;
+}
+
+/* ===================================================
+HERO
+=================================================== */
+
+.hero-card{
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(15,23,42,0.95),
+    rgba(30,58,138,0.88)
+    );
+
+    border:
+    1px solid var(--border);
+
+    border-radius:30px;
+
+    padding:32px;
+
+    margin-bottom:30px;
+
+    text-align:center;
+
+    backdrop-filter:blur(16px);
+
+    box-shadow:
+    0 0 45px rgba(37,99,235,0.18);
+}
+
+.hero-card h1{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+    background:
+    linear-gradient(
+    to right,
+    #ffffff,
+    #60a5fa
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-card p{
+
+    color:#cbd5e1;
+
+    font-size:16px;
+}
+
+/* ===================================================
+FORM CARD
+=================================================== */
+
+.main-form-card{
+
+    background:
+    rgba(15,23,42,0.82);
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    border-radius:28px;
+
+    padding:35px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+    0 0 35px rgba(37,99,235,0.12);
+}
+
+/* ===================================================
+SECTION HEADINGS
+=================================================== */
+
+.section-title{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    margin-bottom:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:white;
+}
+
+.section-divider{
+
+    border-color:rgba(255,255,255,0.08);
+
+    margin:35px 0;
+}
+
+/* ===================================================
+INPUTS
+=================================================== */
+
+.form-label{
+
+    color:#dbeafe;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+}
+
+.form-control,
+.form-select{
+
+    background:
+    rgba(2,6,23,0.7) !important;
+
+    border:
+    1px solid rgba(255,255,255,0.08) !important;
+
+    color:white !important;
+
+    border-radius:16px !important;
+
+    padding:14px 16px !important;
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:#60a5fa !important;
+
+    box-shadow:
+    0 0 0 4px rgba(59,130,246,0.15) !important;
+}
+
+.form-control::placeholder{
+
+    color:#94a3b8;
+}
+
+.form-select option{
+
+    background:#0f172a;
+}
+
+/* ===================================================
+CHECKBOXES
+=================================================== */
+
+.days-container{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:16px;
+}
+
+.day-box{
+
+    background:
+    rgba(255,255,255,0.03);
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    color:#e2e8f0;
+
+    font-weight:600;
+}
+
+/* ===================================================
+IMAGE
+=================================================== */
+
+.preview-img{
+
+    border-radius:20px;
+
+    border:
+    2px solid rgba(255,255,255,0.08);
+
+    max-height:170px;
+
+    box-shadow:
+    0 0 25px rgba(59,130,246,0.18);
+}
+
+/* ===================================================
+BUTTONS
+=================================================== */
+
+.action-buttons{
+
+    margin-top:35px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+}
+
+.update-btn{
+
+    border:none;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #38bdf8
+    );
+
+    color:white;
+
+    padding:14px 28px;
+
+    border-radius:16px;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.update-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 25px rgba(59,130,246,0.4);
+}
+
+.back-btn{
+
+    border:none;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    color:white;
+
+    padding:14px 28px;
+
+    border-radius:16px;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.back-btn:hover{
+
+    background:
+    rgba(255,255,255,0.14);
+
+    color:white;
+}
+
+/* ===================================================
+RESPONSIVE
+=================================================== */
+
+@media(max-width:768px){
+
+    .navbar{
+
+        width:96%;
+
+        padding:1rem;
+    }
+
+    .hero-card h1{
+
+        font-size:32px;
+    }
+
+    .main-form-card{
+
+        padding:22px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- FLOATING PAWS -->
+
+<div id="paw-container"></div>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg position-relative">
+
+<div class="container-fluid">
+
+<a class="navbar-brand" href="/doctor_home">
+
+<i class="fas fa-paw"></i>
+
+<span>Paw</span>Doctor
+
+</a>
+
+<button class="navbar-toggler bg-light"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#navbarNav">
+
+<span class="navbar-toggler-icon"></span>
+
+</button>
+
+<div class="collapse navbar-collapse"
+id="navbarNav">
+
+<ul class="navbar-nav mx-auto">
+
+
+
+
+
+</ul>
+
+<div class="d-flex align-items-center gap-2">
+
+
+    <!-- RIGHT BUTTON -->
+
+            <div class="d-flex align-items-center">
+
+                <a class="nav-link"
+                    href="/doctor_home">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Back to Home Page
+
+                    </a>
+
+            </div>
+
+
+</div>
+
+ 
+
+</div>
+
+</div>
+
+</nav>
+
+<!-- MAIN -->
+
+<div class="main-container">
+
+<!-- HERO -->
+
+<div class="container">
+
+<div class="hero-card">
+
+<h1>Edit  Veterinarian Profile</h1>
+
+</div>
+
+</div>
+
+<!-- FORM -->
+
+<div class="container">
+
+<form id="editDoctorForm">
+
+<input type="hidden" id="doctor_id">
+
+<div class="main-form-card">
+
+<!-- BASIC INFO -->
+
+<h4 class="section-title">
+
+<i class="fas fa-user-doctor"></i>
+
+Basic Information
+
+</h4>
+
+<div class="row g-4">
+
+<div class="col-md-6">
+
+<label class="form-label">
+Doctor Name
+</label>
+
+<input type="text"
+name="name"
+class="form-control"
+value="{{ doctor.name }}"
+required>
+
+</div>
+
+<div class="col-md-6">
+
+<label class="form-label">
+Specialization
+</label>
+
+<select name="specialization"
+class="form-select">
+
+<option {{ 'selected' if doctor.specialization=='General Veterinarian' }}>
+General Veterinarian
+</option>
+
+<option {{ 'selected' if doctor.specialization=='Pet Surgeon' }}>
+Pet Surgeon
+</option>
+
+<option {{ 'selected' if doctor.specialization=='Dermatologist' }}>
+Dermatologist
+</option>
+
+<option {{ 'selected' if doctor.specialization=='Orthopedic Vet' }}>
+Orthopedic Vet
+</option>
+
+<option {{ 'selected' if doctor.specialization=='Dental Vet' }}>
+Dental Vet
+</option>
+
+</select>
+
+</div>
+
+<div class="col-md-6">
+
+<label class="form-label">
+Experience (Years)
+</label>
+
+<input type="number"
+name="experience"
+class="form-control"
+value="{{ doctor.experience_years }}">
+
+</div>
+
+<div class="col-md-6">
+
+<label class="form-label">
+Phone
+</label>
+
+<input type="tel"
+pattern="[0-9]{10}"
+name="phone"
+class="form-control"
+value="{{ doctor.phone }}">
+
+</div>
+
+</div>
+
+<hr class="section-divider">
+
+<!-- CLINIC -->
+
+<h4 class="section-title">
+
+<i class="fas fa-hospital"></i>
+
+Clinic Information
+
+</h4>
+
+<div class="row g-4">
+
+<div class="col-md-6">
+
+<label class="form-label">
+Clinic Name
+</label>
+
+<input type="text"
+name="clinic_name"
+class="form-control"
+value="{{ doctor.clinic_name }}">
+
+</div>
+
+<div class="col-md-6">
+
+<label class="form-label">
+Consultation Fee (₹)
+</label>
+
+<input type="number"
+step="0.01"
+name="consultation_fee"
+class="form-control"
+value="{{ doctor.consultation_fee }}">
+
+</div>
+
+<div class="col-md-12">
+
+<label class="form-label">
+City
+</label>
+
+<input type="text"
+name="city"
+class="form-control"
+value="{{ doctor.city }}">
+
+</div>
+
+</div>
+
+<hr class="section-divider">
+
+<!-- AVAILABILITY -->
+
+<h4 class="section-title">
+
+<i class="fas fa-clock"></i>
+
+Availability
+
+</h4>
+
+<div class="row g-4">
+
+<div class="col-md-12">
+
+<label class="form-label">
+
+Available Days
+
+</label>
+
+<div class="days-container">
+
+<label class="day-box">
+<input type="checkbox"
+name="days"
+value="Mon"
+{% if 'Mon' in days %}checked{% endif %}>
+Mon
+</label>
+
+<label class="day-box">
+<input type="checkbox"
+name="days"
+value="Tue"
+{% if 'Tue' in days %}checked{% endif %}>
+Tue
+</label>
+
+<label class="day-box">
+<input type="checkbox"
+name="days"
+value="Wed"
+{% if 'Wed' in days %}checked{% endif %}>
+Wed
+</label>
+
+<label class="day-box">
+<input type="checkbox"
+name="days"
+value="Thu"
+{% if 'Thu' in days %}checked{% endif %}>
+Thu
+</label>
+
+<label class="day-box">
+<input type="checkbox"
+name="days"
+value="Fri"
+{% if 'Fri' in days %}checked{% endif %}>
+Fri
+</label>
+
+<label class="day-box">
+<input type="checkbox"
+name="days"
+value="Sat"
+{% if 'Sat' in days %}checked{% endif %}>
+Sat
+</label>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<label class="form-label">
+Available Time
+</label>
+
+<input type="text"
+name="available_time"
+class="form-control"
+value="{{ start_time }} AM - {{ end_time }} PM"
+placeholder="10:00 AM - 5:00 PM">
+
+</div>
+
+</div>
+
+<hr class="section-divider">
+
+<!-- BIO -->
+
+<h4 class="section-title">
+
+<i class="fas fa-circle-info"></i>
+
+Doctor Bio
+
+</h4>
+
+<div class="mb-4">
+
+<textarea name="bio"
+class="form-control"
+rows="5">{{ doctor.bio }}</textarea>
+
+</div>
+
+<hr class="section-divider">
+
+<!-- IMAGE -->
+
+<h4 class="section-title">
+
+<i class="fas fa-image"></i>
+
+Profile Picture
+
+</h4>
+
+<div class="row align-items-center g-4">
+
+<div class="col-md-6">
+
+<input type="file"
+name="profile_pic"
+class="form-control">
+
+</div>
+
+<div class="col-md-6">
+
+{% if doctor.profile_pic %}
+
+<img src="/static/uploads/{{ doctor.profile_pic }}"
+class="img-fluid preview-img">
+
+{% endif %}
+
+</div>
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="action-buttons">
+
+<button type="submit"
+class="update-btn">
+
+<i class="fas fa-save me-2"></i>
+
+Update Doctor
+
+</button>
+
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+/* ===================================================
+FORM SUBMIT
+=================================================== */
+
+document.getElementById("editDoctorForm")
+.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const doctorId =
+window.location.pathname.split("/").pop();
+
+const formData = new FormData();
+
+formData.append(
+"name",
+document.querySelector('input[name="name"]').value
+);
+
+formData.append(
+"clinic_name",
+document.querySelector('input[name="clinic_name"]').value
+);
+
+formData.append(
+"specialization",
+document.querySelector('select[name="specialization"]').value
+);
+
+formData.append(
+"phone",
+document.querySelector('input[name="phone"]').value
+);
+
+formData.append(
+"experience",
+document.querySelector('input[name="experience"]').value
+);
+
+formData.append(
+"consultation_fee",
+document.querySelector('input[name="consultation_fee"]').value
+);
+
+formData.append(
+"city",
+document.querySelector('input[name="city"]').value
+);
+
+formData.append(
+"bio",
+document.querySelector('textarea[name="bio"]').value
+);
+
+const selectedDays = [];
+
+document.querySelectorAll(
+'input[name="days"]:checked'
+).forEach(day=>{
+
+selectedDays.push(day.value);
+
+});
+
+formData.append(
+"available_days",
+selectedDays.join(",")
+);
+
+formData.append(
+"available_time",
+document.querySelector('input[name="available_time"]').value
+);
+
+const imageFile =
+document.querySelector(
+'input[name="profile_pic"]'
+).files[0];
+
+if(imageFile){
+
+formData.append(
+"profile_pic",
+imageFile
+);
+
+}
+
+fetch(`/api/doctors/${doctorId}`,{
+
+method:"PUT",
+
+body:formData
+
+})
+
+.then(res=>res.json())
+
+.then(data=>{
+
+alert(data.message);
+
+window.location.href="/doctor_home";
+
+})
+
+.catch(err=>{
+
+console.error(err);
+
+alert("Update failed ❌");
+
+});
+
+});
+
+/* ===================================================
+FLOATING PAWS
+=================================================== */
+
+const container =
+document.getElementById('paw-container');
+
+for(let i=0;i<40;i++){
+
+createPaw();
+
+}
+
+function createPaw(){
+
+const paw =
+document.createElement('div');
+
+paw.className='paw-bubble';
+
+paw.innerHTML =
+'<i class="fas fa-paw"></i>';
+
+paw.style.left =
+Math.random()*100+'vw';
+
+paw.style.fontSize =
+(Math.random()*40+20)+'px';
+
+paw.style.animationDuration =
+(Math.random()*8+8)+'s';
+
+container.appendChild(paw);
+
+setTimeout(()=>{
+
+paw.remove();
+
+createPaw();
+
+},15000);
+
+}
+
+</script>
+
+</body>
+</html>

@@ -30,128 +30,188 @@
         }
 
         /* --- SIDEBAR STYLES (SHIFTED TO RIGHT) --- */
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -320px; /* Hidden off-screen to the right */
-            width: 300px;
-            height: 100vh;
-            background: #F8F9FD;
-            padding: 40px 20px;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 2000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1); /* Shadow on the left side now */
-            display: flex;
-            flex-direction: column;
-        }
+/* ================= SIDE MENU REDESIGN ================= */
 
-        .side-menu.active {
-            right: 0; /* Slide into view */
-        }
+.menu-btn{
+    background: linear-gradient(135deg, #8A2BE2);
+    border:none;
+    color:white;
+    padding:10px 20px;
+    border-radius:30px;
+    font-weight:700;
+}
 
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--primary-blue);
-            margin-bottom: 35px;
-        }
+.menu-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
+    z-index:9998;
+}
 
-        .sidebar-logo h4 {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
+.menu-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
 
-        .menu-title {
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--gray-sub);
-            letter-spacing: 1.5px;
-            margin: 20px 0 10px 10px;
-            text-transform: uppercase;
-        }
+.side-menu{
+    position:fixed;
+    top:0;
+    right:-380px;
+    width:340px;
+    height:100vh;
 
-        .sidebar-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+    background:linear-gradient(180deg,#ffffff,#f5f7ff);
 
-        .sidebar-links li {
-            margin-bottom: 12px;
-        }
+    z-index:9999;
 
-        .sidebar-links a {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 20px;
-            background: var(--light-lavender);
-            color: var(--primary-blue);
-            text-decoration: none;
-            border-radius: 15px;
-            font-weight: 600;
-            transition: 0.3s ease;
-        }
+    transition:0.4s ease;
 
-        .sidebar-links a:hover {
-            background: #CFD5FF;
-            transform: translateX(-5px); /* Shift left slightly on hover */
-        }
+    padding:25px;
 
-        .ai-box {
-            background: var(--emerald-green);
-            color: white;
-            padding: 14px;
-            border-radius: 15px;
-            text-align: center;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 5px;
-            box-shadow: 0 4px 12px rgba(16, 147, 98, 0.2);
-        }
+    display:flex;
+    flex-direction:column;
 
-        .menu-actions {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-bottom: 20px;
-        }
+    overflow-y:auto;
+}
 
-        .login-btn, .register-btn {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: 700;
-            border: none;
-        }
+.side-menu.active{
+    right:0;
+}
 
-        .login-btn {
-            background: white;
-            border: 2px solid #EEE;
-            color: var(--dark-text);
-        }
+.sidebar-top{
+    text-align:center;
+    margin-bottom:25px;
+}
 
-        .register-btn {
-            background: var(--gold-yellow);
-            color: var(--dark-text);
-        }
+.profile-circle{
+    width:90px;
+    height:90px;
+    background:linear-gradient(135deg,#ff6b6b,#ff9a9e);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    color:white;
+    font-size:2.5rem;
+    margin-bottom:15px;
+}
 
-        .menu-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            display: none;
-            z-index: 1500;
-            backdrop-filter: blur(3px);
-        }
+.sidebar-title{
+    font-size:1.5rem;
+    font-weight:700;
+    color:#333;
+}
 
-        .menu-overlay.active {
-            display: block;
-        }
+.sidebar-subtitle{
+    color:#777;
+    font-size:14px;
+}
+
+.sidebar-links{
+    list-style:none;
+    padding:0;
+}
+
+.sidebar-links li{
+    margin-bottom:15px;
+}
+
+.sidebar-links li a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
+    background:white;
+    padding:16px 18px;
+    border-radius:20px;
+    color:#333;
+    font-weight:600;
+    box-shadow:0 8px 20px rgba(0,0,0,0.06);
+    transition:0.3s;
+}
+
+.sidebar-links li a:hover{
+    background:#ff6b6b;
+    color:white;
+    transform:translateX(5px);
+}
+
+.ai-box{
+    margin-top:10px;
+}
+
+.ai-btn{
+    display:block;
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+    color:white;
+    text-decoration:none;
+    padding:16px;
+    border-radius:20px;
+    font-weight:700;
+    text-align:center;
+    transition:0.3s;
+}
+
+.ai-btn:hover{
+    transform:translateY(-3px);
+    color:white;
+}
+
+.menu-footer{
+    margin-top:auto;
+}
+
+/* ================= SIDEBAR BUTTONS ================= */
+
+.sidebar-action-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    text-decoration:none;
+
+    width:100%;
+
+    padding:16px;
+
+    border-radius:20px;
+
+    font-weight:700;
+
+    margin-top:12px;
+
+    transition:0.3s;
+
+    color:white;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.sidebar-action-btn:hover{
+    transform:translateY(-3px);
+    color:white;
+}
+
+.profile-btn{
+    background:linear-gradient(135deg,#3b82f6,#60a5fa);
+}
+
+.logout-btn{
+    background:linear-gradient(135deg,#ef4444,#f87171);
+}
+
+.login-btn{
+    background:linear-gradient(135deg,#6366f1,#818cf8);
+}
+
+.register-btn{
+    background:linear-gradient(135deg,#f59e0b,#fbbf24);
+}
 
         /* --- UI COMPONENTS --- */
         .navbar {
@@ -166,15 +226,6 @@
             transform: translateX(-50%);
             position: fixed;
             z-index: 1000;
-        }
-
-        .menu-btn {
-            background: linear-gradient(135deg, #8A2BE2);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 600;
         }
 
         .search-hero {
@@ -214,6 +265,35 @@
             color: white;
             font-weight: 600;
         }
+        .search-bar select{
+            border:none;
+            padding:0 15px;
+            background:#f4f4f4;
+            }
+
+            #suggestions{
+            max-width:500px;
+            margin:auto;
+            background:white;
+            border-radius:10px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+            display:none;
+            }
+
+            .suggestion-item{
+            padding:10px 15px;
+            cursor:pointer;
+            }
+
+            .suggestion-item:hover{
+            background:#f5f5f5;
+            }
+
+            .no-results{
+            text-align:center;
+            margin-top:40px;
+            font-weight:600;
+            }
 
         .salon-row {
             display: flex;
@@ -264,134 +344,533 @@
             from { transform: translateY(0) scale(0.8); opacity: 0; }
             to { transform: translateY(-120vh) scale(1.4); opacity: 0.6; }
         }
+        
+.vertical-card{
+    background:white;
+    border-radius:30px;
+    overflow:hidden;
+    max-width:450px;
+    margin:auto;
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    transition:0.3s;
+    position:relative;
+}
+
+.vertical-card:hover{
+    transform:translateY(-8px);
+}
+
+.vertical-card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.card-body-custom{
+    padding:25px;
+}
+
+.rating-badge{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:#ffc107;
+    color:#000;
+    padding:8px 14px;
+    border-radius:30px;
+    font-weight:700;
+}
+
+.salon-name{
+    font-family:'Fredoka';
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.info-box{
+    background:#f8f9ff;
+    padding:10px 15px;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+.view-btn-modern{
+    display:block;
+    text-align:center;
+    background:#ff7a7a;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:30px;
+    margin-top:15px;
+    font-weight:700;
+}
+
+.view-btn-modern:hover{
+    color:white;
+}
+.salons-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:30px;
+    max-width:1400px;
+    margin:auto;
+    padding:20px;
+}
+
+.vertical-card{
+    background:white;
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+    transition:0.3s;
+    position:relative;
+}
+
+.vertical-card:hover{
+    transform:translateY(-8px);
+}
+
+.vertical-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-body-custom{
+    padding:20px;
+}
+
+.rating-badge{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:#ffc107;
+    padding:8px 14px;
+    border-radius:25px;
+    font-weight:bold;
+}
+
+@media(max-width:992px){
+    .salons-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:768px){
+    .salons-grid{
+        grid-template-columns:1fr;
+    }
+}
     </style>
 </head>
 <body>
 
     <div class="live-bg-wrapper" id="paw-container"></div>
+<!-- ================= NAVBAR ================= -->
 
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/" style="color: var(--primary-color) !important;">
-                <i class="fas fa-paw"></i> Pawfeact Care
-            </a>
-            <div class="d-none d-lg-flex gap-4 mx-auto fw-semibold">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/about" class="nav-link">About</a>
-            </div>
-            <button class="menu-btn" onclick="openMenu()">☰ Menu</button>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg">
 
-    <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+    <div class="container-fluid">
 
-    <div id="sideMenu" class="side-menu">
-        <div class="sidebar-logo">
-            <i class="fas fa-paw fa-2x"></i>
-            <h4>Pawfect Care</h4>
+        <a class="navbar-brand fw-bold" href="/">
+            <i class="fas fa-paw"></i> Pawfect Care
+        </a>
+
+        <div class="d-none d-lg-flex gap-4 mx-auto fw-semibold">
+            <a href="/index" class="nav-link">Home</a>
+            <a href="/about" class="nav-link">About</a>
         </div>
 
-        <p class="menu-title">Main Menu</p>
-        <ul class="sidebar-links">
-            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="/salon"><i class="fas fa-cut"></i> Salons</a></li>
-            <li><a href="#"><i class="fas fa-shopping-cart"></i> Pet Marketplace</a></li>
-            <li><a href="#"><i class="fas fa-user-md"></i> Doctors</a></li>
-        </ul>
-        
-        <p class="menu-title">Smart Tools</p>
-        <div class="ai-box">
-            🤖 AI Health Bot
-        </div>
+        <button class="menu-btn" onclick="openMenu()">
+            ☰ Menu
+        </button>
 
-        <div class="menu-actions">
-            <button class="login-btn">🔐 Login</button>
-            <button class="register-btn">📝 Register</button>
-        </div>
     </div>
+
+</nav>
+
+<!-- ================= OVERLAY ================= -->
+
+<div id="menuOverlay"
+class="menu-overlay"
+onclick="closeMenu()">
+</div>
+
+<!-- ================= SIDEBAR ================= -->
+
+<div id="sideMenu"
+class="side-menu">
+
+    <div class="sidebar-top">
+
+        <div class="profile-circle">
+            <i class="fas fa-paw"></i>
+        </div>
+
+        <div class="sidebar-title">
+            Pawfect Care
+        </div>
+
+        <div class="sidebar-subtitle">
+            Premium Pet Care Platform
+        </div>
+
+    </div>
+
+    <ul class="sidebar-links">
+
+        <li>
+            <a href="/index">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="/salon">
+                <i class="fas fa-cut"></i>
+                Pet Salons
+            </a>
+        </li>
+
+        <li>
+            <a href="/sales">
+                <i class="fas fa-store"></i>
+                Marketplace
+            </a>
+        </li>
+
+        <li>
+            <a href="/user_doctor">
+                <i class="fas fa-user-md"></i>
+                Doctors
+            </a>
+        </li>
+        <li>
+            <a href="/my_appointments">
+                <i class="fas fa-user-md"></i>
+                My Appointment
+            </a>
+        </li>
+    </ul>
+    
+    <div class="ai-box">
+
+        <a href="/ai-health"
+        class="ai-btn">
+            🤖 AI Health Assistant
+        </a>
+
+    </div>
+
+    <div class="menu-footer">
+
+    {% if session.get("user_id") %}
+
+    <a href="/profile"
+    class="sidebar-action-btn profile-btn">
+        <i class="fas fa-user-circle"></i>
+        My Profile
+    </a>
+
+    <a href="/logout"
+    class="sidebar-action-btn logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+    </a>
+
+    {% else %}
+
+    <a href="/login"
+    class="sidebar-action-btn login-btn">
+        <i class="fas fa-lock"></i>
+        Login
+    </a>
+
+    <a href="/register"
+    class="sidebar-action-btn register-btn">
+        <i class="fas fa-user-plus"></i>
+        Register
+    </a>
+
+    {% endif %}
+
+</div>
+
+</div>
 
     <section class="search-hero">
         <div class="container">
             <h1>Find a Salon Your Pet Will Love 🐶🐱</h1>
             <p style="color: white;">Trusted grooming salons near you</p>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by city or salon name">
-                <button>Search</button>
+
+            <input type="text" id="searchInput" placeholder="Search salon, city or tagline">
+
+            <!--<select id="categoryFilter">
+            <option value="">All</option>
+            <option value="">Premium</option>
+            <option value="budget">Budget</option>
+            <option value="spa">Spa</option>
+            </select>-->
+
+            <button onclick="searchSalon()">Search</button>
+
             </div>
+
+            <div id="suggestions"></div>
         </div>
     </section>
 
     <div id="salonResults" class="mt-5"></div>
 
-    <script>
-        // SIDEBAR LOGIC
-        function openMenu() {
-            document.getElementById("sideMenu").classList.add("active");
-            document.getElementById("menuOverlay").classList.add("active");
+<script>
+
+// ================= SIDEBAR =================
+
+function openMenu() {
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("menuOverlay").classList.add("active");
+}
+
+function closeMenu() {
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("menuOverlay").classList.remove("active");
+}
+
+// ================= GLOBAL DATA =================
+
+let allSalons = [];
+
+// ================= RENDER SALONS =================
+
+function renderSalons(salons) {
+
+    const resultsDiv = document.getElementById("salonResults");
+
+    if (salons.length === 0) {
+        resultsDiv.innerHTML = `
+            <div class="no-results text-white">
+                No salons found 😢
+            </div>
+        `;
+        return;
+    }
+
+    let html = `<div class="salons-grid">`;
+
+    salons.forEach(salon => {
+
+        html += `
+        <div class="vertical-card">
+
+            <img src="/static/${salon.image}" alt="Salon">
+
+            <div class="card-body-custom">
+
+                <h4 style="font-family:'Fredoka';">
+                    ${salon.name}
+                </h4>
+
+                <p class="text-muted">
+                    ${salon.tagline || ""}
+                </p>
+
+                <p>
+                    <i class="fas fa-map-marker-alt text-danger"></i>
+                    ${salon.city}
+                </p>
+
+                <p>
+                    <i class="fas fa-clock text-success"></i>
+                    ${salon.open_hours} - ${salon.close_hours}
+                </p>
+
+                <a href="/salondetail?id=${salon.id}"
+                   class="view-btn">
+                    View Details
+                </a>
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    html += `</div>`;
+
+    resultsDiv.innerHTML = html;
+}
+
+// ================= SEARCH =================
+
+
+function searchSalon() {
+
+    const value =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+    const filtered = allSalons.filter(salon => {
+
+        const name =
+        (salon.name || "").toLowerCase();
+
+        const city =
+        (salon.city || "").toLowerCase();
+
+        const tagline =
+        (salon.tagline || "").toLowerCase();
+
+        const openTime =
+        (salon.open_hours || "").toLowerCase();
+
+        const closeTime =
+        (salon.close_hours || "").toLowerCase();
+        
+
+        return (
+
+            name.includes(value)
+
+            ||
+
+            city.includes(value)
+
+            ||
+
+            tagline.includes(value)
+
+            ||
+
+            openTime.includes(value)
+
+            ||
+
+            closeTime.includes(value)
+
+        );
+
+    });
+
+    renderSalons(filtered);
+}
+
+
+// ================= SUGGESTIONS =================
+
+function selectSuggestion(name) {
+
+    document.getElementById("searchInput").value = name;
+
+    document.getElementById("suggestions").style.display = "none";
+
+    searchSalon();
+}
+
+// ================= LOAD =================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ================= PAW ANIMATION =================
+
+    const container = document.getElementById('paw-container');
+
+    function createPaw() {
+
+        const paw = document.createElement('i');
+
+        paw.className = 'fas fa-paw paw-bubble';
+
+        paw.style.left = Math.random() * 100 + 'vw';
+
+        paw.style.fontSize =
+        Math.random() * 40 + 20 + 'px';
+
+        paw.style.animationDuration =
+        Math.random() * 8 + 6 + 's';
+
+        container.appendChild(paw);
+
+        setTimeout(() => paw.remove(), 8000);
+    }
+
+    for (let i = 0; i < 15; i++) {
+        createPaw();
+    }
+
+    setInterval(createPaw, 1500);
+
+    // ================= FETCH SALONS =================
+
+    fetch("/api/salons")
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        allSalons = data;
+
+        renderSalons(allSalons);
+
+    });
+
+    // ================= LIVE SEARCH =================
+
+    document.getElementById("searchInput")
+
+    .addEventListener("input", function () {
+
+        const value = this.value.toLowerCase();
+
+        const suggestionBox =
+        document.getElementById("suggestions");
+
+        searchSalon();
+
+        if (value.length === 0) {
+
+            suggestionBox.style.display = "none";
+
+            return;
         }
 
-        function closeMenu() {
-            document.getElementById("sideMenu").classList.remove("active");
-            document.getElementById("menuOverlay").classList.remove("active");
-        }
+        const matches = allSalons.filter(salon =>
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // PAW ANIMATION
-            const container = document.getElementById('paw-container');
-            function createPaw(){
-                const paw=document.createElement('i');
-                paw.className='fas fa-paw paw-bubble';
-                paw.style.left=Math.random()*100+'vw';
-                paw.style.fontSize=Math.random()*40+20+'px';
-                paw.style.animationDuration=Math.random()*8+6+'s';
-                container.appendChild(paw);
-                setTimeout(() => paw.remove(), 8000);
-            }
-            for(let i=0;i<15;i++) createPaw();
-            setInterval(createPaw, 1500);
+            salon.name.toLowerCase().includes(value)
 
-            // --- BACKEND FETCH LOGIC (UNCHANGED) ---
-            let allSalons = [];
+            ||
 
-            function renderSalons(salons) {
-                const resultsDiv = document.getElementById("salonResults");
-                resultsDiv.innerHTML = "";
+            salon.city.toLowerCase().includes(value)
 
-                salons.forEach(salon => {
-                    resultsDiv.innerHTML += `
-                    <div class="container mb-4">
-                        <div class="salon-row">
-                            <img src="http://127.0.0.1:5000/static/${salon.image}" alt="Salon">
-                            <div class="salon-info">
-                                <h4 style="font-family: 'Fredoka';">${salon.name}</h4>
-                                <p class="text-muted">${salon.tagline || ""}</p>
-                                <p><i class="fas fa-map-marker-alt"></i> ${salon.city}</p>
-                                <a href="/salondetail?id=${salon.id}" class="view-btn">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                });
-            }
+        ).slice(0, 5);
 
-            fetch("http://127.0.0.1:5000/api/salons")
-                .then(res => res.json())
-                .then(data => {
-                    allSalons = data;
-                    renderSalons(allSalons);
-                });
+        suggestionBox.innerHTML = "";
 
-            document.getElementById("searchInput").addEventListener("input", function () {
-                const value = this.value.toLowerCase();
-                const filtered = allSalons.filter(salon =>
-                    salon.name.toLowerCase().includes(value) ||
-                    salon.city.toLowerCase().includes(value)
-                );
-                renderSalons(filtered);
-            });
+        matches.forEach(salon => {
+
+            suggestionBox.innerHTML += `
+
+            <div class="suggestion-item"
+            onclick="selectSuggestion('${salon.name}')">
+
+                ${salon.name} (${salon.city})
+
+            </div>
+
+            `;
         });
-    </script>
+
+        suggestionBox.style.display =
+        matches.length ? "block" : "none";
+    });
+
+});
+
+</script>
 </body>
 </html>

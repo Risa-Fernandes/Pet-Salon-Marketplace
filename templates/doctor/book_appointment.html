@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Book Appointment | PawFect Care</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+min-height:100vh;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#dff6ff,#eef9ff,#ffffff);
+overflow-x:hidden;
+position:relative;
+}
+
+/* Floating paws background */
+#paw-container{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+overflow:hidden;
+}
+
+.paw{
+position:absolute;
+bottom:-80px;
+color:rgba(0, 0, 0, 0.12);
+animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:0;
+}
+10%{
+opacity:1;
+}
+100%{
+transform:translateY(-120vh) rotate(40deg);
+opacity:0;
+}
+}
+
+/* Main card */
+.booking-wrapper{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px 15px;
+}
+
+.booking-card{
+width:100%;
+max-width:800px;
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(12px);
+border-radius:22px;
+padding:35px;
+box-shadow:0 20px 40px rgba(0,0,0,0.12);
+border:1px solid rgba(255,255,255,0.5);
+}
+
+.logo-box{
+width:75px;
+height:75px;
+background:linear-gradient(135deg,#0d6efd,#4dabff);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+color:white;
+font-size:30px;
+box-shadow:0 10px 25px rgba(13,110,253,0.25);
+}
+
+.heading{
+text-align:center;
+margin-top:15px;
+margin-bottom:25px;
+}
+
+.heading h2{
+font-weight:700;
+color:#0d3b66;
+margin-bottom:8px;
+}
+
+.heading p{
+color:#6c757d;
+font-size:15px;
+}
+
+label{
+font-weight:600;
+color:#24425c;
+margin-bottom:8px;
+}
+
+.form-control,
+.form-select{
+height:48px;
+border-radius:12px;
+border:1px solid #dbe7f3;
+box-shadow:none;
+}
+
+textarea.form-control{
+height:80px;
+resize:none;
+padding-top:12px;
+}
+
+.form-control:focus,
+.form-select:focus{
+border-color:#0d6efd;
+box-shadow:0 0 0 0.15rem rgba(13,110,253,.15);
+}
+
+.input-group-text{
+border-radius:12px 0 0 12px;
+background:#f1f7ff;
+border:1px solid #dbe7f3;
+font-weight:600;
+}
+
+.btn-book{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+font-size:17px;
+font-weight:700;
+background:linear-gradient(135deg,#0d6efd,#4dabff);
+color:white;
+transition:0.3s;
+margin-top:10px;
+}
+
+.btn-book:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 25px rgba(13,110,253,0.25);
+}
+
+.back-link{
+display:block;
+text-align:center;
+margin-top:15px;
+text-decoration:none;
+font-weight:600;
+color:#0d6efd;
+}
+
+.back-link:hover{
+color:#084298;
+}
+
+.slot-note{
+font-size:13px;
+color:#6c757d;
+margin-top:6px;
+}
+
+@media(max-width:576px){
+
+.booking-card{
+padding:25px;
+}
+
+.heading h2{
+font-size:24px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Floating paws -->
+<div id="paw-container"></div>
+
+<div class="booking-wrapper">
+
+<div class="booking-card">
+
+<div class="logo-box">
+<i class="fas fa-paw"></i>
+</div>
+
+<div class="heading">
+<h2>Book Pet Appointment</h2>
+</div>
+
+<form id="appointmentForm" enctype="multipart/form-data">
+
+<input type="hidden" id="doctor_id" value="{{ doctor.id }}">
+
+<div class="row">
+
+<!-- OWNER -->
+
+<div class="col-md-6 mb-3">
+<label>Owner Name</label>
+<input type="text"
+id="owner_name"
+class="form-control"
+required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Phone Number</label>
+<input type="tel"
+id="owner_phone"
+class="form-control"
+required>
+</div>
+
+<!-- PET -->
+
+<div class="col-md-6 mb-3">
+<label>Pet Name</label>
+<input type="text"
+id="pet_name"
+class="form-control"
+required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Pet Type</label>
+
+<select id="pet_type" class="form-select">
+
+<option>Dog</option>
+<option>Cat</option>
+<option>Bird</option>
+<option>Rabbit</option>
+<option>Other</option>
+
+</select>
+</div>
+
+
+<div class="col-md-6 mb-3">
+<label>Gender</label>
+
+<select id="gender" class="form-select">
+
+<option>Male</option>
+<option>Female</option>
+
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Pet Age</label>
+<input type="text"
+id="pet_age"
+class="form-control"
+placeholder="2 years">
+</div>
+
+
+
+<!-- DATE -->
+
+<div class="col-md-6 mb-3">
+<label>Select Date</label>
+
+<input type="date"
+id="appointment_date"
+class="form-control"
+required>
+
+</div>
+
+<div class="mb-3"> <label>Available Slots</label> <select id="appointment_time" class="form-select" required> <option value="">Choose Time Slot</option> </select> <div class="slot-note">Slots are auto-generated based on doctor availability.</div> </div>
+
+<!-- MEDICAL -->
+
+<div class="col-12 mb-3">
+
+<label>Symptoms</label>
+
+<textarea id="symptoms"
+class="form-control"
+placeholder="Vomiting, fever, weakness..."></textarea>
+
+</div>
+
+<div class="col-12 mb-3">
+
+<label>Reason for Visit</label>
+
+<textarea id="reason"
+class="form-control"
+placeholder="Describe concern"></textarea>
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+<button type="submit" class="btn-book">
+
+<i class="fas fa-calendar-check"></i>
+
+Request Appointment
+
+</button>
+
+<a href="/user_doctor"
+class="back-link">
+
+← Back to Doctors
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+/* Floating paws */
+
+const pawContainer = document.getElementById("paw-container");
+
+function createPaw(){
+
+const paw = document.createElement("i");
+paw.className = "fas fa-paw paw";
+
+paw.style.left = Math.random()*100 + "vw";
+paw.style.fontSize = (Math.random()*25 + 18) + "px";
+paw.style.animationDuration = (Math.random()*8 + 8) + "s";
+paw.style.animationDelay = Math.random()*5 + "s";
+
+pawContainer.appendChild(paw);
+
+setTimeout(()=>{
+paw.remove();
+},16000);
+
+}
+
+setInterval(createPaw,500);
+
+
+
+/* Appointment Logic */
+
+const doctorId = document.getElementById("doctor_id").value;
+
+document.getElementById("appointment_date")
+.addEventListener("change", function(){
+
+fetch(`/api/doctors/${doctorId}/slots?date=${this.value}`)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let options = `<option value="">Choose Time Slot</option>`;
+
+if(data.length === 0){
+options = `<option value="">No Slots Available</option>`;
+}
+
+data.forEach(slot=>{
+options += `<option value="${slot}">${slot}</option>`;
+});
+
+document.getElementById("appointment_time").innerHTML = options;
+
+});
+
+});
+
+
+document.getElementById("appointmentForm")
+.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const formData = new FormData();
+
+formData.append("doctor_id", doctorId);
+
+formData.append("owner_name",
+document.getElementById("owner_name").value);
+
+formData.append("owner_phone",
+document.getElementById("owner_phone").value);
+
+formData.append("pet_name",
+document.getElementById("pet_name").value);
+
+formData.append("pet_type",
+document.getElementById("pet_type").value);
+
+formData.append("gender",
+document.getElementById("gender").value);
+
+formData.append("pet_age",
+document.getElementById("pet_age").value);
+
+formData.append("appointment_date",
+document.getElementById("appointment_date").value);
+
+formData.append("appointment_time",
+document.getElementById("appointment_time").value);
+
+formData.append("symptoms",
+document.getElementById("symptoms").value);
+
+formData.append("reason",
+document.getElementById("reason").value);
+
+fetch("/api/appointments", {
+
+    method: "POST",
+    body: formData
+
+})
+.then(res => res.json())
+
+.then(data => {
+
+    alert(data.message);
+
+    window.location = "/index";
+
+})
+
+.then(async res => {
+
+    const data = await res.json()
+
+    if(res.status === 409){
+        alert(data.message)
+        loadSlotsAgain()
+        return
+    }
+
+    alert(data.message)
+
+})
+
+
+});
+
+
+</script>
+
+</body>
+</html>

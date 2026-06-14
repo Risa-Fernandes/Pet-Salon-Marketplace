@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PawSalon Appointments</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Urbanist',sans-serif;
+}
+
+:root{
+    --primary:#6366f1;
+    --dark:#1f2937;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg,#eef2ff,#f8fafc,#fdf4ff);
+    padding:30px;
+    color:var(--dark);
+}
+
+/* NAV */
+.top-navbar{
+    background:rgba(255,255,255,0.5);
+    backdrop-filter:blur(20px);
+    padding:18px 30px;
+    border-radius:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.nav-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.back-btn, .home-btn{
+    padding:10px 20px;
+    border-radius:15px;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.back-btn{
+    background:#fff;
+    color:#333;
+    border:1px solid #ddd;
+}
+
+.home-btn{
+    background:var(--primary);
+    color:#fff;
+}
+
+/* FILTER */
+.filter-bar{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.filter-bar select{
+    padding:12px 18px;
+    border-radius:15px;
+    border:none;
+    background:#fff;
+    min-width:220px;
+}
+
+/* TABLE */
+.table-container{
+    background:#fff;
+    border-radius:25px;
+    padding:25px;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead th{
+    background:var(--primary);
+    color:#fff;
+    padding:15px;
+}
+
+tbody td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+.status{
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:700;
+    font-size:13px;
+}
+
+.pending{background:#fff3cd;color:#856404;}
+.confirmed{background:#d1e7dd;color:#0f5132;}
+.canceled{background:#f8d7da;color:#842029;}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="top-navbar">
+    <div class="logo"><i class="fas fa-paw"></i> PawSalon</div>
+    <div class="nav-buttons">
+          <a href="/salon/dashbord" class="home-btn">Home</a>
+    </div>
+</div>
+
+<!-- TITLE -->
+<h1>{{ salon.name }} Appointments</h1>
+
+<!-- FILTERS -->
+<div class="filter-bar">
+
+    <select id="dateFilter">
+        <option value="all">All Dates</option>
+        <option value="today">Today</option>
+        <option value="tomorrow">Tomorrow</option>
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+    </select>
+
+    <select id="timeFilter">
+        <option value="all">All Time</option>
+        <option value="morning">Morning (6AM - 12PM)</option>
+        <option value="afternoon">Afternoon (12PM - 6PM)</option>
+        <option value="evening">Evening (6PM - 12AM)</option>
+    </select>
+
+    <select id="statusFilter">
+        <option value="all">All Status</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="canceled">Canceled</option>
+       
+    </select>
+
+</div>
+
+<!-- TABLE -->
+<div class="table-container">
+
+<table>
+<thead>
+<tr>
+    <th>Owner</th>
+    <th>Mobile</th>
+    <th>Pet</th>
+    <th>Pet Category </th>
+    <th>Service</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for appointment in appointments %}
+<tr>
+    <td>{{ appointment.owner_name }}</td>
+    <td>{{ appointment.mobile }}</td>
+    <td>{{ appointment.pet_name }}</td>
+    <td>{{ appointment.pet_category }}</td>
+    <td>{{ appointment.service_name }}</td>
+
+    <!-- IMPORTANT: must be YYYY-MM-DD -->
+    <td>{{ appointment.appointment_date }}</td>
+
+    <!-- IMPORTANT: must be HH:MM (24h format) -->
+    <td>{{ appointment.appointment_time }}</td>
+
+    <td>
+        <span class="status {{ appointment.status }}">
+            {{ appointment.status }}
+        </span>
+    </td>
+
+    <td>
+        {% if appointment.status != 'canceled' %}
+        <form action="/update_appointment_status/{{ appointment.id }}" method="POST">
+            <input type="hidden" name="status" value="canceled">
+            <button class="btn btn-danger btn-sm">Reject</button>
+        </form>
+        {% else %}
+        <span>No Action</span>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const tbody = document.querySelector("tbody");
+    const originalRows = Array.from(tbody.querySelectorAll("tr"));
+
+    const dateFilter = document.getElementById("dateFilter");
+    const timeFilter = document.getElementById("timeFilter");
+    const statusFilter = document.getElementById("statusFilter");
+
+    function parseDate(str) {
+        return new Date(str.replace(/-/g, "/"));
+    }
+
+    function getStatus(row) {
+        return row.cells[7].innerText.trim().toLowerCase();
+    }
+
+    function getTime(row) {
+        return row.cells[6].innerText.trim();
+    }
+
+    function applyFilters() {
+
+        let rows = [...originalRows];
+
+        const d = dateFilter.value;
+        const t = timeFilter.value;
+        const s = statusFilter.value;
+
+        // RESET DOM FIRST
+        tbody.innerHTML = "";
+
+        // ---------------- DATE FILTER ----------------
+        if (d === "today") {
+            rows = rows.filter(r =>
+                parseDate(r.cells[5].innerText).toDateString() === new Date().toDateString()
+            );
+        }
+
+        if (d === "tomorrow") {
+            let tm = new Date();
+            tm.setDate(tm.getDate() + 1);
+
+            rows = rows.filter(r =>
+                parseDate(r.cells[5].innerText).toDateString() === tm.toDateString()
+            );
+        }
+
+        if (d === "newest") {
+            rows.sort((a, b) =>
+                parseDate(b.cells[5].innerText) - parseDate(a.cells[5].innerText)
+            );
+        }
+
+        if (d === "oldest") {
+            rows.sort((a, b) =>
+                parseDate(a.cells[5].innerText) - parseDate(b.cells[5].innerText)
+            );
+        }
+
+        // ---------------- TIME FILTER ----------------
+        function hour(time) {
+            return parseInt(time.split(":")[0]);
+        }
+
+        if (t === "morning") {
+            rows = rows.filter(r => {
+                let h = hour(getTime(r));
+                return h >= 6 && h < 12;
+            });
+        }
+
+        if (t === "afternoon") {
+            rows = rows.filter(r => {
+                let h = hour(getTime(r));
+                return h >= 12 && h < 18;
+            });
+        }
+
+        if (t === "evening") {
+            rows = rows.filter(r => {
+                let h = hour(getTime(r));
+                return h >= 18 && h <= 23;
+            });
+        }
+
+        // ---------------- STATUS FILTER ----------------
+        if (s !== "all") {
+               rows = rows.filter(r => {
+
+        let status = getStatus(r);
+
+        if (s === "canceled") {
+            return status === "canceled" || status === "cancelled";
+        }
+
+        return status === s;
+    });
+        }
+
+        // RE-RENDER TABLE
+        rows.forEach(r => tbody.appendChild(r));
+    }
+
+    dateFilter.addEventListener("change", applyFilters);
+    timeFilter.addEventListener("change", applyFilters);
+    statusFilter.addEventListener("change", applyFilters);
+
+});
+</script>
+
+</body>
+</html>

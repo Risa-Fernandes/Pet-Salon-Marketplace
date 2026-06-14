@@ -1,261 +1,838 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pawfeact Care - {{ salon.name }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --primary-blue: #5D5FEF;
-            --light-lavender: #DDE2FF;
-            --emerald-green: #109362;
-            --gold-yellow: #FFC107;
-            --dark-text: #292F36;
-            --gray-sub: #A0A0C0;
-            --primary-color: #FF6B6B;
-            --secondary-color: #4ECDC4;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(135deg, #9951b1, #515eaa);
-            min-height: 100vh;
-            margin: 0;
-            color: var(--dark-text);
-        }
+<title>PawSalon - {{ salon.name }}</title>
 
-        /* --- NAVBAR & SPACING FIX --- */
-        .navbar {
-            margin-top: 20px;
-            padding: 0.8rem 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            left: 50%;
-            transform: translateX(-50%);
-            position: fixed;
-            z-index: 1100; /* Higher than everything else */
-        }
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+rel="stylesheet">
 
-        .main-content {
-            padding-top: 130px; /* This pushes content below the floating navbar */
-            position: relative;
-            z-index: 1;
-        }
+<!-- Font Awesome -->
 
-        /* --- SIDEBAR --- */
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100vh;
-            background: #F8F9FD;
-            padding: 40px 20px;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 2000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-        .side-menu.active { right: 0; }
+<!-- GOOGLE FONT -->
 
-        .menu-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            display: none;
-            z-index: 1500;
-            backdrop-filter: blur(3px);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-        .menu-overlay.active { display: block; }
+<style>
 
-        /* --- CARD & ELEMENT STYLES --- */
-        .card { 
-            border-radius: 20px; 
-            border: none;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Urbanist',sans-serif;
+}
 
-        .btn-primary-custom {
-            background: var(--primary-color);
-            border: none;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: 0.3s;
-        }
+:root{
+    --primary:#6366f1;
+    --secondary:#8b5cf6;
+    --pink:#ec4899;
+    --cyan:#06b6d4;
+    --orange:#f59e0b;
+    --green:#10b981;
+}
 
-        .carousel-item img {
-            height: 400px;
-            object-fit: cover;
-            border-radius: 20px;
-        }
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    color:#1f2937;
 
-        .service-item {
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
+    background:
+    radial-gradient(circle at top left,#bfdbfe 0%,transparent 25%),
+    radial-gradient(circle at top right,#fbcfe8 0%,transparent 25%),
+    radial-gradient(circle at bottom right,#c4b5fd 0%,transparent 25%),
+    linear-gradient(135deg,#9951b1,#515eaa);
 
-        .service-item:last-child { border-bottom: none; }
+    position:relative;
+    padding-bottom:50px;
+}
 
-        /* --- BACKGROUND ANIMATION --- */
-        .live-bg-wrapper {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
+/* BLOBS */
 
-        .paw-bubble {
-            position: absolute;
-            bottom: -100px;
-            color: rgba(255,255,255,0.1);
-            animation: floatUp linear infinite;
-        }
+body::before{
+    content:'';
+    position:fixed;
+    width:550px;
+    height:550px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#60a5fa,#818cf8,#ec4899);
+    top:-180px;
+    left:-120px;
+    filter:blur(120px);
+    opacity:0.35;
+    animation:floatBlob1 10s infinite alternate ease-in-out;
+    z-index:-2;
+}
 
-        @keyframes floatUp {
-            from { transform: translateY(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.4; }
-            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
-        }
-    </style>
+body::after{
+    content:'';
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#06b6d4,#14b8a6,#8b5cf6);
+    bottom:-180px;
+    right:-120px;
+    filter:blur(120px);
+    opacity:0.35;
+    animation:floatBlob2 12s infinite alternate ease-in-out;
+    z-index:-2;
+}
+
+@keyframes floatBlob1{
+
+    0%{
+        transform:translateY(0px) translateX(0px);
+    }
+
+    100%{
+        transform:translateY(60px) translateX(40px);
+    }
+
+}
+
+@keyframes floatBlob2{
+
+    0%{
+        transform:translateY(0px) translateX(0px);
+    }
+
+    100%{
+        transform:translateY(-50px) translateX(-50px);
+    }
+
+}
+
+/* NAVBAR */
+
+.navbar{
+    margin-top:20px;
+    padding:18px 30px;
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(24px);
+    border-radius:40px;
+    width:92%;
+    left:50%;
+    transform:translateX(-50%);
+    position:fixed;
+    top:0;
+    z-index:1200;
+    border:1px solid rgba(255,255,255,0.25);
+    box-shadow:0 20px 45px rgba(99,102,241,0.15);
+}
+
+.navbar-brand{
+    font-size:32px;
+    font-weight:800;
+    color:#ff6b6b!important;
+}
+
+.nav-link{
+    color:#374151!important;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.nav-link:hover{
+    color:#7c3aed!important;
+}
+
+/* MAIN */
+
+.main-content{
+    padding-top:180px;
+}
+
+/* BUTTON */
+
+.btn-primary-custom{
+    background:#ff6b6b;
+    border:none;
+    color:white;
+    padding:13px 28px;
+    border-radius:20px;
+    font-weight:700;
+    transition:0.4s;
+    box-shadow:0 15px 30px rgba(255,107,107,0.25);
+}
+
+.btn-primary-custom:hover{
+    transform:translateY(-4px) scale(1.03);
+    color:white;
+}
+
+.btn-back{
+    background:white;
+    border:none;
+    border-radius:50px;
+    padding:10px 24px;
+    font-weight:700;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+
+.page-header{
+    background:rgba(255,255,255,0.92);
+    border-radius:30px;
+    padding:35px;
+    margin-bottom:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.page-header h1{
+    font-size:54px;
+    font-weight:800;
+}
+
+/* IMAGE */
+
+.salon-image{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+    border-radius:30px;
+    margin-bottom:25px;
+}
+
+/* CARDS */
+
+.service-card,
+.review-item,
+.appointment-card,
+.location-box{
+    background:rgba(255,255,255,0.92);
+    border-radius:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+/* SERVICES */
+
+.service-card{
+    padding:35px;
+}
+
+.service-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+}
+
+.service-item:last-child{
+    border:none;
+}
+
+.service-price{
+    font-size:30px;
+    font-weight:800;
+    color:#2563eb;
+}
+
+/* REVIEWS */
+
+.review-section h4{
+    font-weight:800;
+    margin-bottom:25px;
+    color:white;
+}
+
+.review-item{
+    padding:25px;
+    margin-bottom:18px;
+}
+
+.review-stars{
+    color:#fbbf24;
+    font-size:22px;
+}
+
+/* APPOINTMENT */
+
+.appointment-card{
+    padding:35px;
+}
+
+.appointment-icon{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#ffe5e5;
+    color:#ff6b6b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    margin:auto;
+}
+
+/* INPUTS */
+
+.custom-input{
+    border:none!important;
+    background:#f3f4f6!important;
+    border-radius:16px!important;
+    padding:15px!important;
+    box-shadow:none!important;
+    font-weight:600;
+}
+
+.custom-input:focus{
+    border:2px solid #8b5cf6!important;
+    background:white!important;
+    box-shadow:none!important;
+}
+
+/* LOCATION */
+
+.location-box{
+    padding:25px;
+}
+
+/* TEXT */
+
+.text-primary-custom{
+    color:#7c3aed;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:991px){
+
+    .navbar{
+        width:96%;
+    }
+
+    .page-header h1{
+        font-size:36px;
+    }
+
+    .salon-image{
+        height:300px;
+    }
+
+    .main-content{
+        padding-top:200px;
+    }
+
+}
+
+</style>
+
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const bookingForm = document.getElementById("bookingForm");
+    const serviceError = document.getElementById("serviceError");
+
+    bookingForm.addEventListener("submit", function (e) {
+
+        const checkedServices =
+            document.querySelectorAll(".service-check:checked");
+
+        if (checkedServices.length < 1) {
+
+            e.preventDefault();
+
+            serviceError.classList.remove("d-none");
+
+            alert("Please select at least one service");
+
+            return;
+
+        } else {
+
+            serviceError.classList.add("d-none");
+
+        }
+
+        const confirmBooking =
+            confirm("Do you want to confirm this appointment booking?");
+
+        if (!confirmBooking) {
+            e.preventDefault();
+        }
+
+    });
+
+});
+</script>
 <body>
 
-    <div class="live-bg-wrapper" id="paw-container"></div>
+<!-- NAVBAR -->
 
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/" style="color: var(--primary-color) !important;">
-                <i class="fas fa-paw"></i> Pawfeact Care
-            </a>
-            <div class="d-none d-lg-flex gap-4 mx-auto fw-semibold">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About</a>
+<nav class="navbar navbar-expand-lg">
+
+<div class="container-fluid">
+
+<a class="navbar-brand" href="/">
+
+<i class="fas fa-paw"></i>
+Pawfect Care
+
+</a>
+
+
+
+<a href="/salon" class="btn btn-back">
+Back
+</a>
+
+</div>
+
+</nav>
+
+<!-- MAIN -->
+
+<div class="container main-content">
+
+<div class="row g-4">
+
+<!-- LEFT -->
+
+<div class="col-lg-8">
+
+<!-- HEADER -->
+
+<div class="page-header">
+
+<div class="d-flex justify-content-between align-items-start flex-wrap">
+
+<div>
+
+<h1>
+{{ salon.name }}
+</h1>
+
+<p class="text-muted mb-1">
+
+<i class="fas fa-map-marker-alt text-danger"></i>
+
+{{ salon.address }}, {{ salon.city }}
+
+</p>
+
+<p class="text-muted mb-1">
+
+<i class="fas fa-phone text-danger"></i>
+
+{{ salon.phone or "Not Available" }}
+
+</p>
+
+</div>
+
+<div class="text-end">
+<div class="text-warning fs-5">
+{% for i in range(5) %}
+    {% if i < avg_rating|round(0, 'floor') %}
+        <i class="fas fa-star"></i>
+    {% else %}
+        <i class="far fa-star"></i>
+    {% endif %}
+{% endfor %}
+</div>
+
+<h2 class="text-primary-custom mb-0">
+{{ "%.1f"|format(avg_rating or 0) }}
+<small class="text-muted fs-6">/5</small>
+</h2>
+
+
+</div>
+
+</div>
+
+</div>
+
+<!-- IMAGE -->
+
+{% if salon.image %}
+
+<img src="{{ url_for('static', filename='uploads/' + salon.image) }}"
+class="salon-image">
+
+{% else %}
+
+<img src="{{ url_for('static', filename='images/default.jpg') }}"
+class="salon-image">
+
+{% endif %}
+
+<!-- SERVICES -->
+
+<div class="service-card mb-4">
+
+<h3 class="mb-4 fw-bold">
+Available Services ✨
+</h3>
+
+{% if services %}
+
+{% for service in services %}
+
+<div class="service-item">
+
+<div>
+
+<h5 class="mb-1 fw-bold">
+{{ service.service_name }}
+</h5>
+
+<small class="text-muted">
+
+{{ service.duration }} mins
+
+</small>
+
+</div>
+
+<div class="service-price">
+
+₹{{ "%.2f"|format(service.price) }}
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+</div>
+<!-- REVIEWS -->
+
+<div class="review-section mt-4">
+
+    <h4>Customer Reviews 💕</h4>
+
+    {% if reviews %}
+        {% for r in reviews %}
+
+        <div class="review-item">
+
+            <div class="d-flex justify-content-between">
+
+                <h6 class="mb-1">{{ r.username }}</h6>
+
+                <small class="text-muted">
+                    {{ r.created_at|timeago }}
+                </small>
+
             </div>
-            <button class="btn" style="background: var(--primary-color); color: white; border-radius: 50px;" onclick="openMenu()">☰ Menu</button>
-        </div>
-    </nav>
 
-    <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+            <div class="review-stars">
 
-    <div id="sideMenu" class="side-menu">
-        <div class="sidebar-logo mb-4">
-            <i class="fas fa-paw fa-2x text-primary"></i>
-            <span class="h4 ms-2 fw-bold">Pawfect Menu</span>
+                {% for i in range(r.rating) %}
+                    ★
+                {% endfor %}
+
+            </div>
+
+            <p class="mb-0 mt-2">
+                {{ r.review }}
+            </p>
+
         </div>
-        <div class="sidebar-links">
-            <a href="index.html" class="btn btn-light w-100 text-start mb-2 rounded-3"><i class="fas fa-home me-2"></i> Home</a>
-            <a href="#" class="btn btn-light w-100 text-start mb-2 rounded-3"><i class="fas fa-cut me-2"></i> Salons</a>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="review-item text-center text-muted">
+            💬 No reviews yet. Be the first to share your experience!
         </div>
-        <div class="mt-auto">
-            <button class="btn btn-warning w-100 rounded-pill mb-2">Register</button>
-            <button class="btn btn-outline-secondary w-100 rounded-pill">Login</button>
+
+    {% endif %}
+
+</div>
+</div>
+
+<!-- RIGHT -->
+
+<div class="col-lg-4">
+
+<div class="sticky-top" style="top:140px;">
+
+<!-- APPOINTMENT -->
+
+<div class="appointment-card mb-4">
+
+<div class="text-center mb-4">
+
+<div class="appointment-icon mb-3">
+
+<i class="fas fa-calendar-check"></i>
+
+</div>
+
+<h3 class="fw-bold mb-2">
+Book Appointment
+</h3>
+
+<p class="text-muted small">
+Reserve your pet salon slot easily ✨
+</p>
+
+</div>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible fade show rounded-4 mb-3" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<form action="/api/salon-appointments"
+method="POST"
+id="bookingForm">
+
+<input type="hidden"
+name="salon_id"
+value="{{ salon.id }}">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label fw-semibold">
+Owner Name*
+</label>
+
+<input type="text"
+name="owner_name"
+class="form-control custom-input"
+placeholder="Owner name"
+required>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label fw-semibold">
+Mobile Number*
+</label>
+<input type="text"
+name="mobile"
+class="form-control custom-input"
+placeholder="Enter 10 digit mobile number"
+maxlength="10"
+pattern="[0-9]{10}"
+required
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label fw-semibold">
+Pet Name*
+</label>
+
+<input type="text"
+name="pet_name"
+class="form-control custom-input"
+placeholder="Pet name"
+required>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label fw-semibold">
+Pet Category*
+</label>
+
+<select name="pet_category"
+class="form-select custom-input"
+required>
+
+<option value="">Select Category</option>
+
+<option value="Dog">🐶 Dog</option>
+<option value="Cat">🐱 Cat</option>
+<option value="Other">Other</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label fw-semibold">
+Appointment Date*
+</label>
+<input type="date"
+name="appointment_date"
+class="form-control custom-input"
+min="{{ today }}"
+max="{{ max_date }}"
+required>
+
+</div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Appointment Time*</label>
+            <select name="appointment_time" class="form-select custom-input" required>
+                <option value="">Select Time</option>
+                <option value="05:00 AM">05:00 AM</option>
+                <option value="05:30 AM">05:30 AM</option>
+                <option value="06:00 AM">06:00 AM</option>
+                <option value="06:30 AM">06:30 AM</option>
+                <option value="07:00 AM">07:00 AM</option>
+                <option value="07:30 AM">07:30 AM</option>
+                <option value="08:00 AM">08:00 AM</option>
+                <option value="08:30 AM">08:30 AM</option>
+                <option value="09:00 AM">09:00 AM</option>
+                <option value="09:30 AM">09:30 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="10:30 AM">10:30 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="11:30 AM">11:30 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="12:30 PM">12:30 PM</option>
+                <option value="01:00 PM">01:00 PM</option>
+                <option value="01:30 PM">01:30 PM</option>
+                <option value="02:00 PM">02:00 PM</option>
+                <option value="02:30 PM">02:30 PM</option>
+                <option value="03:00 PM">03:00 PM</option>
+                <option value="03:30 PM">03:30 PM</option>
+                <option value="04:00 PM">04:00 PM</option>
+                <option value="04:30 PM">04:30 PM</option>
+                <option value="05:00 PM">05:00 PM</option>
+                <option value="05:30 PM">05:30 PM</option>
+                <option value="06:00 PM">06:00 PM</option>
+                <option value="06:30 PM">06:30 PM</option>
+                <option value="07:00 PM">07:00 PM</option>
+                <option value="07:30 PM">07:30 PM</option>
+                <option value="08:00 PM">08:00 PM</option>
+                <option value="08:30 PM">08:30 PM</option>
+                <option value="09:00 PM">09:00 PM</option>
+                <option value="09:30 PM">09:30 PM</option>
+                <option value="10:00 PM">10:00 PM</option>
+                <option value="10:30 PM">10:30 PM</option>
+                <option value="11:00 PM">11:00 PM</option>
+                <option value="11:30 PM">11:30 PM</option>
+            </select>
         </div>
+
+</div>
+
+<div class="mb-4">
+    <!-- SERVICES -->
+    <div class="mb-3">
+        <label class="form-label fw-semibold">Choose Services*</label>
+
+        {% for service in services %}
+        <div class="form-check">
+            <input class="form-check-input service-check"
+                   type="checkbox"
+                   name="service_name"
+                   value="{{ service.service_name }}">
+
+            <label class="form-check-label">
+                {{ service.service_name }}
+            </label>
+        </div>
+        {% endfor %}
+
+        <small id="serviceError" class="text-danger d-none">
+            Please select at least one service
+        </small>
     </div>
+<label class="form-label fw-semibold">
+Additional Notes
+</label>
 
-    <div class="container main-content">
-        <div class="row g-4"> <div class="col-lg-8">
-                <div class="card p-4 mb-4">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h1 class="fw-bold mb-1">{{ salon.name }}</h1>
-                            <p class="text-muted mb-1"><i class="fas fa-map-marker-alt me-2 text-danger"></i>{{ salon.address }}, {{ salon.city }}</p>
-                            <p class="text-muted"><i class="fas fa-phone me-2 text-danger"></i>{{ salon.phone or "Not Available" }}</p>
-                        </div>
-                        <div class="text-end">
-                            <span class="badge bg-warning text-dark fs-5">4.8 / 5</span>
-                            <p class="small text-muted mt-1">120 Reviews</p>
-                        </div>
-                    </div>
-                </div>
+<textarea rows="4"
+name="notes"
+class="form-control custom-input"
+placeholder="Write something..."></textarea>
 
-                <div id="salonCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
-                    <div class="carousel-inner rounded-4 shadow">
-                        <div class="carousel-item active">
-                            <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7" class="d-block w-100">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://images.unsplash.com/photo-1599443015574-be5fe8a05783" class="d-block w-100">
-                        </div>
-                    </div>
-                </div>
+</div>
 
-                <h3 class="text-white mb-3 fw-bold">Services Menu</h3>
-                <div class="card p-4 mb-5">
-                    {% for service in services %}
-                    <div class="service-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5 class="fw-bold mb-0">{{ service.service_name }}</h5>
-                            <small class="text-muted">{{ service.duration }} mins</small>
-                        </div>
-                        <div class="fw-bold text-primary fs-5">₹{{ "%.2f"|format(service.price) }}</div>
-                    </div>
-                    {% else %}
-                    <p class="text-center py-4">No services listed for this salon.</p>
-                    {% endfor %}
-                </div>
-            </div>
+<button type="submit"
+class="btn btn-primary-custom w-100 btn-lg">
 
-            <div class="col-lg-4">
-                <div class="card p-4 sticky-top shadow" style="top: 130px;">
-                    <h4 class="fw-bold mb-3">Book Appointment</h4>
-                    <p class="text-muted small mb-4">Book a slot for your pet instantly.</p>
-                    
-                    <a href="/book/{{ salon.id }}" class="btn btn-primary-custom w-100 mb-4">Book Now</a>
-                    
-                    <h5 class="fw-bold mb-2">Business Hours</h5>
-                    <p class="small mb-4 text-muted">
-                        <i class="far fa-clock me-2"></i>{{ salon.open_hours or "9:00 AM" }} - {{ salon.close_hours or "8:00 PM" }}
-                    </p>
+<i class="fas fa-paw me-2"></i>
 
-                    <h5 class="fw-bold mb-2">Location</h5>
-                    <div class="bg-light rounded text-center py-4 mb-2">
-                        <i class="fas fa-map-marked-alt fa-2x text-muted mb-2"></i>
-                        <p class="small text-muted mb-0">Map View Available in App</p>
-                    </div>
-                    <p class="small text-muted">{{ salon.address }}</p>
-                </div>
-            </div>
+Confirm Booking
 
-        </div>
-    </div>
+</button>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function openMenu() {
-            document.getElementById("sideMenu").classList.add("active");
-            document.getElementById("menuOverlay").classList.add("active");
-        }
-        function closeMenu() {
-            document.getElementById("sideMenu").classList.remove("active");
-            document.getElementById("menuOverlay").classList.remove("active");
-        }
+</form>
 
-        // Generate Paws
-        function createPaw() {
-            const container = document.getElementById('paw-container');
-            const paw = document.createElement('i');
-            paw.className = 'fas fa-paw paw-bubble';
-            const size = Math.random() * 20 + 15 + 'px';
-            paw.style.left = Math.random() * 100 + 'vw';
-            paw.style.fontSize = size;
-            paw.style.animationDuration = Math.random() * 4 + 6 + 's';
-            container.appendChild(paw);
-            setTimeout(() => { paw.remove(); }, 8000);
-        }
-        setInterval(createPaw, 1000);
-    </script>
+</div>
+
+<!-- LOCATION -->
+
+<div class="location-box">
+
+<h4 class="fw-bold mb-3">
+Salon Location
+</h4>
+
+<div class="rounded-4 overflow-hidden mb-3"
+style="height:250px;">
+
+<iframe
+width="100%"
+height="100%"
+style="border:0;"
+loading="lazy"
+allowfullscreen
+src="https://www.google.com/maps?q={{ salon.address }}, {{ salon.city }}&output=embed">
+</iframe>
+
+</div>
+
+<p class="small text-muted mb-3">
+
+<i class="fas fa-map-marker-alt text-danger me-2"></i>
+
+{{ salon.address }}, {{ salon.city }}
+
+</p>
+
+<a href="https://www.google.com/maps/search/?api=1&query={{ salon.address }}, {{ salon.city }}"
+target="_blank"
+class="btn btn-primary-custom w-100">
+
+<i class="fas fa-location-arrow me-2"></i>
+
+Get Directions
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </body>
 </html>
